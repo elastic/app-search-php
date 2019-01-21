@@ -1,0 +1,23 @@
+### Composer ###
+composer.phar
+/vendor/
+composer.lock
+
+### OpenAPI metadata ###
+.openapi-generator/
+
+### IDEs ###
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+*.launch
+.buildpath
+.project
+.idea/*
+out/
+.idea_modules/
+
