@@ -1,0 +1,6 @@
+{
+  "gitUserId": "swiftype",
+  "gitRepoId": "swiftype-app-search-php",
+  "artifactVersion": "1.0.0",
+  "invokerPackage": "Swiftype\\AppSearch"
+}

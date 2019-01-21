@@ -1,0 +1,27 @@
+<?php
+
+namespace {{invokerPackage}};
+
+class Client
+{
+    private $endpointBuilder;
+
+    public function __construct()
+    {
+      $this->endpointBuilder = new Endpoint\EndpointBuilder();
+    }
+{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
+    public function {{operationId}}({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
+        {{#allParams.0}}
+        $params = [
+            {{#allParams}}
+              '{{baseName}}' => ${{paramName}},
+            {{/allParams}}
+        ];
+        {{/allParams.0}}
+        $endpoint = $endpointBuilder('{{classname}}');
+        {{#allParams.0}}
+        $endpoint->setParams($params);
+        {{/allParams.0}}
+    }
+{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}}

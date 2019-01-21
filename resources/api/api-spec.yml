@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: "Swiftype App Search API"
+  description: "Swiftype App Search API"
+  version: "1.0"
+components:
+  parameters:
+    pageCurrent:
+      name: page.current
+      in: query
+      description: The current page
+      schema:
+        type: integer
+        format: int32
+        default: 1
+      x-example: page.current=1
+    pageSize:
+      name: page.size
+      in: query
+      description: The number of results to show on each page
+      schema:
+        type: integer
+        format: int32
+        default: 20
+      x-example: page.size=20
+    engineNameParam:
+      name: engine_name
+      in: path
+      description: Name of the engine
+      required: true
+      schema:
+        type: string
+      x-example": rent-a-car
+paths:
+  /engines:
+    get:
+      operationId: listEngines
+      tags:
+      - engine
+      parameters:
+      - $ref: "#/components/parameters/pageSize"
+      - $ref: "#/compone  nts/parameters/pageCurrent"
+      responses:
+        '200':
+          description: A simple string response
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /engines/{engine_name}:
+    get:
+      operationId: getEngine
+      tags:
+      - engine
+      parameters:
+      - $ref: "#/components/parameters/engineNameParam"
+      responses:
+        '200':
+          description: A simple string response
+          content:
+            text/plain:
+              schema:
+                type: string
+  /engines/search:
+    post:
+      operationId: search
+      tags:
+        - search
+      parameters:
+        - $ref: "#/components/parameters/engineNameParam"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/pageCurrent"
+      responses:
+        '200':
+          description: A simple string response
+          content:
+            text/plain:
+              schema:
+                type: string

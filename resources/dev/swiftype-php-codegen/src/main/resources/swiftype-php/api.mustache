@@ -1,0 +1,31 @@
+<?php
+/**
+ */
+
+namespace {{package}};
+
+class {{classname}} extends AbstractEndpoint
+{
+  {{#operations}}
+  {{#operation}}
+    private $httpMethod   = '{{httpMethod}}';
+    private $resourcePath = '{{{path}}}';
+    private $pathParams   = [{{#pathParams}}'{{baseName}}'{{#hasMore}}, {{/hasMore}}{{/pathParams}}];
+  {{/operation}}
+  {{/operations}}
+
+    public function getMethod()
+    {
+        return $this->httpMehod;
+    }
+
+    public function getURI()
+    {
+        return $this->resourcePath;
+    }
+
+    public function setParams($params)
+    {
+
+    }
+}
