@@ -68,6 +68,11 @@ class Connection
 
     public function performRequest($method, $uri, $params = null, $body = null, $options = [])
     {
+        if (in_array($method, ['PUT', 'POST']) && $params !== null) {
+            $body   = $body ? array_merge($body, $params) :$params;
+            $params = null;
+        }
+
         if (isset($body) === true) {
             $body = $this->serializer->serialize($body);
             $options['headers']['Content-Type'][] = 'application/json';
