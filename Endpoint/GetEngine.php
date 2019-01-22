@@ -21,9 +21,12 @@ class GetEngine extends AbstractEndpoint
      */
     protected $method = 'GET';
 
+    /**
+     * @var string
+     */
+    protected $uri = '/engines/{engine_name}';
 
-    public function __construct($params)
-    {
-      
-    }
+    protected $routeParams    = ['engine_name'];
+
+    protected $paramWhitelist = [];
 }

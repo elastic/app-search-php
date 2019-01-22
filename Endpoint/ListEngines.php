@@ -21,9 +21,12 @@ class ListEngines extends AbstractEndpoint
      */
     protected $method = 'GET';
 
+    /**
+     * @var string
+     */
+    protected $uri = '/engines';
 
-    public function __construct($params)
-    {
-      
-    }
+    protected $routeParams    = [];
+
+    protected $paramWhitelist = ['page.current', 'page.size'];
 }

@@ -21,6 +21,8 @@ class Builder
      */
     public function __invoke($endpointName)
     {
-      return new $endpointName;
+      $className = sprintf("%s\\%s", __NAMESPACE__, $endpointName);
+
+      return new $className;
     }
 }

@@ -21,9 +21,12 @@ class Search extends AbstractEndpoint
      */
     protected $method = 'POST';
 
+    /**
+     * @var string
+     */
+    protected $uri = '/engines/search/{engine_name}';
 
-    public function __construct($params)
-    {
-      
-    }
+    protected $routeParams    = ['engine_name'];
+
+    protected $paramWhitelist = ['page.current', 'page.size'];
 }
