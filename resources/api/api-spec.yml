@@ -53,7 +53,7 @@ paths:
       parameters:
       - name: name
         in: query
-        description: Engine name
+        description: Engine name.
         schema:
           type: string
         x-example: name=mysuper-engine
@@ -81,12 +81,18 @@ paths:
         "application/json":
           description: "Engine data."
 
-  /engines/search/{engine_name}:
+  /engines/{engine_name}/search:
     post:
       operationId: search
       tags:
       - search
       parameters:
+      - name: query
+        in: query
+        description: Search query text.
+        schema:
+          type: string
+        x-example: query=foo+bar
       - $ref: "#/components/parameters/engineNameParam"
       - $ref: "#/components/parameters/pageCurrent"
       - $ref: "#/components/parameters/pageSize"

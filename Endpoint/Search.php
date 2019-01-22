@@ -24,9 +24,9 @@ class Search extends AbstractEndpoint
     /**
      * @var string
      */
-    protected $uri = '/engines/search/{engine_name}';
+    protected $uri = '/engines/{engine_name}/search';
 
     protected $routeParams    = ['engine_name'];
 
-    protected $paramWhitelist = ['page.current', 'page.size'];
+    protected $paramWhitelist = ['query', 'page.current', 'page.size'];
 }

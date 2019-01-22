@@ -82,10 +82,11 @@ class Client
         return $this->performRequest($endpoint);
     }
 
-    public function search($engineName, $pageCurrent, $pageSize)
+    public function search($engineName, $query, $pageCurrent, $pageSize)
     {
         $params = [
             'engine_name' => $engineName,
+            'query' => $query,
             'page.current' => $pageCurrent,
             'page.size' => $pageSize,
         ];
