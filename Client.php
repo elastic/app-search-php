@@ -33,7 +33,32 @@ class Client
     }
 
 
-    public function getEngine($engineName) {
+    public function createEngine($name)
+    {
+        $params = [
+            'name' => $name,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('CreateEngine');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    public function deleteEngine($engineName)
+    {
+        $params = [
+            'engine_name' => $engineName,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('DeleteEngine');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    public function getEngine($engineName)
+    {
         $params = [
             'engine_name' => $engineName,
         ];
@@ -44,7 +69,8 @@ class Client
         return $this->performRequest($endpoint);
     }
 
-    public function listEngines($pageCurrent, $pageSize) {
+    public function listEngines($pageCurrent, $pageSize)
+    {
         $params = [
             'page.current' => $pageCurrent,
             'page.size' => $pageSize,
@@ -56,7 +82,8 @@ class Client
         return $this->performRequest($endpoint);
     }
 
-    public function search($engineName, $pageCurrent, $pageSize) {
+    public function search($engineName, $pageCurrent, $pageSize)
+    {
         $params = [
             'engine_name' => $engineName,
             'page.current' => $pageCurrent,

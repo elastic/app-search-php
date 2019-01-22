@@ -44,8 +44,22 @@ paths:
       - $ref: "#/components/parameters/pageCurrent"
       - $ref: "#/components/parameters/pageSize"
       responses:
-        '200':
-          description: A simple string response
+        "application/json":
+          description: "List of available engines."
+    post:
+      operationId: createEngine
+      tags:
+      - engine
+      parameters:
+      - name: name
+        in: query
+        description: Engine name
+        schema:
+          type: string
+        x-example: name=mysuper-engine
+      responses:
+        "application/json":
+          description: "List of available engines."
 
   /engines/{engine_name}:
     get:
@@ -55,18 +69,27 @@ paths:
       parameters:
       - $ref: "#/components/parameters/engineNameParam"
       responses:
-        '200':
-          description: A simple string response
+        "application/json":
+          description: "Engine data."
+    delete:
+      operationId: deleteEngine
+      tags:
+      - engine
+      parameters:
+      - $ref: "#/components/parameters/engineNameParam"
+      responses:
+        "application/json":
+          description: "Engine data."
 
   /engines/search/{engine_name}:
     post:
       operationId: search
       tags:
-        - search
+      - search
       parameters:
-        - $ref: "#/components/parameters/engineNameParam"
-        - $ref: "#/components/parameters/pageCurrent"
-        - $ref: "#/components/parameters/pageSize"
+      - $ref: "#/components/parameters/engineNameParam"
+      - $ref: "#/components/parameters/pageCurrent"
+      - $ref: "#/components/parameters/pageSize"
       responses:
-        '200':
-          description: A simple string response
+        "application/json":
+          description: "Search result response."

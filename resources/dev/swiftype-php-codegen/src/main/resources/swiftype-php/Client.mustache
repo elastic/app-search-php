@@ -33,7 +33,8 @@ class Client
     }
 
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
-    public function {{operationId}}({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
+    public function {{operationId}}({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+    {
         {{#allParams.0}}
         $params = [
             {{#allParams}}
