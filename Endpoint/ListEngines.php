@@ -6,28 +6,24 @@
  * file that was distributed with this source code.
  */
 
-namespace {{package}};
+namespace Swiftype\AppSearch\Endpoint;
 
 /**
- * Implementation of the {{className}} endpoint.
+ * Implementation of the  endpoint.
  *
- * @package {{package}}
+ * @package Swiftype\AppSearch\Endpoint
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class {{classname}} extends AbstractEndpoint
+class ListEngines extends AbstractEndpoint
 {
-  {{#operations}}
-  {{#operation}}
     /**
      * @var string
      */
-    protected $method = '{{httpMethod}}';
+    protected $method = 'GET';
 
 
     public function __construct($params)
     {
       
     }
-  {{/operation}}
-  {{/operations}}
 }
