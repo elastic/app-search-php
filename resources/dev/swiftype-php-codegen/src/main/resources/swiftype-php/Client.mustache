@@ -37,9 +37,12 @@ class Client
     {
         {{#allParams.0}}
         $params = [
-            {{#allParams}}
+            {{#pathParams}}
             '{{baseName}}' => ${{paramName}},
-            {{/allParams}}
+            {{/pathParams}}
+            {{#queryParams}}
+            '{{baseName}}' => ${{paramName}},
+            {{/queryParams}}
         ];
         {{/allParams.0}}
 
@@ -47,6 +50,9 @@ class Client
         {{#allParams.0}}
         $endpoint->setParams($params);
         {{/allParams.0}}
+        {{#bodyParams.0}}
+        $endpoint->setBody($body);
+        {{/bodyParams.0}}
 
         return $this->performRequest($endpoint);
     }

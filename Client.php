@@ -69,6 +69,19 @@ class Client
         return $this->performRequest($endpoint);
     }
 
+    public function indexDocuments($engineName, $body)
+    {
+        $params = [
+            'engine_name' => $engineName,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('IndexDocuments');
+        $endpoint->setParams($params);
+        $endpoint->setBody($body);
+
+        return $this->performRequest($endpoint);
+    }
+
     public function listEngines($pageCurrent, $pageSize)
     {
         $params = [

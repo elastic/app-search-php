@@ -99,3 +99,20 @@ paths:
       responses:
         "application/json":
           description: "Search result response."
+
+  /engines/{engine_name}/documents:
+    post:
+      operationId: indexDocuments
+      tags:
+      - documents
+      parameters:
+      - $ref: "#/components/parameters/engineNameParam"
+      requestBody:
+        description: Search query text.
+        content:
+          "*":
+            schema:
+                type: string
+      responses:
+        "application/json":
+          description: "Document indexing response."
