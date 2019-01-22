@@ -23,11 +23,14 @@ class {{classname}} extends AbstractEndpoint
      */
     protected $method = '{{httpMethod}}';
 
+    /**
+     * @var string
+     */
+    protected $uri = '{{path}}';
 
-    public function __construct($params)
-    {
-      
-    }
+    protected $routeParams    = [{{#pathParams}}'{{baseName}}'{{#hasMore}}, {{/hasMore}}{{/pathParams}}];
+
+    protected $paramWhitelist = [{{#queryParams}}'{{baseName}}'{{#hasMore}}, {{/hasMore}}{{/queryParams}}];
   {{/operation}}
   {{/operations}}
 }

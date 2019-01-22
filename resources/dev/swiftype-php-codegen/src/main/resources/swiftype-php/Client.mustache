@@ -31,9 +31,12 @@ class Client
             {{/allParams}}
         ];
         {{/allParams.0}}
-        $endpoint = $endpointBuilder('{{classname}}');
+
+        $endpoint = ($this->endpointBuilder)('{{classname}}');
         {{#allParams.0}}
         $endpoint->setParams($params);
         {{/allParams.0}}
+
+        return $endpoint;
     }
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}}
