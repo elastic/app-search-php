@@ -1,9 +1,13 @@
 version: 2
+
+defaults: &defaults
+  docker:
+  - image: circleci/php:7.1-browsers
+  working_directory: ~/repo
+
 jobs:
   build:
-    docker:
-      - image: circleci/php:7.1-browsers
-    working_directory: ~/repo
+    <<: *defaults
     steps:
       - checkout
       - restore_cache:
@@ -11,8 +15,19 @@ jobs:
           - v1-dependencies-{{ checksum "composer.json" }}
           - v1-dependencies-
       - run: composer install -n --prefer-dist
+      - persist_to_workspace:
+          root: .
+          paths:
+          - ./vendor
+          - ./composer.lock
       - save_cache:
           paths:
-            - ./vendor
+          - ~/.composer/cache/
           key: v1-dependencies-{{ checksum "composer.json" }}
-#      - run: phpunit
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: .
+      - run: phpunit -c dev/tests/phpunit.xml.dist --testsuite unit
+      - run: phpunit -c dev/tests/phpunit.xml.dist --testsuite integration
