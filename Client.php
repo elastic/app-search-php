@@ -16,12 +16,22 @@ namespace Swiftype\AppSearch;
  */
 class Client
 {
-    private $endpointBuilder;
+    /**
+    * @var Connections\Connection
+    */
+    private $connection;
 
-    public function __construct()
+    /**
+     * @var callable
+     */
+    private $endpoint;
+
+    public function __construct(callable $endpointBuilder, Connection\Connection $connection)
     {
-      $this->endpointBuilder = new Endpoint\Builder();
+        $this->endpointBuilder = $endpointBuilder;
+        $this->connection      = $connection;
     }
+
 
     public function getEngine($engineName) {
         $params = [
@@ -31,7 +41,7 @@ class Client
         $endpoint = ($this->endpointBuilder)('GetEngine');
         $endpoint->setParams($params);
 
-        return $endpoint;
+        return $this->performRequest($endpoint);
     }
 
     public function listEngines($pageCurrent, $pageSize) {
@@ -43,7 +53,7 @@ class Client
         $endpoint = ($this->endpointBuilder)('ListEngines');
         $endpoint->setParams($params);
 
-        return $endpoint;
+        return $this->performRequest($endpoint);
     }
 
     public function search($engineName, $pageCurrent, $pageSize) {
@@ -56,6 +66,16 @@ class Client
         $endpoint = ($this->endpointBuilder)('Search');
         $endpoint->setParams($params);
 
-        return $endpoint;
+        return $this->performRequest($endpoint);
+    }
+
+    private function performRequest(Endpoint\EndpointInterface $endpoint)
+    {
+        $method  = $endpoint->getMethod();
+        $uri     = $endpoint->getURI();
+        $params  = $endpoint->getParams();
+        $body    = $endpoint->getBody();
+
+        return $this->connection->performRequest($method, $uri, $params, $body, $options)->wait();
     }
 }

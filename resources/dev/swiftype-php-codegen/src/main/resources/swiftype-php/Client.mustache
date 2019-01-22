@@ -16,12 +16,22 @@ namespace {{invokerPackage}};
  */
 class Client
 {
-    private $endpointBuilder;
+    /**
+    * @var Connections\Connection
+    */
+    private $connection;
 
-    public function __construct()
+    /**
+     * @var callable
+     */
+    private $endpoint;
+
+    public function __construct(callable $endpointBuilder, Connection\Connection $connection)
     {
-      $this->endpointBuilder = new Endpoint\Builder();
+        $this->endpointBuilder = $endpointBuilder;
+        $this->connection      = $connection;
     }
+
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
     public function {{operationId}}({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
         {{#allParams.0}}
@@ -37,6 +47,16 @@ class Client
         $endpoint->setParams($params);
         {{/allParams.0}}
 
-        return $endpoint;
+        return $this->performRequest($endpoint);
     }
-{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}}
+{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+    private function performRequest(Endpoint\EndpointInterface $endpoint)
+    {
+        $method  = $endpoint->getMethod();
+        $uri     = $endpoint->getURI();
+        $params  = $endpoint->getParams();
+        $body    = $endpoint->getBody();
+
+        return $this->connection->performRequest($method, $uri, $params, $body, $options)->wait();
+    }
+}
