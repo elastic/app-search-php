@@ -117,9 +117,9 @@ abstract class AbstractEndpoint implements EndpointInterface
 
     private function checkParams($params)
     {
-        /*if ($params == null) {
+        if ($params == null) {
             return;
-        }*/
+        }
 
         $whitelist     = array_merge($this->paramWhitelist, $this->routeParams);
         $invalidParams = array_diff(array_keys($params), $whitelist);
