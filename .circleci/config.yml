@@ -58,9 +58,12 @@ workflows:
   build_and_test:
     jobs:
     - build
-    - unit_test:
+    - test_unit:
         requires:
         - build
-    - integration_test:
+    - test_integration:
+        requires:
+        - build
+    - test_phpcs:
         requires:
         - build
