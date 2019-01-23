@@ -9,25 +9,49 @@ jobs:
   build:
     <<: *defaults
     steps:
-      - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "composer.json" }}
-          - v1-dependencies-
-      - run: composer install -n --prefer-dist
-      - persist_to_workspace:
-          root: .
-          paths:
-          - ./vendor
-          - ./composer.lock
-      - save_cache:
-          paths:
-          - ~/.composer/cache/
-          key: v1-dependencies-{{ checksum "composer.json" }}
-  test:
+    - checkout
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "composer.json" }}
+        - v1-dependencies-
+    - run:
+        name: Install composer dependencies
+        command: composer install -n --prefer-dist
+    - persist_to_workspace:
+        root: .
+        paths:
+        - .
+    - save_cache:
+        paths:
+        - ~/.composer/cache/
+        key: v1-dependencies-{{ checksum "composer.json" }}
+
+  test_unit:
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: .
-      - run: phpunit -c dev/tests/phpunit.xml.dist --testsuite unit
-      - run: phpunit -c dev/tests/phpunit.xml.dist --testsuite integration
+    - attach_workspace:
+        at: .
+    - run:
+        name: Unit testing
+        command: vendor/bin/phpunit -c resources/dev/tests/phpunit.xml.dist --testsuite unit
+
+  test_integration:
+    <<: *defaults
+    steps:
+    - attach_workspace:
+        at: .
+    - run:
+        name: Integration testing
+        command: vendor/bin/phpunit -c resources/dev/tests/phpunit.xml.dist --testsuite integration
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+    - build
+    - unit_test:
+        requires:
+        - build
+    - integration_test:
+        requires:
+        - build
