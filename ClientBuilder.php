@@ -3,6 +3,7 @@
 namespace Swiftype\AppSearch;
 
 use Swiftype\AppSearch\Connection\Connection;
+use Swiftype\AppSearch\Connection\Handler;
 
 class ClientBuilder
 {
@@ -53,11 +54,11 @@ class ClientBuilder
      * @param string $hostIdentifier
      * @param string $apiKey
      *
-     * @return \Swiftype\AppSearch\ClientBuilder
+     * @return \Swiftype\AppSearch\Client
      */
     public static function create($apiEndpoint = null, $apiKey = null)
     {
-        return (new static())->setApiEndpoint($apiEndpoint)->setApiKey($apiKey)->instantiate();
+        return (new static())->setApiEndpoint($apiEndpoint)->setApiKey($apiKey)->build();
     }
 
     /**
@@ -125,38 +126,13 @@ class ClientBuilder
      */
     private function instantiate()
     {
-        $connection = new Connection(
-            $this->handler,
-            $this->serializer,
-            $this->logger,
-            $this->tracer,
-            $this->getConnectionParams()
-        );
+        $this->handler = new Handler\RequestAuthenticationHandler($this->handler, $this->apiKey);
+        $this->handler = new Handler\RequestUrlHandler($this->handler, $this->apiEndpoint);
+        $this->handler = new Handler\RequestSerializationHandler($this->handler, $this->serializer);
+
+        $connection = new Connection($this->handler, $this->serializer, $this->logger, $this->tracer);
 
         return new Client($this->endpointBuilder(), $connection);
-    }
-
-    /**
-     * Create connection params for the client.
-     * Mostly used to init host (from apiEndpoint) and auth headers (from apiKey).
-     *
-     * @return array
-     */
-    private function getConnectionParams()
-    {
-        $connectionParams = [];
-
-        if (!empty($this->apiKey)) {
-            $connectionParams['headers']['Authorization'][] = sprintf("Bearer %s", $this->apiKey);
-        }
-
-        if (!empty($this->apiEndpoint)) {
-            $urlComponents = parse_url($this->apiEndpoint);
-            $connectionParams['scheme'] = $urlComponents['scheme'];
-            $connectionParams['headers']['host'][] = $urlComponents['host'];
-        }
-
-        return $connectionParams;
     }
 
     /**

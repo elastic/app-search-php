@@ -23,11 +23,11 @@
 
     <filter>
         <whitelist>
-            <directory>./</directory>
+            <directory>../../../</directory>
             <exclude>
-                <directory>./resources</directory>
-                <directory>./Tests/</directory>
-                <directory>./vendor</directory>
+                <directory>../../../resources</directory>
+                <directory>../../../Tests/</directory>
+                <directory>../../../vendor</directory>
             </exclude>
         </whitelist>
     </filter>
