@@ -50,7 +50,7 @@ jobs:
     - attach_workspace:
         at: .
     - run:
-        name: Integration testing
+        name: PHPCS
         command: vendor/bin/phpcs --ignore=vendor,resources --standard=PSR2 .
 
 workflows:
