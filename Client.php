@@ -117,6 +117,6 @@ class Client
         $params  = $endpoint->getParams();
         $body    = $endpoint->getBody();
 
-        return $this->connection->performRequest($method, $uri, $params, $body, $options)->wait();
+        return $this->connection->performRequest($method, $uri, $params, $body)->wait();
     }
 }
