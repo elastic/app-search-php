@@ -11,9 +11,9 @@ namespace Swiftype\AppSearch\Exception;
 /**
  * Wrapper for exceptions raised by the client.
  *
- * @package Swiftype\AppSearch\Endpoint
+ * @package Swiftype\AppSearch\Exception
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
- interface SwiftypeException
- {
- }
+interface SwiftypeException
+{
+}

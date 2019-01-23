@@ -13,7 +13,7 @@ use function InvalidArgumentException\__construct as sprintf;
 /**
  * JSON error handling providing human friendly messages.
  *
- * @package Swiftype\AppSearch\Endpoint
+ * @package Swiftype\AppSearch\Exception
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class JsonErrorException extends \Exception implements SwiftypeException

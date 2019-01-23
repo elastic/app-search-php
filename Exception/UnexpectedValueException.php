@@ -11,9 +11,9 @@ namespace Swiftype\AppSearch\Exception;
 /**
  * Denote a value that is outside the normally accepted values.
  *
- * @package Swiftype\AppSearch\Endpoint
+ * @package Swiftype\AppSearch\Exception
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
- class UnexpectedValueException extends \UnexpectedValueException implements SwiftypeException
- {
- }
+class UnexpectedValueException extends \UnexpectedValueException implements SwiftypeException
+{
+}

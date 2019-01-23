@@ -13,7 +13,7 @@ use Swiftype\AppSearch\Exception\UnexpectedValueException;
 /**
  * Abstract endpoint implementation.
  *
- * @package Swiftype\AppSearch
+ * @package Swiftype\AppSearch\Endpoint
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 abstract class AbstractEndpoint implements EndpointInterface
@@ -78,9 +78,9 @@ abstract class AbstractEndpoint implements EndpointInterface
         $params = [];
 
         foreach ($this->params as $paramName => $paramVal) {
-          if (in_array($paramName, $this->paramWhitelist)) {
-              $params[$paramName] = $paramVal;
-          }
+            if (in_array($paramName, $this->paramWhitelist)) {
+                $params[$paramName] = $paramVal;
+            }
         }
 
         return $this->processParams($params);
@@ -130,10 +130,10 @@ abstract class AbstractEndpoint implements EndpointInterface
             $invalidParams = implode('", "', $invalidParams);
             $message = '"%s" is not a valid parameter. Allowed parameters are "%s".';
             if ($countInvalid > 1) {
-              $message = '"%s" are not valid parameters. Allowed parameters are "%s".';
+                $message = '"%s" are not valid parameters. Allowed parameters are "%s".';
             }
             throw new UnexpectedValueException(
-              sprintf($message, $invalidParams, $whitelist)
+                sprintf($message, $invalidParams, $whitelist)
             );
         }
     }
