@@ -44,14 +44,26 @@ jobs:
         name: Integration testing
         command: vendor/bin/phpunit -c resources/dev/tests/phpunit.xml.dist --testsuite integration
 
+  test_phpcs:
+    <<: *defaults
+    steps:
+    - attach_workspace:
+        at: .
+    - run:
+        name: PHPCS
+        command: vendor/bin/phpcs --ignore=vendor,resources --standard=PSR2 .
+
 workflows:
   version: 2
   build_and_test:
     jobs:
     - build
-    - unit_test:
+    - test_unit:
         requires:
         - build
-    - integration_test:
+    - test_integration:
+        requires:
+        - build
+    - test_phpcs:
         requires:
         - build

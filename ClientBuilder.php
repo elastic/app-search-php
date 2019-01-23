@@ -26,10 +26,19 @@ class ClientBuilder
      */
     private $handler;
 
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
     private $logger;
 
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
     private $tracer;
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->handler    = new \GuzzleHttp\Ring\Client\CurlHandler();
@@ -51,6 +60,13 @@ class ClientBuilder
         return (new static())->setApiEndpoint($apiEndpoint)->setApiKey($apiKey)->instantiate();
     }
 
+    /**
+     * Set the api key for the client.
+     *
+     * @param string $apiKey
+     *
+     * @return ClientBuilder
+     */
     public function setApiKey($apiKey)
     {
         $this->apiKey = $apiKey;
@@ -58,6 +74,13 @@ class ClientBuilder
         return $this;
     }
 
+    /**
+     * Set the api endpoint for the client.
+     *
+     * @param string $apiEndpoint
+     *
+     * @return ClientBuilder
+     */
     public function setApiEndpoint($apiEndpoint)
     {
         $isValidEndpoint = false;
@@ -102,14 +125,23 @@ class ClientBuilder
      */
     private function instantiate()
     {
-        $connectionParams = $this->getConnectionParams();
-        $connection       = new Connection(
-            $this->handler, $this->serializer, $this->logger, $this->tracer, $connectionParams
+        $connection = new Connection(
+            $this->handler,
+            $this->serializer,
+            $this->logger,
+            $this->tracer,
+            $this->getConnectionParams()
         );
 
         return new Client($this->endpointBuilder(), $connection);
     }
 
+    /**
+     * Create connection params for the client.
+     * Mostly used to init host (from apiEndpoint) and auth headers (from apiKey).
+     *
+     * @return array
+     */
     private function getConnectionParams()
     {
         $connectionParams = [];
@@ -127,6 +159,11 @@ class ClientBuilder
         return $connectionParams;
     }
 
+    /**
+     * Instantiate the endpoint builder.
+     *
+     * @return Endpoint\Builder.
+     */
     private function endpointBuilder()
     {
         return new Endpoint\Builder();

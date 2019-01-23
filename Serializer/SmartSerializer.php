@@ -99,7 +99,6 @@ class SmartSerializer implements SerializerInterface
 
         $result = @json_decode($data, true);
 
-        // Throw exception only if E_NOTICE is on to maintain backwards-compatibility on systems that silently ignore E_NOTICEs.
         if (json_last_error() !== JSON_ERROR_NONE && (error_reporting() & E_NOTICE) === E_NOTICE) {
             $e = new JsonErrorException(json_last_error(), $data, $result);
             throw $e;

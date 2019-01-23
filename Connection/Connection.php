@@ -11,11 +11,15 @@ namespace Swiftype\AppSearch\Connection;
 use GuzzleHttp\Ring\Core;
 use Psr\Log\LoggerInterface;
 use Swiftype\AppSearch\Serializer\SerializerInterface;
+use \Swiftype\AppSearch\Exception\ConnectionException;
+use \Swiftype\AppSearch\Exception\CouldNotResolveHostException;
+use \Swiftype\AppSearch\Exception\CouldNotConnectToHostException;
+use \Swiftype\AppSearch\Exception\OperationTimeoutException;
 
 /**
  * Connection bring HTTP connectivity to the Swiftype HTTP API.
  *
- * @package Swiftype\AppSearch
+ * @package Swiftype\AppSearch\Connection
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class Connection
@@ -49,7 +53,13 @@ class Connection
     private $tracer;
 
     /**
-     * Constr
+     * Constructor.
+     *
+     * @param callable            $handler          Guzzle handler used to issue request.
+     * @param SerializerInterface $serializer       JSON serializer.
+     * @param LoggerInterface     $logger           Logger used for warning & error.
+     * @param LoggerInterface     $tracer           Logger used for tracing.
+     * @param array               $connectionParams Connections params.
      */
     public function __construct(
         callable $handler,
@@ -66,6 +76,17 @@ class Connection
         $this->connectionParams = array_merge($this->connectionParams, $connectionParams);
     }
 
+    /**
+     * Run the HTTP request and process the result to be usable by the client.
+     *
+     * @param string     $method  HTTP method (eg. GET, POST, ...).
+     * @param string     $uri     URI of the request.
+     * @param array|null $params  Query params.
+     * @param array|null $body    Request body.
+     * @param array|null $options Additional options.
+          *
+     * @return array
+     */
     public function performRequest($method, $uri, $params = null, $body = null, $options = [])
     {
         if (in_array($method, ['PUT', 'POST']) && $params !== null) {
@@ -99,13 +120,21 @@ class Connection
         return $handler($request);
     }
 
+    /**
+     * Build request URI from basepath and query params.
+     *
+     * @param string     $uri    URI of the request.
+     * @param array|null $params Query params.
+     *
+     * @return string
+     */
     private function getURI($uri, $params)
     {
         if (!empty($params)) {
             array_walk($params, function (&$value, &$key) {
                 if ($value === true) {
                     $value = 'true';
-                } else if ($value === false) {
+                } elseif ($value === false) {
                     $value = 'false';
                 }
             });
@@ -116,6 +145,13 @@ class Connection
         return sprintf("%s/%s", $this->connectionParams['uriPrefix'], $uri);
     }
 
+    /**
+     * Install proxy method that wrap the original handler to postprocess the response.
+     *
+     * @param callable $handler Original handler.
+     *
+     * @return callable
+     */
     private function wrapHandler(callable $handler)
     {
         $handler = function (array $request) use ($handler) {
@@ -140,21 +176,29 @@ class Connection
         return $handler;
     }
 
+    /**
+     * Process error to raised an more comprehensive exception.
+     *
+     * @param array $request  Request.
+     * @param array $response Response.
+     *
+     * @return ConnectionException
+     */
     protected function getConnectionErrorException($request, $response)
     {
         $exception = null;
-        $message = $response['error']->getMessage();
-        $exception = new \Swiftype\AppSearch\Exception\ConnectionException($message);
-        if ( isset($response['curl'])) {
+        $message   = $response['error']->getMessage();
+        $exception = new ConnectionException($message);
+        if (isset($response['curl'])) {
             switch ($response['curl']['errno']) {
                 case CURLE_COULDNT_RESOLVE_HOST:
-                    $exception = new \Swiftype\AppSearch\Exception\CouldNotResolveHostException($message, null, $response['error']);
+                    $exception = new CouldNotResolveHostException($message, null, $response['error']);
                     break;
                 case CURLE_COULDNT_CONNECT:
-                    $exception = new \Swiftype\AppSearch\Exception\CouldNotConnectToHostException($message, null, $response['error']);
+                    $exception = new CouldNotConnectToHostException($message, null, $response['error']);
                     break;
                 case CURLE_OPERATION_TIMEOUTED:
-                    $exception = new \Swiftype\AppSearch\Exception\OperationTimeoutException($message, null, $response['error']);
+                    $exception = new OperationTimeoutException($message, null, $response['error']);
                     break;
             }
         }

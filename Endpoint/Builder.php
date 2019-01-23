@@ -11,7 +11,7 @@ namespace Swiftype\AppSearch\Endpoint;
 /**
  * Endpoint builder implementation.
  *
- * @package Swiftype\AppSearch
+ * @package Swiftype\AppSearch\Endpoint
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class Builder
@@ -21,8 +21,8 @@ class Builder
      */
     public function __invoke($endpointName)
     {
-      $className = sprintf("%s\\%s", __NAMESPACE__, $endpointName);
+        $className = sprintf("%s\\%s", __NAMESPACE__, $endpointName);
 
-      return new $className;
+        return new $className;
     }
 }
