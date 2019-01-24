@@ -10,10 +10,6 @@ namespace Swiftype\AppSearch\Connection;
 
 use GuzzleHttp\Ring\Core;
 use Psr\Log\LoggerInterface;
-use Swiftype\AppSearch\Exception\ConnectionException;
-use Swiftype\AppSearch\Exception\CouldNotConnectToHostException;
-use Swiftype\AppSearch\Exception\CouldNotResolveHostException;
-use Swiftype\AppSearch\Exception\OperationTimeoutException;
 use Swiftype\AppSearch\Serializer\SerializerInterface;
 
 /**
@@ -99,9 +95,7 @@ class Connection
     {
         $handler = function (array $request) use ($handler) {
             $response =  Core::proxy($handler($request), function ($response) use ($request) {
-                if (isset($response['error']) === true) {
-                    throw $this->getConnectionErrorException($request, $response);
-                } elseif (isset($response['body']) === true) {
+                if (isset($response['body']) === true) {
                     $response['body'] = stream_get_contents($response['body']);
                     $headers = $response['transfer_stats'] ?? [];
                     $response['body'] = $this->serializer->deserialize($response['body'], $headers);
@@ -118,35 +112,5 @@ class Connection
         };
 
         return $handler;
-    }
-
-    /**
-     * Process error to raised an more comprehensive exception.
-     *
-     * @param array $request  Request.
-     * @param array $response Response.
-     *
-     * @return ConnectionException
-     */
-    protected function getConnectionErrorException($request, $response)
-    {
-        $exception = null;
-        $message   = $response['error']->getMessage();
-        $exception = new ConnectionException($message);
-        if (isset($response['curl'])) {
-            switch ($response['curl']['errno']) {
-                case CURLE_COULDNT_RESOLVE_HOST:
-                    $exception = new CouldNotResolveHostException($message, null, $response['error']);
-                    break;
-                case CURLE_COULDNT_CONNECT:
-                    $exception = new CouldNotConnectToHostException($message, null, $response['error']);
-                    break;
-                case CURLE_OPERATION_TIMEOUTED:
-                    $exception = new OperationTimeoutException($message, null, $response['error']);
-                    break;
-            }
-        }
-
-        return $exception;
     }
 }

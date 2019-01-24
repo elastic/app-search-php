@@ -129,6 +129,7 @@ class ClientBuilder
         $this->handler = new Handler\RequestAuthenticationHandler($this->handler, $this->apiKey);
         $this->handler = new Handler\RequestUrlHandler($this->handler, $this->apiEndpoint);
         $this->handler = new Handler\RequestSerializationHandler($this->handler, $this->serializer);
+        $this->handler = new Handler\ConnectionErrorHandler($this->handler);
 
         $connection = new Connection($this->handler, $this->serializer, $this->logger, $this->tracer);
 
