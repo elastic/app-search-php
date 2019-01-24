@@ -12,12 +12,12 @@ use GuzzleHttp\Ring\Core;
 use Swiftype\AppSearch\Serializer\SerializerInterface;
 
 /**
- * Automatatic unserialization of the response.
+ * Automatatic serialization of the request params and body.
  *
  * @package Swiftype\AppSearch\Connection\Handler
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class RequestSerializationHandler
+class ResponseSerializationHandler
 {
     /**
      * @var callable
@@ -43,20 +43,16 @@ class RequestSerializationHandler
 
     public function __invoke($request)
     {
-        $request = Core::setHeader($request, 'Content-Type', ['application/json']);
+        $response = Core::proxy(($this->handler)($request), function ($response) use ($request) {
+            if (isset($response['body']) === true) {
+                $response['body'] = stream_get_contents($response['body']);
+                $headers = $response['transfer_stats'] ?? [];
+                $response['body'] = $this->serializer->deserialize($response['body'], $headers);
+            }
 
-        $body = $request['body'] ?? [];
+            return $response;
+        });
 
-        if (isset($request['query_params'])) {
-            $body = array_merge($body, $request['query_params']);
-            unset($request['query_params']);
-        }
-
-        if (!empty($body)) {
-            ksort($body);
-            $request['body'] = $this->serializer->serialize($body);
-        }
-
-        return ($this->handler)($request);
+        return $response;
     }
 }
