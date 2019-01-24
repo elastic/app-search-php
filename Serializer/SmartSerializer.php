@@ -69,17 +69,11 @@ class SmartSerializer implements SerializerInterface
      */
     public function deserialize($data, $headers)
     {
-        if (isset($headers['content_type']) === true) {
-            if (strpos($headers['content_type'], 'json') !== false) {
-                return $this->decode($data);
-            } else {
-                //Not json, return as string
-                return $data;
-            }
-        } else {
-            //No content headers, assume json
-            return $this->decode($data);
+        if (isset($headers['content_type']) === true && strpos($headers['content_type'], 'json') === false) {
+            return $data;
         }
+
+        return $this->decode($data);
     }
 
     /**

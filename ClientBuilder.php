@@ -130,8 +130,9 @@ class ClientBuilder
         $this->handler = new Handler\RequestUrlHandler($this->handler, $this->apiEndpoint);
         $this->handler = new Handler\RequestSerializationHandler($this->handler, $this->serializer);
         $this->handler = new Handler\ConnectionErrorHandler($this->handler);
+        $this->handler = new Handler\ResponseSerializationHandler($this->handler, $this->serializer);
 
-        $connection = new Connection($this->handler, $this->serializer, $this->logger, $this->tracer);
+        $connection = new Connection($this->handler, $this->logger, $this->tracer);
 
         return new Client($this->endpointBuilder(), $connection);
     }

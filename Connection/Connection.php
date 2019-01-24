@@ -8,9 +8,7 @@
 
 namespace Swiftype\AppSearch\Connection;
 
-use GuzzleHttp\Ring\Core;
 use Psr\Log\LoggerInterface;
-use Swiftype\AppSearch\Serializer\SerializerInterface;
 
 /**
  * Connection bring HTTP connectivity to the Swiftype HTTP API.
@@ -26,11 +24,6 @@ class Connection
     private $handler;
 
     /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -43,19 +36,13 @@ class Connection
     /**
      * Constructor.
      *
-     * @param callable            $handler     Guzzle handler used to issue request.
-     * @param SerializerInterface $serializer  JSON serializer.
-     * @param LoggerInterface     $logger      Logger used for warning & error.
-     * @param LoggerInterface     $tracer      Logger used for tracing.
+     * @param callable        $handler Guzzle handler used to issue request.
+     * @param LoggerInterface $logger  Logger used for warning & error.
+     * @param LoggerInterface $tracer  Logger used for tracing.
      */
-    public function __construct(
-        callable $handler,
-        SerializerInterface $serializer,
-        LoggerInterface $logger,
-        LoggerInterface $tracer
-    ) {
+    public function __construct(callable $handler, LoggerInterface $logger, LoggerInterface $tracer)
+    {
         $this->handler    = $handler;
-        $this->serializer = $serializer;
         $this->logger     = $logger;
         $this->tracer     = $tracer;
     }
@@ -79,38 +66,6 @@ class Connection
             'query_params' => $params,
         ];
 
-        $handler = $this->wrapHandler($this->handler);
-
-        return $handler(array_filter($request));
-    }
-
-    /**
-     * Install proxy method that wrap the original handler to postprocess the response.
-     *
-     * @param callable $handler Original handler.
-     *
-     * @return callable
-     */
-    private function wrapHandler(callable $handler)
-    {
-        $handler = function (array $request) use ($handler) {
-            $response =  Core::proxy($handler($request), function ($response) use ($request) {
-                if (isset($response['body']) === true) {
-                    $response['body'] = stream_get_contents($response['body']);
-                    $headers = $response['transfer_stats'] ?? [];
-                    $response['body'] = $this->serializer->deserialize($response['body'], $headers);
-                }
-
-                // @todo : log error
-                // @todo : log success
-                // @todo : manage 4xx et 5xx status code
-
-                return $response['body'];
-            });
-
-            return $response;
-        };
-
-        return $handler;
+        return ($this->handler)(array_filter($request));
     }
 }
