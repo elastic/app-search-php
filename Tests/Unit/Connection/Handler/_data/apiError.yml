@@ -1,0 +1,84 @@
+-
+  - status: 200
+    foo: bar
+  - null
+  - null
+
+-
+  - status: 400
+    foo: bar
+  - \Swiftype\AppSearch\Exception\BadRequestException
+  - Unexpected error.
+
+-
+  - status: 400
+    reason: Error msg.
+  - \Swiftype\AppSearch\Exception\BadRequestException
+  - Error msg.
+
+-
+  - status: 400
+    reason: Error msg.
+    body:
+      error: Body error msg.
+  - \Swiftype\AppSearch\Exception\BadRequestException
+  - Body error msg.
+
+-
+  - status: 400
+    body:
+      error: Error msg.
+  - \Swiftype\AppSearch\Exception\BadRequestException
+  - Error msg.
+
+-
+  - status: 400
+    body:
+      errors: Error msg.
+  - \Swiftype\AppSearch\Exception\BadRequestException
+  - Error msg.
+
+-
+  - status: 400
+    body:
+      error:
+        - Error msg.
+  - \Swiftype\AppSearch\Exception\BadRequestException
+  - Error msg.
+
+-
+  - status: 400
+    body:
+      errors:
+        - Error msg1.
+        - Error msg2.
+  - \Swiftype\AppSearch\Exception\BadRequestException
+  - Error msg1. Error msg2.
+
+-
+  - status: 401
+    body:
+      error: Error msg.
+  - \Swiftype\AppSearch\Exception\AuthenticationException
+  - Error msg.
+
+-
+  - status: 403
+    body:
+      error: Error msg.
+  - \Swiftype\AppSearch\Exception\AuthenticationException
+  - Error msg.
+
+-
+  - status: 404
+    body:
+      error: Error msg.
+  - \Swiftype\AppSearch\Exception\NotFoundException
+  - Error msg.
+
+-
+  - status: 500
+    body:
+      error: Error msg.
+  - \Swiftype\AppSearch\Exception\ApiException
+  - Error msg.

@@ -47,7 +47,7 @@ class ResponseSerializationHandler
             if (isset($response['body']) === true) {
                 $response['body'] = stream_get_contents($response['body']);
                 $headers = $response['transfer_stats'] ?? [];
-                $response = $this->serializer->deserialize($response['body'], $headers);
+                $response['body'] = $this->serializer->deserialize($response['body'], $headers);
             }
 
             return $response;

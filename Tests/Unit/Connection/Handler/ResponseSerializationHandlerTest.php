@@ -22,7 +22,7 @@ use Swiftype\AppSearch\Serializer\SmartSerializer;
 class ResponseSerializationHandlerTest extends TestCase
 {
     /**
-     * Check data serialization accross various requests of the dataprovider.
+     * Check data unserialization accross various response of the dataprovider.
      *
      * @dataProvider requestDataProvider
      */
@@ -36,7 +36,7 @@ class ResponseSerializationHandlerTest extends TestCase
         $result = $handler([])->wait();
 
         if (!$expectedResult instanceof \Exception) {
-            $this->assertEquals($expectedResult, $result);
+            $this->assertEquals($expectedResult, $result['body']);
         }
     }
 
@@ -51,6 +51,7 @@ class ResponseSerializationHandlerTest extends TestCase
             ['["foo", "bar"]', ["foo", "bar"]],
             ['{}', []],
             ['[]', []],
+            // @todo : try invalid response and exception
         ];
 
         return $data;

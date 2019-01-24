@@ -17,7 +17,7 @@ namespace Swiftype\AppSearch;
 class Client
 {
     /**
-    * @var Connections\Connection
+    * @var Connection\Connection
     */
     private $connection;
 
@@ -117,6 +117,8 @@ class Client
         $params  = $endpoint->getParams();
         $body    = $endpoint->getBody();
 
-        return $this->connection->performRequest($method, $uri, $params, $body)->wait();
+        $response = $this->connection->performRequest($method, $uri, $params, $body)->wait();
+
+        return $response['body'] ?? $response;
     }
 }
