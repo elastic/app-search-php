@@ -49,8 +49,13 @@ class RequestUrlHandler
         $this->handler = $handler;
 
         $urlComponents = parse_url($apiEndpoint);
+
         $this->scheme  = $urlComponents['scheme'];
         $this->host    = $urlComponents['host'];
+
+        if (isset($urlComponents['port'])) {
+            $this->host = sprintf("%s:%s", $this->host, $urlComponents['port']);
+        }
     }
 
     /**

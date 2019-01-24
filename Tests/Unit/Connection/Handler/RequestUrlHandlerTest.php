@@ -53,6 +53,8 @@ class RequestUrlHandlerTest extends TestCase
             ["http://test", "/", "/api/as/v1/", "test", "http"],
             ["https://test/foo", "/", "/api/as/v1/", "test", "https"],
             ["http://test/foo", "/", "/api/as/v1/", "test", "http"],
+            ["http://localhost:3200/foo", "/", "/api/as/v1/", "localhost:3200", "http"],
+            ["https://localhost:3200/foo", "/", "/api/as/v1/", "localhost:3200", "https"],
         ];
     }
 }
