@@ -14,7 +14,7 @@ use Swiftype\AppSearch\Serializer\SerializerInterface;
 /**
  * Automatatic serialization of the request params and body.
  *
- * @package Swiftype\AppSearch\Connection
+ * @package Swiftype\AppSearch\Connection\Handler
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RequestSerializationHandler
@@ -29,6 +29,12 @@ class RequestSerializationHandler
      */
     private $serializer;
 
+    /**
+     * Constructor.
+     *
+     * @param callable            $handler    Original handler.
+     * @param SerializerInterface $serializer Serialize.
+     */
     public function __construct(callable $handler, SerializerInterface $serializer)
     {
         $this->handler    = $handler;
@@ -47,6 +53,7 @@ class RequestSerializationHandler
         }
 
         if (!empty($body)) {
+            ksort($body);
             $request['body'] = $this->serializer->serialize($body);
         }
 

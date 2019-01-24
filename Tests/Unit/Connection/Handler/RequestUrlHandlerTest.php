@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 use Swiftype\AppSearch\Connection\Handler\RequestUrlHandler;
 
 /**
- * Unit tests for the authentication handler.
+ * Unit tests for the request url handler.
  *
  * @package Swiftype\AppSearch\Test\Unit\Connection\Handler
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>

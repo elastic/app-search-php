@@ -13,7 +13,7 @@ use GuzzleHttp\Ring\Core;
 /**
  * This handler add automatically the API Key to the request.
  *
- * @package Swiftype\AppSearch\Connection
+ * @package Swiftype\AppSearch\Connection\Handler
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RequestAuthenticationHandler
