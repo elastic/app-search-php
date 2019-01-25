@@ -142,6 +142,25 @@ class Client
     }
 
     /**
+     * Operation: getSchema
+     *
+     * @param string $engineName Name of the engine.
+     *
+     * @return array
+     */
+    public function getSchema($engineName)
+    {
+        $params = [
+            'engine_name' => $engineName,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('GetSchema');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Operation: indexDocuments
      *
      * @param string $engineName Name of the engine.
@@ -283,6 +302,27 @@ class Client
         ];
 
         $endpoint = ($this->endpointBuilder)('UpdateDocuments');
+        $endpoint->setParams($params);
+        $endpoint->setBody($requestBody);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Operation: updateSchema
+     *
+     * @param string $engineName Name of the engine.
+     * @param array[] $requestBody Schema description.
+     *
+     * @return array
+     */
+    public function updateSchema($engineName, $requestBody = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('UpdateSchema');
         $endpoint->setParams($params);
         $endpoint->setBody($requestBody);
 

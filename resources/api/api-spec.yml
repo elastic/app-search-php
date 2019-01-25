@@ -186,6 +186,34 @@ paths:
         "application/json":
           description: "Array of search result response."
 
+  /engines/{engine_name}/schema:
+    get:
+      operationId: getSchema
+      tags:
+      - schema
+      parameters:
+      - $ref: "#/components/parameters/engineNameParam"
+      responses:
+        "application/json":
+          description: "Engine schema"
+    post:
+      operationId: updateSchema
+      tags:
+      - schema
+      parameters:
+      - $ref: "#/components/parameters/engineNameParam"
+      requestBody:
+        description: Schema description.
+        content:
+          "*":
+            schema:
+              type: array
+              items:
+                type: object
+      responses:
+        "application/json":
+          description: "Engine schema"
+
   /engines/{engine_name}/documents:
     get:
       operationId: getDocuments
@@ -215,9 +243,9 @@ paths:
         content:
           "*":
             schema:
-                type: array
-                items:
-                  type: object
+              type: array
+              items:
+                type: object
       responses:
         "application/json":
           description: "Document indexing response."
@@ -232,9 +260,9 @@ paths:
         content:
           "*":
             schema:
-                type: array
-                items:
-                  type: object
+              type: array
+              items:
+                type: object
       responses:
         "application/json":
           description: "Document update response."
@@ -249,9 +277,9 @@ paths:
         content:
           "*":
             schema:
-                type: array
-                items:
-                  type: string
+              type: array
+              items:
+                type: string
       responses:
         "application/json":
           description: "Document delete response."
