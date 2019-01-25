@@ -484,18 +484,21 @@ paths:
       - name: queries
         in: query
         required: true
+        description: Curated queries.
         schema:
           type: array
           items:
             type: string
       - name: promoted
         in: query
+        description: Promoted doc ids.
         schema:
           type: array
           items:
             type: string
       - name: hidden
         in: query
+        description: Hidden doc ids.
         schema:
           type: array
           items:
@@ -503,3 +506,38 @@ paths:
       responses:
         "application/json":
           description: "Delete operation result."
+
+  /engines/{engine_name}/click:
+    post:
+     operationId: sendClick
+     tags:
+     - clickthrough
+     parameters:
+     - $ref: "#/components/parameters/engineNameParam"
+     - name: query
+       in: query
+       required: true
+       description: The query that the user searched with.
+       schema:
+         type: string
+     - name: document_id
+       in: query
+       required: true
+       description: The id of the document that was clicked on.
+       schema:
+         type: string
+     - name: request_id
+       in: query
+       description: The request id returned in the meta tag of a search API response.
+       schema:
+         type: string
+     - name: tags
+       in: query
+       description: Array of strings representing additional information you wish to track with the clickthrough.
+       schema:
+         type: array
+         items:
+           type: string
+     responses:
+       "application/json":
+         description: "Delete operation result."
