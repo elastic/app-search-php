@@ -5,6 +5,7 @@ composer.lock
 
 ### OpenAPI metadata ###
 .openapi-generator/
+.openapi-generator-ignore
 
 ### IDEs ###
 *.tmp
@@ -20,4 +21,4 @@ local.properties
 .idea/*
 out/
 .idea_modules/
-
+.php_cs.cache
