@@ -502,13 +502,40 @@ class Client
     }
 
     /**
+     * Operation: sendClick
+     *
+     * @param string $engineName Name of the engine.
+     * @param string $query The query that the user searched with.
+     * @param string $documentId The id of the document that was clicked on.
+     * @param string $requestId The request id returned in the meta tag of a search API response.
+     * @param string[] $tags Array of strings representing additional information you wish to track with the clickthrough.
+     *
+     * @return array
+     */
+    public function sendClick($engineName, $query, $documentId, $requestId = null, $tags = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'query' => $query,
+            'document_id' => $documentId,
+            'request_id' => $requestId,
+            'tags' => $tags,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('SendClick');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Operation: updateCuration
      *
      * @param string $engineName Name of the engine.
      * @param string $curationId Curation id.
-     * @param string[] $queries
-     * @param string[] $promoted
-     * @param string[] $hidden
+     * @param string[] $queries Curated queries.
+     * @param string[] $promoted Promoted doc ids.
+     * @param string[] $hidden Hidden doc ids.
      *
      * @return array
      */
