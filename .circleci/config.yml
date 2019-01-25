@@ -51,7 +51,7 @@ jobs:
         at: .
     - run:
         name: PHPCS
-        command: vendor/bin/phpcs --ignore=vendor,resources --standard=PSR2 .
+        command: vendor/bin/phpcs --ignore=vendor,resources --standard=PSR12 .
 
 workflows:
   version: 2

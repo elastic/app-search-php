@@ -23,6 +23,6 @@ class Builder
     {
         $className = sprintf("%s\\%s", __NAMESPACE__, $endpointName);
 
-        return new $className;
+        return new $className();
     }
 }
