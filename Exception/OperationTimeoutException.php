@@ -12,9 +12,9 @@ namespace Swiftype\AppSearch\Exception;
  * Exception raised when an HTTP operation timeout.
  *
  * @package Swiftype\AppSearch\Exception
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class OperationTimeoutException extends ConnectionException implements SwiftypeException
 {
-
 }

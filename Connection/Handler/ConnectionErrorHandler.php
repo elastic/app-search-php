@@ -18,6 +18,7 @@ use Swiftype\AppSearch\Exception\OperationTimeoutException;
  * This handler manage connections errors and throw comprehensive exceptions to the user.
  *
  * @package Swiftype\AppSearch\Connection\Handler
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ConnectionErrorHandler
@@ -30,7 +31,7 @@ class ConnectionErrorHandler
     /**
      * Constructor.
      *
-     * @param callable $handler Original handler.
+     * @param callable $handler original handler
      */
     public function __construct(callable $handler)
     {
@@ -40,14 +41,14 @@ class ConnectionErrorHandler
     /**
      * Proxy the response and throw an exception if a connection error is detected.
      *
-     * @param array $request Request.
+     * @param array $request request
      *
      * @return array
      */
     public function __invoke($request)
     {
         $response = Core::proxy(($this->handler)($request), function ($response) use ($request) {
-            if (isset($response['error']) === true) {
+            if (true === isset($response['error'])) {
                 throw $this->getConnectionErrorException($request, $response);
             }
 
@@ -60,15 +61,15 @@ class ConnectionErrorHandler
     /**
      * Process error to raised a more comprehensive exception.
      *
-     * @param array $request  Request.
-     * @param array $response Response.
+     * @param array $request  request
+     * @param array $response response
      *
      * @return ConnectionException
      */
     private function getConnectionErrorException($request, $response)
     {
         $exception = null;
-        $message   = $response['error']->getMessage();
+        $message = $response['error']->getMessage();
         $exception = new ConnectionException($message);
         if (isset($response['curl']['errno'])) {
             switch ($response['curl']['errno']) {

@@ -12,9 +12,9 @@ namespace Swiftype\AppSearch\Exception;
  * Exception thrown when something goes bad on the server.
  *
  * @package Swiftype\AppSearch\Exception
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ApiException extends ConnectionException implements SwiftypeException
 {
-
 }

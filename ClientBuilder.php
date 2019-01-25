@@ -16,6 +16,7 @@ use Swiftype\AppSearch\Exception\UnexpectedValueException;
  * Use this class to instantiate new client and all their dependencies.
  *
  * @package Swiftype\AppSearch
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ClientBuilder
@@ -55,10 +56,10 @@ class ClientBuilder
      */
     public function __construct()
     {
-        $this->handler    = new \GuzzleHttp\Ring\Client\CurlHandler();
+        $this->handler = new \GuzzleHttp\Ring\Client\CurlHandler();
         $this->serializer = new Serializer\SmartSerializer();
-        $this->logger     = new \Psr\Log\NullLogger();
-        $this->tracer     = new \Psr\Log\NullLogger();
+        $this->logger = new \Psr\Log\NullLogger();
+        $this->tracer = new \Psr\Log\NullLogger();
     }
 
     /**
@@ -98,20 +99,20 @@ class ClientBuilder
     public function setApiEndpoint($apiEndpoint)
     {
         $isValidEndpoint = false;
-        $testedEndpoint  = $apiEndpoint;
+        $testedEndpoint = $apiEndpoint;
 
         if (filter_var($testedEndpoint, FILTER_VALIDATE_URL)) {
             $isValidEndpoint = true;
         }
 
         if (!$isValidEndpoint) {
-            $testedEndpoint  = sprintf('https://%s', $testedEndpoint);
-            $isValidEndpoint = filter_var($testedEndpoint, FILTER_VALIDATE_URL) != false;
+            $testedEndpoint = sprintf('https://%s', $testedEndpoint);
+            $isValidEndpoint = false != filter_var($testedEndpoint, FILTER_VALIDATE_URL);
         }
 
         if (!$isValidEndpoint) {
-            $testedEndpoint  = sprintf('%s.%s', $testedEndpoint, "api.swiftype.com");
-            $isValidEndpoint = filter_var($testedEndpoint, FILTER_VALIDATE_URL) != false;
+            $testedEndpoint = sprintf('%s.%s', $testedEndpoint, 'api.swiftype.com');
+            $isValidEndpoint = false != filter_var($testedEndpoint, FILTER_VALIDATE_URL);
         }
 
         if (!$isValidEndpoint) {
@@ -155,7 +156,7 @@ class ClientBuilder
     /**
      * Instantiate the endpoint builder.
      *
-     * @return Endpoint\Builder.
+     * @return endpoint\Builder
      */
     private function endpointBuilder()
     {

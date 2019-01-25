@@ -12,9 +12,9 @@ namespace Swiftype\AppSearch\Exception;
  * Wrapper for connection exceptions raised by the client.
  *
  * @package Swiftype\AppSearch\Exception
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ConnectionException extends \Exception implements SwiftypeException
 {
-
 }

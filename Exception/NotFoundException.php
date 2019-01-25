@@ -12,9 +12,9 @@ namespace Swiftype\AppSearch\Exception;
  * Exception thrown when trying to access a resource that does not exists.
  *
  * @package Swiftype\AppSearch\Exception
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class NotFoundException extends ApiException implements SwiftypeException
 {
-
 }

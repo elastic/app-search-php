@@ -12,11 +12,12 @@ namespace Swiftype\AppSearch\Endpoint;
  * Implementation of the  endpoint.
  *
  * @package Swiftype\AppSearch\Endpoint
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class GetDocuments extends AbstractEndpoint
 {
-// phpcs:disable
+    // phpcs:disable
     /**
      * @var string
      */
@@ -30,5 +31,5 @@ class GetDocuments extends AbstractEndpoint
     protected $routeParams = ['engine_name'];
 
     protected $paramWhitelist = ['ids'];
-// phpcs:enable
+    // phpcs:enable
 }

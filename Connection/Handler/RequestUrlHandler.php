@@ -14,6 +14,7 @@ use GuzzleHttp\Ring\Core;
  * This handler add automatically all URIs data to the request.
  *
  * @package Swiftype\AppSearch\Connection\Handler
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RequestUrlHandler
@@ -41,7 +42,7 @@ class RequestUrlHandler
     /**
      * Constructor.
      *
-     * @param callable $handler     Original handler.
+     * @param callable $handler     original handler
      * @param string   $apiEndpoint API endpoint (eg. http://myserver/).
      */
     public function __construct(callable $handler, $apiEndpoint)
@@ -50,18 +51,18 @@ class RequestUrlHandler
 
         $urlComponents = parse_url($apiEndpoint);
 
-        $this->scheme  = $urlComponents['scheme'];
-        $this->host    = $urlComponents['host'];
+        $this->scheme = $urlComponents['scheme'];
+        $this->host = $urlComponents['host'];
 
         if (isset($urlComponents['port'])) {
-            $this->host = sprintf("%s:%s", $this->host, $urlComponents['port']);
+            $this->host = sprintf('%s:%s', $this->host, $urlComponents['port']);
         }
     }
 
     /**
      * Add host, scheme and uri prefix to the request before calling the original handler.
      *
-     * @param array $request Original request.
+     * @param array $request original request
      *
      * @return array
      */
@@ -69,7 +70,7 @@ class RequestUrlHandler
     {
         $request = Core::setHeader($request, 'host', [$this->host]);
         $request['scheme'] = $this->scheme;
-        $request['uri']    = $this->addURIPrefix($request['uri']);
+        $request['uri'] = $this->addURIPrefix($request['uri']);
 
         return ($this->handler)($request);
     }
@@ -83,6 +84,6 @@ class RequestUrlHandler
      */
     private function addURIPrefix($uri)
     {
-        return sprintf("%s%s", substr($uri, 0, 1) == "/" ? rtrim(self::URI_PREFIX, "/") : self::URI_PREFIX, $uri);
+        return sprintf('%s%s', '/' == substr($uri, 0, 1) ? rtrim(self::URI_PREFIX, '/') : self::URI_PREFIX, $uri);
     }
 }

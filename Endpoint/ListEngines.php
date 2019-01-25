@@ -12,11 +12,12 @@ namespace Swiftype\AppSearch\Endpoint;
  * Implementation of the  endpoint.
  *
  * @package Swiftype\AppSearch\Endpoint
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ListEngines extends AbstractEndpoint
 {
-// phpcs:disable
+    // phpcs:disable
     /**
      * @var string
      */
@@ -28,5 +29,5 @@ class ListEngines extends AbstractEndpoint
     protected $uri = '/engines';
 
     protected $paramWhitelist = ['page.current', 'page.size'];
-// phpcs:enable
+    // phpcs:enable
 }

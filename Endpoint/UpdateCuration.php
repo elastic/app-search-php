@@ -12,11 +12,12 @@ namespace Swiftype\AppSearch\Endpoint;
  * Implementation of the  endpoint.
  *
  * @package Swiftype\AppSearch\Endpoint
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class UpdateCuration extends AbstractEndpoint
 {
-// phpcs:disable
+    // phpcs:disable
     /**
      * @var string
      */
@@ -30,5 +31,5 @@ class UpdateCuration extends AbstractEndpoint
     protected $routeParams = ['engine_name', 'curation_id'];
 
     protected $paramWhitelist = ['queries', 'promoted', 'hidden'];
-// phpcs:enable
+    // phpcs:enable
 }

@@ -14,6 +14,7 @@ use Swiftype\AppSearch\Exception\JsonErrorException;
  * Default serializer used by the client.
  *
  * @package Swiftype\AppSearch\Serializer
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class SmartSerializer implements SerializerInterface
@@ -32,7 +33,7 @@ class SmartSerializer implements SerializerInterface
     }
 
     /**
-     * Serialize assoc array into JSON string
+     * Serialize assoc array into JSON string.
      *
      * @param string|array $data Assoc array to encode into JSON
      *
@@ -40,15 +41,15 @@ class SmartSerializer implements SerializerInterface
      */
     public function serialize($data)
     {
-        if (is_string($data) === true) {
+        if (true === is_string($data)) {
             return $data;
         } else {
-            if (version_compare($this->PHP_VERSION, '5.6.6', '<') || ! defined('JSON_PRESERVE_ZERO_FRACTION')) {
+            if (version_compare($this->PHP_VERSION, '5.6.6', '<') || !defined('JSON_PRESERVE_ZERO_FRACTION')) {
                 $data = json_encode($data);
             } else {
                 $data = json_encode($data, JSON_PRESERVE_ZERO_FRACTION);
             }
-            if ($data === '[]') {
+            if ('[]' === $data) {
                 return '{}';
             } else {
                 return $data;
@@ -58,18 +59,18 @@ class SmartSerializer implements SerializerInterface
 
     /**
      * Deserialize by introspecting content_type. Tries to deserialize JSON,
-     * otherwise returns string
+     * otherwise returns string.
      *
      * @throws JsonErrorException
      *
-     * @param string $data JSON encoded string
+     * @param string $data    JSON encoded string
      * @param array  $headers Response Headers
      *
      * @return array
      */
     public function deserialize($data, $headers)
     {
-        if (isset($headers['content_type']) === true && strpos($headers['content_type'], 'json') === false) {
+        if (true === isset($headers['content_type']) && false === strpos($headers['content_type'], 'json')) {
             return $data;
         }
 
@@ -87,13 +88,13 @@ class SmartSerializer implements SerializerInterface
      */
     private function decode($data)
     {
-        if ($data === null || strlen($data) === 0) {
-            return "";
+        if (null === $data || 0 === strlen($data)) {
+            return '';
         }
 
         $result = @json_decode($data, true);
 
-        if (json_last_error() !== JSON_ERROR_NONE && (error_reporting() & E_NOTICE) === E_NOTICE) {
+        if (JSON_ERROR_NONE !== json_last_error() && E_NOTICE === (error_reporting() & E_NOTICE)) {
             $e = new JsonErrorException(json_last_error(), $data, $result);
             throw $e;
         }

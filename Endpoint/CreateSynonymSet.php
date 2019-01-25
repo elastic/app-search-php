@@ -12,11 +12,12 @@ namespace Swiftype\AppSearch\Endpoint;
  * Implementation of the  endpoint.
  *
  * @package Swiftype\AppSearch\Endpoint
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class CreateSynonymSet extends AbstractEndpoint
 {
-// phpcs:disable
+    // phpcs:disable
     /**
      * @var string
      */
@@ -30,5 +31,5 @@ class CreateSynonymSet extends AbstractEndpoint
     protected $routeParams = ['engine_name'];
 
     protected $paramWhitelist = ['synonyms'];
-// phpcs:enable
+    // phpcs:enable
 }

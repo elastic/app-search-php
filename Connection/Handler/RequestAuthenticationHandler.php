@@ -14,6 +14,7 @@ use GuzzleHttp\Ring\Core;
  * This handler add automatically the API Key to the request.
  *
  * @package Swiftype\AppSearch\Connection\Handler
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RequestAuthenticationHandler
@@ -21,12 +22,12 @@ class RequestAuthenticationHandler
     /**
      * @var string
      */
-    private const HEADER_NAME = "Authorization";
+    private const HEADER_NAME = 'Authorization';
 
     /**
      * @var string
      */
-    private const HEADER_VALUE_PATTERN = "Bearer %s";
+    private const HEADER_VALUE_PATTERN = 'Bearer %s';
 
     /**
      * @var callable
@@ -41,26 +42,26 @@ class RequestAuthenticationHandler
     /**
      * Constructor.
      *
-     * @param callable $handler Original handler.
-     * @param string   $apiKey  API Key.
+     * @param callable $handler original handler
+     * @param string   $apiKey  API Key
      */
     public function __construct(callable $handler, $apiKey)
     {
         $this->handler = $handler;
-        $this->apiKey  = $apiKey;
+        $this->apiKey = $apiKey;
     }
 
     /**
      * Add API key before calling the original handler.
      *
-     * @param array $request Original request.
+     * @param array $request original request
      *
      * @return array
      */
     public function __invoke($request)
     {
         $headerValue = [sprintf(self::HEADER_VALUE_PATTERN, $this->apiKey)];
-        $request     = Core::setHeader($request, self::HEADER_NAME, $headerValue);
+        $request = Core::setHeader($request, self::HEADER_NAME, $headerValue);
 
         return ($this->handler)($request);
     }

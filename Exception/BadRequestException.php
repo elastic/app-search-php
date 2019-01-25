@@ -12,9 +12,9 @@ namespace Swiftype\AppSearch\Exception;
  * Exception thrown when something goes bad with the user request.
  *
  * @package Swiftype\AppSearch\Exception
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class BadRequestException extends ApiException implements SwiftypeException
 {
-
 }

@@ -16,6 +16,7 @@ use Swiftype\AppSearch\Serializer\SmartSerializer;
  * Unit tests for the request serialization handler.
  *
  * @package Swiftype\AppSearch\Test\Unit\Connection\Handler
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RequestSerializationHandlerTest extends TestCase
@@ -56,7 +57,7 @@ class RequestSerializationHandlerTest extends TestCase
             ],
             [
                 [],
-                null
+                null,
             ],
         ];
 

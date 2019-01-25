@@ -12,13 +12,14 @@ namespace Swiftype\AppSearch\Endpoint;
  * API endpoint interface.
  *
  * @package Swiftype\AppSearch
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 interface EndpointInterface
 {
     /**
      * HTTP method for the current endpoint.
-    *
+     *
      * @return string
      */
     public function getMethod();
@@ -33,21 +34,21 @@ interface EndpointInterface
     /**
      * Params data for the current endpoint.
      *
-     * @return null|string[]
+     * @return string[]|null
      */
     public function getParams();
 
     /**
      * Body content for the current endpoint.
      *
-     * @return null|array
+     * @return array|null
      */
     public function getBody();
 
     /**
      * Set body data for the endpoint.
      *
-     * @param array|null $body Body data.
+     * @param array|null $body body data
      *
      * @return $this
      */
@@ -56,7 +57,7 @@ interface EndpointInterface
     /**
      * Set params data for the endpoint.
      *
-     * @param array|null $params Params data.
+     * @param array|null $params params data
      *
      * @return $this
      */

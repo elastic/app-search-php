@@ -12,9 +12,9 @@ namespace Swiftype\AppSearch\Exception;
  * Exception raised when the client can not resolve the hostname specified.
  *
  * @package Swiftype\AppSearch\Exception
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class CouldNotResolveHostException extends ConnectionException implements SwiftypeException
 {
-
 }

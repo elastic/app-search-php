@@ -12,11 +12,12 @@ namespace Swiftype\AppSearch\Endpoint;
  * Implementation of the  endpoint.
  *
  * @package Swiftype\AppSearch\Endpoint
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class GetSchema extends AbstractEndpoint
 {
-// phpcs:disable
+    // phpcs:disable
     /**
      * @var string
      */
@@ -28,5 +29,5 @@ class GetSchema extends AbstractEndpoint
     protected $uri = '/engines/{engine_name}/schema';
 
     protected $routeParams = ['engine_name'];
-// phpcs:enable
+    // phpcs:enable
 }

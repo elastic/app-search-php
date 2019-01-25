@@ -16,6 +16,7 @@ use Swiftype\AppSearch\ClientBuilder;
  * Check the client builder is able to instantiate new clients.
  *
  * @package Swiftype\AppSearch\Test\Unit\Connection\Handler
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ClientBuilderTest extends TestCase
@@ -29,7 +30,7 @@ class ClientBuilderTest extends TestCase
      */
     public function testInstantiation($apiEndpoint)
     {
-        $client = ClientBuilder::create($apiEndpoint, "apiKey");
+        $client = ClientBuilder::create($apiEndpoint, 'apiKey');
         $this->assertInstanceOf(Client::class, $client);
     }
 
@@ -44,7 +45,7 @@ class ClientBuilderTest extends TestCase
      */
     public function testInvalidEndpoints($apiEndpoint)
     {
-        $client = ClientBuilder::create($apiEndpoint, "apiKey");
+        $client = ClientBuilder::create($apiEndpoint, 'apiKey');
         $this->assertInstanceOf(Client::class, $client);
     }
 
@@ -53,7 +54,7 @@ class ClientBuilderTest extends TestCase
      */
     public function validApiEndpoints()
     {
-        return [["https://test.com"], ["http://test.com"], ["http://test"], ["https://test"], ["test.com"], ["test"]];
+        return [['https://test.com'], ['http://test.com'], ['http://test'], ['https://test'], ['test.com'], ['test']];
     }
 
     /**
@@ -61,6 +62,6 @@ class ClientBuilderTest extends TestCase
      */
     public function invalidApiEndpoints()
     {
-        return [["test_"]];
+        return [['test_']];
     }
 }

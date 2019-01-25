@@ -17,6 +17,7 @@ use Swiftype\AppSearch\Serializer\SmartSerializer;
  * Unit tests for the response serialization handler.
  *
  * @package Swiftype\AppSearch\Test\Unit\Connection\Handler
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ResponseSerializationHandlerTest extends TestCase
@@ -48,7 +49,7 @@ class ResponseSerializationHandlerTest extends TestCase
         $serializer = $this->getSerializer();
         $data = [
             [$serializer->serialize(['foo' => 'bar']), ['foo' => 'bar']],
-            ['["foo", "bar"]', ["foo", "bar"]],
+            ['["foo", "bar"]', ['foo', 'bar']],
             ['{}', []],
             ['[]', []],
             // @todo : try invalid response and exception

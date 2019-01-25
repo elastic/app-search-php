@@ -15,6 +15,7 @@ use Swiftype\AppSearch\Connection\Handler\RequestAuthenticationHandler;
  * Unit tests for the authentication handler.
  *
  * @package Swiftype\AppSearch\Test\Unit\Connection\Handler
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RequestAuthenticationHandlerTest extends TestCase
@@ -28,9 +29,9 @@ class RequestAuthenticationHandlerTest extends TestCase
             return $request['headers'];
         };
 
-        $authenticationHandler = new RequestAuthenticationHandler($handler, "apiKey");
+        $authenticationHandler = new RequestAuthenticationHandler($handler, 'apiKey');
         $response = $authenticationHandler([]);
         $this->assertArrayHasKey('Authorization', $response);
-        $this->assertEquals("Bearer apiKey", current($response['Authorization']));
+        $this->assertEquals('Bearer apiKey', current($response['Authorization']));
     }
 }
