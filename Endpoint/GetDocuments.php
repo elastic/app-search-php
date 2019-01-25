@@ -14,19 +14,21 @@ namespace Swiftype\AppSearch\Endpoint;
  * @package Swiftype\AppSearch\Endpoint
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class CreateEngine extends AbstractEndpoint
+class GetDocuments extends AbstractEndpoint
 {
 // phpcs:disable
     /**
      * @var string
      */
-    protected $method = 'POST';
+    protected $method = 'GET';
 
     /**
      * @var string
      */
-    protected $uri = '/engines';
+    protected $uri = '/engines/{engine_name}/documents';
 
-    protected $paramWhitelist = ['name', 'language'];
+    protected $routeParams = ['engine_name'];
+
+    protected $paramWhitelist = ['ids'];
 // phpcs:enable
 }

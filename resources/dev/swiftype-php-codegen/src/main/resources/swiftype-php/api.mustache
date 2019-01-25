@@ -16,8 +16,9 @@ namespace {{package}};
  */
 class {{classname}} extends AbstractEndpoint
 {
-  {{#operations}}
-  {{#operation}}
+// phpcs:disable
+{{#operations}}
+{{#operation}}
     /**
      * @var string
      */
@@ -27,10 +28,15 @@ class {{classname}} extends AbstractEndpoint
      * @var string
      */
     protected $uri = '{{path}}';
+{{#pathParams.0}}
 
-    protected $routeParams    = [{{#pathParams}}'{{baseName}}'{{#hasMore}}, {{/hasMore}}{{/pathParams}}];
+    protected $routeParams = [{{#pathParams}}'{{baseName}}'{{#hasMore}}, {{/hasMore}}{{/pathParams}}];
+{{/pathParams.0}}
+{{#queryParams.0}}
 
     protected $paramWhitelist = [{{#queryParams}}'{{baseName}}'{{#hasMore}}, {{/hasMore}}{{/queryParams}}];
-  {{/operation}}
-  {{/operations}}
+{{/queryParams.0}}
+{{/operation}}
+{{/operations}}
+// phpcs:enable
 }

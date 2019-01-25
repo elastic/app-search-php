@@ -10,8 +10,10 @@ import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenType;
 import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.PhpClientCodegen;
+import org.openapitools.codegen.utils.ModelUtils;
 
 import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.media.Schema;
 
 public class SwiftypePhpGenerator extends PhpClientCodegen implements CodegenConfig {
 
@@ -65,6 +67,15 @@ public class SwiftypePhpGenerator extends PhpClientCodegen implements CodegenCon
 
     opList.add(co);
     operations.put(uniqueName, opList);
+  }
+
+  @Override
+  public String getTypeDeclaration(Schema p) {
+    if (ModelUtils.isObjectSchema(p)) {
+      return "array";
+    }
+
+    return super.getTypeDeclaration(p);
   }
 
   private void resetTemplateFiles() {

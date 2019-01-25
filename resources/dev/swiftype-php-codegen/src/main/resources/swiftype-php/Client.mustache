@@ -24,18 +24,38 @@ class Client
     /**
      * @var callable
      */
-    private $endpoint;
+    private $endpointBuilder;
 
+    /**
+     * Client constructor.
+     *
+     * @param callable              $endpointBuilder Allow to access endpoints.
+     * @param Connection\Connection $connection      HTTP connection handler.
+     */
     public function __construct(callable $endpointBuilder, Connection\Connection $connection)
     {
         $this->endpointBuilder = $endpointBuilder;
         $this->connection      = $connection;
     }
 
+    // phpcs:disable
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
-    public function {{operationId}}({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+    /**
+     * Operation: {{{operationId}}}
+     *
+{{#description}}
+     * {{.}}
+     *
+{{/description}}
+{{#allParams}}
+     * @param {{dataType}} ${{paramName}}{{#description}} {{description}}{{/description}}
+{{/allParams}}
+     *
+     * @return array
+     */
+    public function {{operationId}}({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}{{{.}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
-        {{#allParams.0}}
+{{#allParams.0}}
         $params = [
             {{#pathParams}}
             '{{baseName}}' => ${{paramName}},
@@ -44,19 +64,21 @@ class Client
             '{{baseName}}' => ${{paramName}},
             {{/queryParams}}
         ];
-        {{/allParams.0}}
+{{/allParams.0}}
 
         $endpoint = ($this->endpointBuilder)('{{classname}}');
-        {{#allParams.0}}
+{{#allParams.0}}
         $endpoint->setParams($params);
-        {{/allParams.0}}
-        {{#bodyParams.0}}
-        $endpoint->setBody($body);
-        {{/bodyParams.0}}
+{{/allParams.0}}
+{{#bodyParams.0}}
+        $endpoint->setBody($requestBody);
+{{/bodyParams.0}}
 
         return $this->performRequest($endpoint);
     }
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+    // phpcs:enable
+
     private function performRequest(Endpoint\EndpointInterface $endpoint)
     {
         $method  = $endpoint->getMethod();

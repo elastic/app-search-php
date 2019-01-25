@@ -24,19 +24,35 @@ class Client
     /**
      * @var callable
      */
-    private $endpoint;
+    private $endpointBuilder;
 
+    /**
+     * Client constructor.
+     *
+     * @param callable              $endpointBuilder Allow to access endpoints.
+     * @param Connection\Connection $connection      HTTP connection handler.
+     */
     public function __construct(callable $endpointBuilder, Connection\Connection $connection)
     {
         $this->endpointBuilder = $endpointBuilder;
         $this->connection      = $connection;
     }
 
+    // phpcs:disable
 
-    public function createEngine($name)
+    /**
+     * Operation: createEngine
+     *
+     * @param string $name Engine name.
+     * @param string $language Language code.
+     *
+     * @return array
+     */
+    public function createEngine($name, $language = null)
     {
         $params = [
             'name' => $name,
+            'language' => $language,
         ];
 
         $endpoint = ($this->endpointBuilder)('CreateEngine');
@@ -45,6 +61,34 @@ class Client
         return $this->performRequest($endpoint);
     }
 
+    /**
+     * Operation: deleteDocuments
+     *
+     * @param string $engineName Name of the engine.
+     * @param string[] $requestBody Documents update.
+     *
+     * @return array
+     */
+    public function deleteDocuments($engineName, $requestBody = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('DeleteDocuments');
+        $endpoint->setParams($params);
+        $endpoint->setBody($requestBody);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Operation: deleteEngine
+     *
+     * @param string $engineName Name of the engine.
+     *
+     * @return array
+     */
     public function deleteEngine($engineName)
     {
         $params = [
@@ -57,6 +101,34 @@ class Client
         return $this->performRequest($endpoint);
     }
 
+    /**
+     * Operation: getDocuments
+     *
+     * @param string $engineName Name of the engine.
+     * @param string[] $ids Documents ids.
+     *
+     * @return array
+     */
+    public function getDocuments($engineName, $ids)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'ids' => $ids,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('GetDocuments');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Operation: getEngine
+     *
+     * @param string $engineName Name of the engine.
+     *
+     * @return array
+     */
     public function getEngine($engineName)
     {
         $params = [
@@ -69,7 +141,15 @@ class Client
         return $this->performRequest($endpoint);
     }
 
-    public function indexDocuments($engineName, $body)
+    /**
+     * Operation: indexDocuments
+     *
+     * @param string $engineName Name of the engine.
+     * @param array[] $requestBody Indexed documents.
+     *
+     * @return array
+     */
+    public function indexDocuments($engineName, $requestBody = null)
     {
         $params = [
             'engine_name' => $engineName,
@@ -77,12 +157,43 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('IndexDocuments');
         $endpoint->setParams($params);
-        $endpoint->setBody($body);
+        $endpoint->setBody($requestBody);
 
         return $this->performRequest($endpoint);
     }
 
-    public function listEngines($pageCurrent, $pageSize)
+    /**
+     * Operation: listDocuments
+     *
+     * @param string $engineName Name of the engine.
+     * @param int $pageCurrent The current page.
+     * @param int $pageSize The number of results to show on each page.
+     *
+     * @return array
+     */
+    public function listDocuments($engineName, $pageCurrent = null, $pageSize = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'page.current' => $pageCurrent,
+            'page.size' => $pageSize,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('ListDocuments');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Operation: listEngines
+     *
+     * @param int $pageCurrent The current page.
+     * @param int $pageSize The number of results to show on each page.
+     *
+     * @return array
+     */
+    public function listEngines($pageCurrent = null, $pageSize = null)
     {
         $params = [
             'page.current' => $pageCurrent,
@@ -95,13 +206,60 @@ class Client
         return $this->performRequest($endpoint);
     }
 
-    public function search($engineName, $query, $pageCurrent, $pageSize)
+    /**
+     * Operation: multiSearch
+     *
+     * @param string $engineName Name of the engine.
+     * @param array[] $queries Array of search queries.
+     *
+     * @return array
+     */
+    public function multiSearch($engineName, $queries = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'queries' => $queries,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('MultiSearch');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Operation: search
+     *
+     * @param string $engineName Name of the engine.
+     * @param string $query Search query text.
+     * @param int $pageCurrent The current page.
+     * @param int $pageSize The number of results to show on each page.
+     * @param array[] $filters Search query filters.
+     * @param array[] $sort Search query sort orders.
+     * @param array[] $facets Search query facets.
+     * @param array[] $searchFields Search query fields and weights.
+     * @param array[] $boosts Search query boosts.
+     * @param array[] $group Search result group specification.
+     * @param array[] $resultFields Search result fields.
+     * @param string[] $analyticsTags Analytics tags for the current search.
+     *
+     * @return array
+     */
+    public function search($engineName, $query, $pageCurrent = null, $pageSize = null, $filters = null, $sort = null, $facets = null, $searchFields = null, $boosts = null, $group = null, $resultFields = null, $analyticsTags = null)
     {
         $params = [
             'engine_name' => $engineName,
             'query' => $query,
             'page.current' => $pageCurrent,
             'page.size' => $pageSize,
+            'filters' => $filters,
+            'sort' => $sort,
+            'facets' => $facets,
+            'search_fields' => $searchFields,
+            'boosts' => $boosts,
+            'group' => $group,
+            'result_fields' => $resultFields,
+            'analytics.tags' => $analyticsTags,
         ];
 
         $endpoint = ($this->endpointBuilder)('Search');
@@ -109,6 +267,29 @@ class Client
 
         return $this->performRequest($endpoint);
     }
+
+    /**
+     * Operation: updateDocuments
+     *
+     * @param string $engineName Name of the engine.
+     * @param array[] $requestBody Documents update.
+     *
+     * @return array
+     */
+    public function updateDocuments($engineName, $requestBody = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('UpdateDocuments');
+        $endpoint->setParams($params);
+        $endpoint->setBody($requestBody);
+
+        return $this->performRequest($endpoint);
+    }
+
+    // phpcs:enable
 
     private function performRequest(Endpoint\EndpointInterface $endpoint)
     {

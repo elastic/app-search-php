@@ -16,6 +16,7 @@ namespace Swiftype\AppSearch\Endpoint;
  */
 class Search extends AbstractEndpoint
 {
+// phpcs:disable
     /**
      * @var string
      */
@@ -26,7 +27,8 @@ class Search extends AbstractEndpoint
      */
     protected $uri = '/engines/{engine_name}/search';
 
-    protected $routeParams    = ['engine_name'];
+    protected $routeParams = ['engine_name'];
 
-    protected $paramWhitelist = ['query', 'page.current', 'page.size'];
+    protected $paramWhitelist = ['query', 'page.current', 'page.size', 'filters', 'sort', 'facets', 'search_fields', 'boosts', 'group', 'result_fields', 'analytics.tags'];
+// phpcs:enable
 }

@@ -16,6 +16,7 @@ namespace Swiftype\AppSearch\Endpoint;
  */
 class ListEngines extends AbstractEndpoint
 {
+// phpcs:disable
     /**
      * @var string
      */
@@ -26,7 +27,6 @@ class ListEngines extends AbstractEndpoint
      */
     protected $uri = '/engines';
 
-    protected $routeParams    = [];
-
     protected $paramWhitelist = ['page.current', 'page.size'];
+// phpcs:enable
 }
