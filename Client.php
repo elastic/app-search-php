@@ -62,6 +62,27 @@ class Client
     }
 
     /**
+     * Operation: createSynonymSet
+     *
+     * @param string $engineName Name of the engine.
+     * @param string[] $synonyms
+     *
+     * @return array
+     */
+    public function createSynonymSet($engineName, $synonyms)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'synonyms' => $synonyms,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('CreateSynonymSet');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Operation: deleteDocuments
      *
      * @param string $engineName Name of the engine.
@@ -96,6 +117,27 @@ class Client
         ];
 
         $endpoint = ($this->endpointBuilder)('DeleteEngine');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Operation: deleteSynonymSet
+     *
+     * @param string $engineName Name of the engine.
+     * @param string $synonymSetId Synonym set id.
+     *
+     * @return array
+     */
+    public function deleteSynonymSet($engineName, $synonymSetId)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'synonym_set_id' => $synonymSetId,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('DeleteSynonymSet');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -180,6 +222,27 @@ class Client
     }
 
     /**
+     * Operation: getSynonymSet
+     *
+     * @param string $engineName Name of the engine.
+     * @param string $synonymSetId Synonym set id.
+     *
+     * @return array
+     */
+    public function getSynonymSet($engineName, $synonymSetId)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'synonym_set_id' => $synonymSetId,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('GetSynonymSet');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Operation: indexDocuments
      *
      * @param string $engineName Name of the engine.
@@ -239,6 +302,29 @@ class Client
         ];
 
         $endpoint = ($this->endpointBuilder)('ListEngines');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Operation: listSynonyms
+     *
+     * @param string $engineName Name of the engine.
+     * @param int $pageCurrent The current page.
+     * @param int $pageSize The number of results to show on each page.
+     *
+     * @return array
+     */
+    public function listSynonyms($engineName, $pageCurrent = null, $pageSize = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'page.current' => $pageCurrent,
+            'page.size' => $pageSize,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('ListSynonyms');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
