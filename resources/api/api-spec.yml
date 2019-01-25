@@ -396,3 +396,110 @@ paths:
       responses:
         "application/json":
           description: "Delete operation result."
+
+  /engines/{engine_name}/curations:
+    get:
+      operationId: listCurations
+      tags:
+      - curations
+      parameters:
+      - $ref: "#/components/parameters/engineNameParam"
+      - $ref: "#/components/parameters/pageCurrent"
+      - $ref: "#/components/parameters/pageSize"
+      responses:
+       "application/json":
+         description: "List of curations."
+    post:
+     operationId: createCuration
+     tags:
+     - curations
+     parameters:
+     - $ref: "#/components/parameters/engineNameParam"
+     - name: queries
+       in: query
+       required: true
+       schema:
+         type: array
+         items:
+           type: string
+     - name: promoted
+       in: query
+       schema:
+         type: array
+         items:
+           type: string
+     - name: hidden
+       in: query
+       schema:
+         type: array
+         items:
+           type: string
+     responses:
+       "application/json":
+         description: "Curations data."
+
+  /engines/{engine_name}/curations/{curation_id}:
+    get:
+      operationId: getCuration
+      tags:
+      - curations
+      parameters:
+      - $ref: "#/components/parameters/engineNameParam"
+      - name: curation_id
+        in: path
+        description: Curation id.
+        required: true
+        schema:
+          type: string
+      responses:
+        "application/json":
+          description: "Curation data."
+    delete:
+      operationId: deleteCuration
+      tags:
+      - synonyms
+      parameters:
+      - $ref: "#/components/parameters/engineNameParam"
+      - name: curation_id
+        in: path
+        description: Curation id.
+        required: true
+        schema:
+          type: string
+      responses:
+        "application/json":
+          description: "Delete operation result."
+    put:
+      operationId: updateCuration
+      tags:
+      - synonyms
+      parameters:
+      - $ref: "#/components/parameters/engineNameParam"
+      - name: curation_id
+        in: path
+        description: Curation id.
+        required: true
+        schema:
+          type: string
+      - name: queries
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: promoted
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: hidden
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "application/json":
+          description: "Delete operation result."

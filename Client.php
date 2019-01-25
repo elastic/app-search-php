@@ -41,6 +41,31 @@ class Client
     // phpcs:disable
 
     /**
+     * Operation: createCuration
+     *
+     * @param string $engineName Name of the engine.
+     * @param string[] $queries
+     * @param string[] $promoted
+     * @param string[] $hidden
+     *
+     * @return array
+     */
+    public function createCuration($engineName, $queries, $promoted = null, $hidden = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'queries' => $queries,
+            'promoted' => $promoted,
+            'hidden' => $hidden,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('CreateCuration');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Operation: createEngine
      *
      * @param string $name Engine name.
@@ -77,6 +102,27 @@ class Client
         ];
 
         $endpoint = ($this->endpointBuilder)('CreateSynonymSet');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Operation: deleteCuration
+     *
+     * @param string $engineName Name of the engine.
+     * @param string $curationId Curation id.
+     *
+     * @return array
+     */
+    public function deleteCuration($engineName, $curationId)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'curation_id' => $curationId,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('DeleteCuration');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -138,6 +184,27 @@ class Client
         ];
 
         $endpoint = ($this->endpointBuilder)('DeleteSynonymSet');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Operation: getCuration
+     *
+     * @param string $engineName Name of the engine.
+     * @param string $curationId Curation id.
+     *
+     * @return array
+     */
+    public function getCuration($engineName, $curationId)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'curation_id' => $curationId,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('GetCuration');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -259,6 +326,29 @@ class Client
         $endpoint = ($this->endpointBuilder)('IndexDocuments');
         $endpoint->setParams($params);
         $endpoint->setBody($requestBody);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Operation: listCurations
+     *
+     * @param string $engineName Name of the engine.
+     * @param int $pageCurrent The current page.
+     * @param int $pageSize The number of results to show on each page.
+     *
+     * @return array
+     */
+    public function listCurations($engineName, $pageCurrent = null, $pageSize = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'page.current' => $pageCurrent,
+            'page.size' => $pageSize,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('ListCurations');
+        $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
     }
@@ -406,6 +496,33 @@ class Client
         ];
 
         $endpoint = ($this->endpointBuilder)('Search');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Operation: updateCuration
+     *
+     * @param string $engineName Name of the engine.
+     * @param string $curationId Curation id.
+     * @param string[] $queries
+     * @param string[] $promoted
+     * @param string[] $hidden
+     *
+     * @return array
+     */
+    public function updateCuration($engineName, $curationId, $queries, $promoted = null, $hidden = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'curation_id' => $curationId,
+            'queries' => $queries,
+            'promoted' => $promoted,
+            'hidden' => $hidden,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('UpdateCuration');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
