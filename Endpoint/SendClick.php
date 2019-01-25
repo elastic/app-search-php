@@ -12,11 +12,12 @@ namespace Swiftype\AppSearch\Endpoint;
  * Implementation of the  endpoint.
  *
  * @package Swiftype\AppSearch\Endpoint
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class SendClick extends AbstractEndpoint
 {
-// phpcs:disable
+    // phpcs:disable
     /**
      * @var string
      */
@@ -30,5 +31,5 @@ class SendClick extends AbstractEndpoint
     protected $routeParams = ['engine_name'];
 
     protected $paramWhitelist = ['query', 'document_id', 'request_id', 'tags'];
-// phpcs:enable
+    // phpcs:enable
 }

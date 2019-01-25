@@ -13,9 +13,10 @@ use PHPUnit\Framework\TestCase;
 use Swiftype\AppSearch\Connection\Handler\ConnectionErrorHandler;
 
 /**
- * Check connection error are turns into comprehensive exceptions by the handler
+ * Check connection error are turns into comprehensive exceptions by the handler.
  *
  * @package Swiftype\AppSearch\Test\Unit\Connection\Handler
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ConnectionErrornHandlerTest extends TestCase
@@ -27,7 +28,7 @@ class ConnectionErrornHandlerTest extends TestCase
      */
     public function testExceptionTypes($response, $exceptionClass, $exceptionMessage)
     {
-        if ($exceptionClass != null) {
+        if (null != $exceptionClass) {
             $this->expectException($exceptionClass);
             $this->expectExceptionMessage($exceptionMessage);
         }
@@ -40,7 +41,7 @@ class ConnectionErrornHandlerTest extends TestCase
 
         $handlerResponse = $handler([])->wait();
 
-        if ($exceptionClass == null) {
+        if (null == $exceptionClass) {
             $this->assertEquals($response, $handlerResponse);
         }
     }
@@ -52,29 +53,29 @@ class ConnectionErrornHandlerTest extends TestCase
     {
         $data = [
           [
-            ['error' => new \Exception("Unknown exception")],
+            ['error' => new \Exception('Unknown exception')],
             \Swiftype\AppSearch\Exception\ConnectionException::class,
-            "Unknown exception",
+            'Unknown exception',
           ],
           [
-            ['error' => new \Exception("Unknown exception"), 'curl' => []],
+            ['error' => new \Exception('Unknown exception'), 'curl' => []],
             \Swiftype\AppSearch\Exception\ConnectionException::class,
-            "Unknown exception",
+            'Unknown exception',
           ],
           [
-            ['error' => new \Exception("Could not resolve host"), 'curl' => ['errno' => CURLE_COULDNT_RESOLVE_HOST]],
+            ['error' => new \Exception('Could not resolve host'), 'curl' => ['errno' => CURLE_COULDNT_RESOLVE_HOST]],
             \Swiftype\AppSearch\Exception\CouldNotResolveHostException::class,
-            "Could not resolve host",
+            'Could not resolve host',
           ],
           [
-            ['error' => new \Exception("Could not connect to host"), 'curl' => ['errno' => CURLE_COULDNT_CONNECT]],
+            ['error' => new \Exception('Could not connect to host'), 'curl' => ['errno' => CURLE_COULDNT_CONNECT]],
             \Swiftype\AppSearch\Exception\CouldNotConnectToHostException::class,
-            "Could not connect to host",
+            'Could not connect to host',
           ],
           [
-            ['error' => new \Exception("Timeout exception"), 'curl' => ['errno' => CURLE_OPERATION_TIMEOUTED]],
+            ['error' => new \Exception('Timeout exception'), 'curl' => ['errno' => CURLE_OPERATION_TIMEOUTED]],
             \Swiftype\AppSearch\Exception\OperationTimeoutException::class,
-            "Timeout exception",
+            'Timeout exception',
           ],
           [
             ['foo' => 'bar'],

@@ -13,9 +13,10 @@ use PHPUnit\Framework\TestCase;
 use Swiftype\AppSearch\Connection\Handler\ApiErrorHandler;
 
 /**
- * Check API errors are turns into comprehensive exceptions by the handler
+ * Check API errors are turns into comprehensive exceptions by the handler.
  *
  * @package Swiftype\AppSearch\Test\Unit\Connection\Handler
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ApiErrorHandlerTest extends TestCase
@@ -27,7 +28,7 @@ class ApiErrorHandlerTest extends TestCase
      */
     public function testExceptionTypes($response, $exceptionClass, $exceptionMessage)
     {
-        if ($exceptionClass != null) {
+        if (null != $exceptionClass) {
             $this->expectException($exceptionClass);
             $this->expectExceptionMessage($exceptionMessage);
         }
@@ -40,7 +41,7 @@ class ApiErrorHandlerTest extends TestCase
 
         $handlerResponse = $handler([])->wait();
 
-        if ($exceptionClass == null) {
+        if (null == $exceptionClass) {
             $this->assertEquals($response, $handlerResponse);
         }
     }
@@ -52,6 +53,6 @@ class ApiErrorHandlerTest extends TestCase
     {
         $parser = new \Symfony\Component\Yaml\Parser();
 
-        return $parser->parseFile(__DIR__ . '/_data/apiError.yml');
+        return $parser->parseFile(__DIR__.'/_data/apiError.yml');
     }
 }

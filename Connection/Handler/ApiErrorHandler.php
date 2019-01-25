@@ -18,6 +18,7 @@ use Swiftype\AppSearch\Exception\NotFoundException;
  * This handler manage server side errors and throw comprehensive exceptions to the user.
  *
  * @package Swiftype\AppSearch\Connection\Handler
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ApiErrorHandler
@@ -30,7 +31,7 @@ class ApiErrorHandler
     /**
      * Constructor.
      *
-     * @param callable $handler Original handler.
+     * @param callable $handler original handler
      */
     public function __construct(callable $handler)
     {
@@ -40,7 +41,7 @@ class ApiErrorHandler
     /**
      * Proxy the response and throw an exception if a http error is detected.
      *
-     * @param array $request Request.
+     * @param array $request request
      *
      * @return array
      */
@@ -80,7 +81,7 @@ class ApiErrorHandler
      */
     private function getErrorMessage($response)
     {
-        $message = $response['reason'] ?? "Unexpected error.";
+        $message = $response['reason'] ?? 'Unexpected error.';
 
         if (!empty($response['body']['errors'])) {
             $message = $response['body']['errors'];
@@ -88,6 +89,6 @@ class ApiErrorHandler
             $message = $response['body']['error'];
         }
 
-        return is_array($message) ? implode(" ", $message) : $message;
+        return is_array($message) ? implode(' ', $message) : $message;
     }
 }

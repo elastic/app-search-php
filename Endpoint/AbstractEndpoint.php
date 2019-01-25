@@ -14,12 +14,13 @@ use Swiftype\AppSearch\Exception\UnexpectedValueException;
  * Abstract endpoint implementation.
  *
  * @package Swiftype\AppSearch\Endpoint
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 abstract class AbstractEndpoint implements EndpointInterface
 {
     /**
-     * @var  string
+     * @var string
      */
     protected $method;
 
@@ -44,7 +45,7 @@ abstract class AbstractEndpoint implements EndpointInterface
     protected $params = null;
 
     /**
-     * @var null|array
+     * @var array|null
      */
     protected $body = null;
 
@@ -117,16 +118,16 @@ abstract class AbstractEndpoint implements EndpointInterface
 
     private function checkParams($params)
     {
-        if ($params == null) {
+        if (null == $params) {
             return;
         }
 
-        $whitelist     = array_merge($this->paramWhitelist, $this->routeParams);
+        $whitelist = array_merge($this->paramWhitelist, $this->routeParams);
         $invalidParams = array_diff(array_keys($params), $whitelist);
-        $countInvalid  = count($invalidParams);
+        $countInvalid = count($invalidParams);
 
         if ($countInvalid > 0) {
-            $whitelist     = implode('", "', $whitelist);
+            $whitelist = implode('", "', $whitelist);
             $invalidParams = implode('", "', $invalidParams);
             $message = '"%s" is not a valid parameter. Allowed parameters are "%s".';
             if ($countInvalid > 1) {
@@ -143,9 +144,9 @@ abstract class AbstractEndpoint implements EndpointInterface
         foreach ($params as $key => $value) {
             $keyPath = explode('.', $key);
             if (count($keyPath) > 1) {
-                $suffix   = implode('.', array_slice($keyPath, 1));
-                $value    = $this->processParams([$suffix => $value]);
-                $params[$keyPath[0]] =  array_merge($params[$keyPath[0]] ?? [], $value);
+                $suffix = implode('.', array_slice($keyPath, 1));
+                $value = $this->processParams([$suffix => $value]);
+                $params[$keyPath[0]] = array_merge($params[$keyPath[0]] ?? [], $value);
                 unset($params[$key]);
             }
         }

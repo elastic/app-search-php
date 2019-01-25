@@ -15,6 +15,7 @@ use Swiftype\AppSearch\Connection\Handler\RequestUrlHandler;
  * Unit tests for the request url handler.
  *
  * @package Swiftype\AppSearch\Test\Unit\Connection\Handler
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RequestUrlHandlerTest extends TestCase
@@ -45,16 +46,16 @@ class RequestUrlHandlerTest extends TestCase
     public function urlDataProvider()
     {
         return [
-            ["http://test.com", "/foo", "/api/as/v1/foo", "test.com", "http"],
-            ["https://test.com", "/foo", "/api/as/v1/foo", "test.com", "https"],
-            ["https://test.com", "/", "/api/as/v1/", "test.com", "https"],
-            ["http://test.com", "/", "/api/as/v1/", "test.com", "http"],
-            ["https://test", "/", "/api/as/v1/", "test", "https"],
-            ["http://test", "/", "/api/as/v1/", "test", "http"],
-            ["https://test/foo", "/", "/api/as/v1/", "test", "https"],
-            ["http://test/foo", "/", "/api/as/v1/", "test", "http"],
-            ["http://localhost:3200/foo", "/", "/api/as/v1/", "localhost:3200", "http"],
-            ["https://localhost:3200/foo", "/", "/api/as/v1/", "localhost:3200", "https"],
+            ['http://test.com', '/foo', '/api/as/v1/foo', 'test.com', 'http'],
+            ['https://test.com', '/foo', '/api/as/v1/foo', 'test.com', 'https'],
+            ['https://test.com', '/', '/api/as/v1/', 'test.com', 'https'],
+            ['http://test.com', '/', '/api/as/v1/', 'test.com', 'http'],
+            ['https://test', '/', '/api/as/v1/', 'test', 'https'],
+            ['http://test', '/', '/api/as/v1/', 'test', 'http'],
+            ['https://test/foo', '/', '/api/as/v1/', 'test', 'https'],
+            ['http://test/foo', '/', '/api/as/v1/', 'test', 'http'],
+            ['http://localhost:3200/foo', '/', '/api/as/v1/', 'localhost:3200', 'http'],
+            ['https://localhost:3200/foo', '/', '/api/as/v1/', 'localhost:3200', 'https'],
         ];
     }
 }

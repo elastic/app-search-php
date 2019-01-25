@@ -12,6 +12,7 @@ namespace Swiftype\AppSearch\Tests\Integration;
  * Allow to load config from environnement variable.
  *
  * @package Swiftype\AppSearch\Test\Integration
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class Config

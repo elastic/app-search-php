@@ -12,11 +12,12 @@ namespace Swiftype\AppSearch\Endpoint;
  * Implementation of the  endpoint.
  *
  * @package Swiftype\AppSearch\Endpoint
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class Search extends AbstractEndpoint
 {
-// phpcs:disable
+    // phpcs:disable
     /**
      * @var string
      */
@@ -30,5 +31,5 @@ class Search extends AbstractEndpoint
     protected $routeParams = ['engine_name'];
 
     protected $paramWhitelist = ['query', 'page.current', 'page.size', 'filters', 'sort', 'facets', 'search_fields', 'boosts', 'group', 'result_fields', 'analytics.tags'];
-// phpcs:enable
+    // phpcs:enable
 }

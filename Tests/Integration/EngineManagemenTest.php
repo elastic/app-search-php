@@ -14,26 +14,27 @@ use Swiftype\AppSearch\ClientBuilder;
 
 /**
  * A basic test of the index management.
+ *
  * @todo : replace with better implementation.
  *
  * @package Swiftype\AppSearch\Test\Integration
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class EngineManagementTest extends TestCase
 {
-    private $engineName  = "test-engine";
-    private $docSamples  = [
-        ['id' => "678", "name" => "an indexed doc"],
-        ['id' => "671", "name" => "another doc"],
+    private $engineName = 'test-engine';
+    private $docSamples = [
+        ['id' => '678', 'name' => 'an indexed doc'],
+        ['id' => '671', 'name' => 'another doc'],
     ];
 
     public function setUp()
     {
         $config = new Config();
         $this->apiEndpoint = $config->getApiEndpoint();
-        $this->apiKey      = $config->getApiKey();
+        $this->apiKey = $config->getApiKey();
     }
-
 
     public function testClient()
     {

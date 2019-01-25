@@ -15,6 +15,7 @@ use Swiftype\AppSearch\Serializer\SerializerInterface;
  * Automatatic unserialization of the response.
  *
  * @package Swiftype\AppSearch\Connection\Handler
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RequestSerializationHandler
@@ -32,12 +33,12 @@ class RequestSerializationHandler
     /**
      * Constructor.
      *
-     * @param callable            $handler    Original handler.
-     * @param SerializerInterface $serializer Serialize.
+     * @param callable            $handler    original handler
+     * @param SerializerInterface $serializer serialize
      */
     public function __construct(callable $handler, SerializerInterface $serializer)
     {
-        $this->handler    = $handler;
+        $this->handler = $handler;
         $this->serializer = $serializer;
     }
 

@@ -12,11 +12,12 @@ namespace Swiftype\AppSearch\Endpoint;
  * Implementation of the  endpoint.
  *
  * @package Swiftype\AppSearch\Endpoint
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class DeleteSynonymSet extends AbstractEndpoint
 {
-// phpcs:disable
+    // phpcs:disable
     /**
      * @var string
      */
@@ -28,5 +29,5 @@ class DeleteSynonymSet extends AbstractEndpoint
     protected $uri = '/engines/{engine_name}/synonyms/{synonym_set_id}';
 
     protected $routeParams = ['engine_name', 'synonym_set_id'];
-// phpcs:enable
+    // phpcs:enable
 }

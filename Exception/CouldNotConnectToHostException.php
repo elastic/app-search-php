@@ -12,9 +12,9 @@ namespace Swiftype\AppSearch\Exception;
  * Exception raised when the client can not connect to the host specified.
  *
  * @package Swiftype\AppSearch\Exception
+ *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class CouldNotConnectToHostException extends ConnectionException implements SwiftypeException
 {
-
 }
