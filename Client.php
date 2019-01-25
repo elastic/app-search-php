@@ -161,6 +161,25 @@ class Client
     }
 
     /**
+     * Operation: getSearchSettings
+     *
+     * @param string $engineName Name of the engine.
+     *
+     * @return array
+     */
+    public function getSearchSettings($engineName)
+    {
+        $params = [
+            'engine_name' => $engineName,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('GetSearchSettings');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Operation: indexDocuments
      *
      * @param string $engineName Name of the engine.
@@ -247,6 +266,25 @@ class Client
     }
 
     /**
+     * Operation: resetSearchSettings
+     *
+     * @param string $engineName Name of the engine.
+     *
+     * @return array
+     */
+    public function resetSearchSettings($engineName)
+    {
+        $params = [
+            'engine_name' => $engineName,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('ResetSearchSettings');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Operation: search
      *
      * @param string $engineName Name of the engine.
@@ -323,6 +361,27 @@ class Client
         ];
 
         $endpoint = ($this->endpointBuilder)('UpdateSchema');
+        $endpoint->setParams($params);
+        $endpoint->setBody($requestBody);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Operation: updateSearchSettings
+     *
+     * @param string $engineName Name of the engine.
+     * @param array[] $requestBody Schema description.
+     *
+     * @return array
+     */
+    public function updateSearchSettings($engineName, $requestBody = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('UpdateSearchSettings');
         $endpoint->setParams($params);
         $endpoint->setBody($requestBody);
 

@@ -214,6 +214,45 @@ paths:
         "application/json":
           description: "Engine schema"
 
+  /engines/{engine_name}/search_settings:
+    get:
+      operationId: getSearchSettings
+      tags:
+      - search_settings
+      parameters:
+      - $ref: "#/components/parameters/engineNameParam"
+      responses:
+        "application/json":
+          description: "Search settings."
+    put:
+      operationId: updateSearchSettings
+      tags:
+      - search_settings
+      parameters:
+      - $ref: "#/components/parameters/engineNameParam"
+      requestBody:
+        description: Schema description.
+        content:
+          "*":
+            schema:
+              type: array
+              items:
+                type: object
+      responses:
+        "application/json":
+          description: "Search settings."
+
+  /engines/{engine_name}/search_settings/reset:
+    post:
+      operationId: resetSearchSettings
+      tags:
+      - search_settings
+      parameters:
+      - $ref: "#/components/parameters/engineNameParam"
+      responses:
+        "application/json":
+          description: "Search settings."
+
   /engines/{engine_name}/documents:
     get:
       operationId: getDocuments
