@@ -10,7 +10,9 @@ $finder = PhpCsFixer\Finder::create()
 return PhpCsFixer\Config::create()
     ->setRules([
         '@Symfony' => true,
-        'full_opening_tag' => false,
+        'phpdoc_no_package' => false,
+        'phpdoc_annotation_without_dot' => false,
+        'concat_space' => ['spacing' => 'one'],
     ])
     ->setFinder($finder)
 ;

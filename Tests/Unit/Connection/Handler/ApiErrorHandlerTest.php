@@ -53,6 +53,6 @@ class ApiErrorHandlerTest extends TestCase
     {
         $parser = new \Symfony\Component\Yaml\Parser();
 
-        return $parser->parseFile(__DIR__.'/_data/apiError.yml');
+        return $parser->parseFile(__DIR__ . '/_data/apiError.yml');
     }
 }

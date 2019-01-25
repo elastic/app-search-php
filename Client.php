@@ -30,8 +30,8 @@ class Client
     /**
      * Client constructor.
      *
-     * @param callable              $endpointBuilder allow to access endpoints
-     * @param Connection\Connection $connection      HTTP connection handler
+     * @param callable              $endpointBuilder Allow to access endpoints.
+     * @param Connection\Connection $connection      HTTP connection handler.
      */
     public function __construct(callable $endpointBuilder, Connection\Connection $connection)
     {
@@ -44,7 +44,7 @@ class Client
     /**
      * Operation: createCuration.
      *
-     * @param string   $engineName name of the engine
+     * @param string   $engineName Name of the engine.
      * @param string[] $queries
      * @param string[] $promoted
      * @param string[] $hidden
@@ -69,8 +69,8 @@ class Client
     /**
      * Operation: createEngine.
      *
-     * @param string $name     engine name
-     * @param string $language language code
+     * @param string $name     Engine name.
+     * @param string $language Language code.
      *
      * @return array
      */
@@ -90,7 +90,7 @@ class Client
     /**
      * Operation: createSynonymSet.
      *
-     * @param string   $engineName name of the engine
+     * @param string   $engineName Name of the engine.
      * @param string[] $synonyms
      *
      * @return array
@@ -111,8 +111,8 @@ class Client
     /**
      * Operation: deleteCuration.
      *
-     * @param string $engineName name of the engine
-     * @param string $curationId curation id
+     * @param string $engineName Name of the engine.
+     * @param string $curationId Curation id.
      *
      * @return array
      */
@@ -132,8 +132,8 @@ class Client
     /**
      * Operation: deleteDocuments.
      *
-     * @param string   $engineName  name of the engine
-     * @param string[] $requestBody documents update
+     * @param string   $engineName  Name of the engine.
+     * @param string[] $requestBody Documents update.
      *
      * @return array
      */
@@ -153,7 +153,7 @@ class Client
     /**
      * Operation: deleteEngine.
      *
-     * @param string $engineName name of the engine
+     * @param string $engineName Name of the engine.
      *
      * @return array
      */
@@ -172,8 +172,8 @@ class Client
     /**
      * Operation: deleteSynonymSet.
      *
-     * @param string $engineName   name of the engine
-     * @param string $synonymSetId synonym set id
+     * @param string $engineName   Name of the engine.
+     * @param string $synonymSetId Synonym set id.
      *
      * @return array
      */
@@ -193,8 +193,8 @@ class Client
     /**
      * Operation: getCuration.
      *
-     * @param string $engineName name of the engine
-     * @param string $curationId curation id
+     * @param string $engineName Name of the engine.
+     * @param string $curationId Curation id.
      *
      * @return array
      */
@@ -214,8 +214,8 @@ class Client
     /**
      * Operation: getDocuments.
      *
-     * @param string   $engineName name of the engine
-     * @param string[] $ids        documents ids
+     * @param string   $engineName Name of the engine.
+     * @param string[] $ids        Documents ids.
      *
      * @return array
      */
@@ -235,7 +235,7 @@ class Client
     /**
      * Operation: getEngine.
      *
-     * @param string $engineName name of the engine
+     * @param string $engineName Name of the engine.
      *
      * @return array
      */
@@ -254,7 +254,7 @@ class Client
     /**
      * Operation: getSchema.
      *
-     * @param string $engineName name of the engine
+     * @param string $engineName Name of the engine.
      *
      * @return array
      */
@@ -273,7 +273,7 @@ class Client
     /**
      * Operation: getSearchSettings.
      *
-     * @param string $engineName name of the engine
+     * @param string $engineName Name of the engine.
      *
      * @return array
      */
@@ -292,8 +292,8 @@ class Client
     /**
      * Operation: getSynonymSet.
      *
-     * @param string $engineName   name of the engine
-     * @param string $synonymSetId synonym set id
+     * @param string $engineName   Name of the engine.
+     * @param string $synonymSetId Synonym set id.
      *
      * @return array
      */
@@ -313,8 +313,8 @@ class Client
     /**
      * Operation: indexDocuments.
      *
-     * @param string  $engineName  name of the engine
-     * @param array[] $requestBody indexed documents
+     * @param string  $engineName  Name of the engine.
+     * @param array[] $requestBody Indexed documents.
      *
      * @return array
      */
@@ -334,9 +334,9 @@ class Client
     /**
      * Operation: listCurations.
      *
-     * @param string $engineName  name of the engine
-     * @param int    $pageCurrent the current page
-     * @param int    $pageSize    the number of results to show on each page
+     * @param string $engineName  Name of the engine.
+     * @param int    $pageCurrent The current page.
+     * @param int    $pageSize    The number of results to show on each page.
      *
      * @return array
      */
@@ -357,9 +357,9 @@ class Client
     /**
      * Operation: listDocuments.
      *
-     * @param string $engineName  name of the engine
-     * @param int    $pageCurrent the current page
-     * @param int    $pageSize    the number of results to show on each page
+     * @param string $engineName  Name of the engine.
+     * @param int    $pageCurrent The current page.
+     * @param int    $pageSize    The number of results to show on each page.
      *
      * @return array
      */
@@ -380,8 +380,8 @@ class Client
     /**
      * Operation: listEngines.
      *
-     * @param int $pageCurrent the current page
-     * @param int $pageSize    the number of results to show on each page
+     * @param int $pageCurrent The current page.
+     * @param int $pageSize    The number of results to show on each page.
      *
      * @return array
      */
@@ -401,9 +401,9 @@ class Client
     /**
      * Operation: listSynonyms.
      *
-     * @param string $engineName  name of the engine
-     * @param int    $pageCurrent the current page
-     * @param int    $pageSize    the number of results to show on each page
+     * @param string $engineName  Name of the engine.
+     * @param int    $pageCurrent The current page.
+     * @param int    $pageSize    The number of results to show on each page.
      *
      * @return array
      */
@@ -424,8 +424,8 @@ class Client
     /**
      * Operation: multiSearch.
      *
-     * @param string  $engineName name of the engine
-     * @param array[] $queries    array of search queries
+     * @param string  $engineName Name of the engine.
+     * @param array[] $queries    Array of search queries.
      *
      * @return array
      */
@@ -445,7 +445,7 @@ class Client
     /**
      * Operation: resetSearchSettings.
      *
-     * @param string $engineName name of the engine
+     * @param string $engineName Name of the engine.
      *
      * @return array
      */
@@ -464,18 +464,18 @@ class Client
     /**
      * Operation: search.
      *
-     * @param string   $engineName    name of the engine
-     * @param string   $query         search query text
-     * @param int      $pageCurrent   the current page
-     * @param int      $pageSize      the number of results to show on each page
-     * @param array[]  $filters       search query filters
-     * @param array[]  $sort          search query sort orders
-     * @param array[]  $facets        search query facets
-     * @param array[]  $searchFields  search query fields and weights
-     * @param array[]  $boosts        search query boosts
-     * @param array[]  $group         search result group specification
-     * @param array[]  $resultFields  search result fields
-     * @param string[] $analyticsTags analytics tags for the current search
+     * @param string   $engineName    Name of the engine.
+     * @param string   $query         Search query text.
+     * @param int      $pageCurrent   The current page.
+     * @param int      $pageSize      The number of results to show on each page.
+     * @param array[]  $filters       Search query filters.
+     * @param array[]  $sort          Search query sort orders.
+     * @param array[]  $facets        Search query facets.
+     * @param array[]  $searchFields  Search query fields and weights.
+     * @param array[]  $boosts        Search query boosts.
+     * @param array[]  $group         Search result group specification.
+     * @param array[]  $resultFields  Search result fields.
+     * @param string[] $analyticsTags Analytics tags for the current search.
      *
      * @return array
      */
@@ -505,11 +505,11 @@ class Client
     /**
      * Operation: sendClick.
      *
-     * @param string   $engineName name of the engine
-     * @param string   $query      the query that the user searched with
-     * @param string   $documentId the id of the document that was clicked on
-     * @param string   $requestId  the request id returned in the meta tag of a search API response
-     * @param string[] $tags       array of strings representing additional information you wish to track with the clickthrough
+     * @param string   $engineName Name of the engine.
+     * @param string   $query      The query that the user searched with.
+     * @param string   $documentId The id of the document that was clicked on.
+     * @param string   $requestId  The request id returned in the meta tag of a search API response.
+     * @param string[] $tags       Array of strings representing additional information you wish to track with the clickthrough.
      *
      * @return array
      */
@@ -532,11 +532,11 @@ class Client
     /**
      * Operation: updateCuration.
      *
-     * @param string   $engineName name of the engine
-     * @param string   $curationId curation id
-     * @param string[] $queries    curated queries
-     * @param string[] $promoted   promoted doc ids
-     * @param string[] $hidden     hidden doc ids
+     * @param string   $engineName Name of the engine.
+     * @param string   $curationId Curation id.
+     * @param string[] $queries    Curated queries.
+     * @param string[] $promoted   Promoted doc ids.
+     * @param string[] $hidden     Hidden doc ids.
      *
      * @return array
      */
@@ -559,8 +559,8 @@ class Client
     /**
      * Operation: updateDocuments.
      *
-     * @param string  $engineName  name of the engine
-     * @param array[] $requestBody documents update
+     * @param string  $engineName  Name of the engine.
+     * @param array[] $requestBody Documents update.
      *
      * @return array
      */
@@ -580,8 +580,8 @@ class Client
     /**
      * Operation: updateSchema.
      *
-     * @param string  $engineName  name of the engine
-     * @param array[] $requestBody schema description
+     * @param string  $engineName  Name of the engine.
+     * @param array[] $requestBody Schema description.
      *
      * @return array
      */
@@ -601,8 +601,8 @@ class Client
     /**
      * Operation: updateSearchSettings.
      *
-     * @param string  $engineName  name of the engine
-     * @param array[] $requestBody schema description
+     * @param string  $engineName  Name of the engine.
+     * @param array[] $requestBody Schema description.
      *
      * @return array
      */
