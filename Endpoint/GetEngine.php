@@ -16,6 +16,7 @@ namespace Swiftype\AppSearch\Endpoint;
  */
 class GetEngine extends AbstractEndpoint
 {
+// phpcs:disable
     /**
      * @var string
      */
@@ -26,7 +27,6 @@ class GetEngine extends AbstractEndpoint
      */
     protected $uri = '/engines/{engine_name}';
 
-    protected $routeParams    = ['engine_name'];
-
-    protected $paramWhitelist = [];
+    protected $routeParams = ['engine_name'];
+// phpcs:enable
 }

@@ -14,7 +14,7 @@ namespace Swiftype\AppSearch\Endpoint;
  * @package Swiftype\AppSearch\Endpoint
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class CreateEngine extends AbstractEndpoint
+class MultiSearch extends AbstractEndpoint
 {
 // phpcs:disable
     /**
@@ -25,8 +25,10 @@ class CreateEngine extends AbstractEndpoint
     /**
      * @var string
      */
-    protected $uri = '/engines';
+    protected $uri = '/engines/{engine_name}/multi_search';
 
-    protected $paramWhitelist = ['name', 'language'];
+    protected $routeParams = ['engine_name'];
+
+    protected $paramWhitelist = ['queries'];
 // phpcs:enable
 }
