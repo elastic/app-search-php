@@ -145,7 +145,7 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('DeleteDocuments');
         $endpoint->setParams($params);
-        $endpoint->setBody($requestBody);
+        $endpoint->setBody(requestBody);
 
         return $this->performRequest($endpoint);
     }
@@ -326,7 +326,7 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('IndexDocuments');
         $endpoint->setParams($params);
-        $endpoint->setBody($requestBody);
+        $endpoint->setBody(requestBody);
 
         return $this->performRequest($endpoint);
     }
@@ -572,7 +572,7 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('UpdateDocuments');
         $endpoint->setParams($params);
-        $endpoint->setBody($requestBody);
+        $endpoint->setBody(requestBody);
 
         return $this->performRequest($endpoint);
     }
@@ -593,7 +593,7 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('UpdateSchema');
         $endpoint->setParams($params);
-        $endpoint->setBody($requestBody);
+        $endpoint->setBody(requestBody);
 
         return $this->performRequest($endpoint);
     }
@@ -614,7 +614,7 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('UpdateSearchSettings');
         $endpoint->setParams($params);
-        $endpoint->setBody($requestBody);
+        $endpoint->setBody(requestBody);
 
         return $this->performRequest($endpoint);
     }

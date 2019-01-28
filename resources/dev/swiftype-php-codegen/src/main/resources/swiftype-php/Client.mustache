@@ -71,7 +71,7 @@ class Client
         $endpoint->setParams($params);
 {{/allParams.0}}
 {{#bodyParams.0}}
-        $endpoint->setBody($requestBody);
+        $endpoint->setBody({{paramName}});
 {{/bodyParams.0}}
 
         return $this->performRequest($endpoint);
