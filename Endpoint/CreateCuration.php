@@ -29,7 +29,5 @@ class CreateCuration extends AbstractEndpoint
     protected $uri = '/engines/{engine_name}/curations';
 
     protected $routeParams = ['engine_name'];
-
-    protected $paramWhitelist = ['queries', 'promoted', 'hidden'];
     // phpcs:enable
 }

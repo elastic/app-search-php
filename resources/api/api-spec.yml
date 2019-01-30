@@ -6,21 +6,503 @@ info:
   version: "1.0"
 
 components:
+
+  # Reusable schemas definitions -----------------------------------------------
+  schemas:
+    simpleObject:
+      type: object
+
+    pageListParams:
+      type: object
+      properties:
+        current:
+          type: integer
+        size:
+          type: integer
+
+    listParams:
+      type: object
+      properties:
+        page:
+          $ref: "#/components/schemas/pageListParams"
+
+    pageListMeta:
+      allOf:
+      - $ref: "#/components/schemas/pageListParams"
+      - type: object
+        properties:
+          total_results:
+            type: integer
+          total_pages:
+            type: integer
+
+    listMeta:
+      type: object
+      properties:
+        page:
+          $ref: "#/components/schemas/pageListMeta"
+
+    engine:
+      type: object
+      required:
+      - name
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        language:
+          type: string
+
+    engineList:
+      type: array
+      items:
+        $ref: "#/components/schemas/engine"
+
+    engineListResponse:
+      type: object
+      properties:
+        meta:
+          $ref: "#/components/schemas/pageListMeta"
+        results:
+          $ref: "#/components/schemas/engineList"
+
+    documentFieldValue:
+      anyOf:
+      - type: string
+      - type: number
+      - type: array
+        items:
+          anyOf:
+          - type: string
+          - type: number
+
+    document:
+      type: object
+      properties:
+        id:
+          type: string
+      additionalProperties:
+        $ref: "#/components/schemas/documentFieldValue"
+
+    documentList:
+      type: array
+      items:
+        $ref: "#/components/schemas/document"
+
+    documentIds:
+      type: array
+      items:
+        type: string
+
+    documentListResponse:
+      type: object
+      properties:
+        meta:
+          $ref: "#/components/schemas/pageListMeta"
+        results:
+          $ref: "#/components/schemas/documentList"
+
+    documentsIndexingResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          errors:
+            type: array
+            items:
+              type: string
+
+    documentsDeleteResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          deleted:
+            type: boolean
+
+    searchSimpleFilterValue:
+      anyOf:
+      - type: string
+      - type: number
+
+    searchFilterValue:
+      anyOf:
+      - $ref: "#/components/schemas/searchSimpleFilterValue"
+      - type: array
+        items:
+          $ref: "#/components/schemas/searchSimpleFilterValue"
+      - type: object
+        additionalProperties: false
+        minProperties: 1
+        properties:
+          from:
+            $ref: "#/components/schemas/searchSimpleFilterValue"
+          to:
+            $ref: "#/components/schemas/searchSimpleFilterValue"
+      - type: object
+        additionalProperties: false
+        minProperties: 1
+        properties:
+          center:
+            type: string
+          distance:
+            type: number
+          unit:
+            type: string
+
+    searchFilterList:
+      type: array
+      items:
+        $ref: "#/components/schemas/searchFilters"
+
+    searchFilters:
+      type: object
+      minProperties: 1
+      maxProperties: 1
+      properties:
+        any:
+          $ref: "#/components/schemas/searchFilterList"
+        all:
+          $ref: "#/components/schemas/searchFilterList"
+        none:
+          $ref: "#/components/schemas/searchFilterList"
+      additionalProperties:
+        $ref: "#/components/schemas/searchFilters"
+
+    searchFields:
+      type: object
+      additionalProperties:
+        type: object
+        additionalProperties: false
+        properties:
+          weight:
+            type: integer
+
+    searchResultFields:
+      type: array
+      items:
+        type: object
+        properties:
+          raw:
+            type: object
+            properties:
+              size:
+                type: integer
+          snippet:
+            type: object
+            properties:
+              size:
+                type: integer
+              fallback:
+                type: boolean
+
+    searchSimpleSortOrder:
+      type: object
+      minProperties: 1
+      maxProperties: 1
+      additionalProperties:
+        type: string
+        enum: ['asc', 'desc']
+
+    searchSortOrder:
+      anyOf:
+      - $ref: "#/components/schemas/searchSimpleSortOrder"
+      - type: array
+        items:
+          $ref: "#/components/schemas/searchSimpleSortOrder"
+
+    searchValueFacetParams:
+      type: object
+      additionalProperties: false
+      required:
+      - type
+      properties:
+        type:
+          type: string
+        size:
+          type: integer
+        sort:
+          $ref: "#/components/schemas/searchSimpleSortOrder"
+
+    searchRangeFacetParams:
+      type: object
+      additionalProperties: false
+      required:
+      - type
+      properties:
+        type:
+          type: string
+        ranges:
+          type: array
+          items:
+            type: object
+            properties:
+              from:
+                $ref: "#/components/schemas/searchSimpleFilterValue"
+              to:
+                $ref: "#/components/schemas/searchSimpleFilterValue"
+              name:
+                type: string
+
+    searchGeoRangeFacetParams:
+      type: object
+      additionalProperties: false
+      required:
+      - type
+      - center
+      - unit
+      properties:
+        type:
+          type: string
+        center:
+          type: string
+        unit:
+          type: string
+        ranges:
+          type: array
+          items:
+            type: object
+            properties:
+              from:
+                $ref: "#/components/schemas/searchSimpleFilterValue"
+              to:
+                $ref: "#/components/schemas/searchSimpleFilterValue"
+              name:
+                type: string
+
+    searchFacetParams:
+      anyOf:
+      - $ref: "#/components/schemas/searchValueFacetParams"
+      - $ref: "#/components/schemas/searchRangeFacetParams"
+      - $ref: "#/components/schemas/searchGeoRangeFacetParams"
+
+    searchFacets:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          $ref: "#/components/schemas/searchFacetParams"
+
+    searchBoostParams:
+      anyOf:
+      - type: object
+        additionalProperties: false
+        properties:
+          type:
+            type: string
+          value:
+            anyOf:
+            - $ref: "#/components/schemas/searchSimpleFilterValue"
+            - type: array
+              items:
+                $ref: "#/components/schemas/searchSimpleFilterValue"
+          operation:
+            type: string
+          factor:
+            type: number
+      - type: object
+        additionalProperties: false
+        properties:
+          type:
+            type: string
+          function:
+            type: string
+          operation:
+            type: string
+          factor:
+            type: number
+      - type: object
+        additionalProperties: false
+        properties:
+          type:
+            type: string
+          center:
+            type: string
+          operation:
+            type: string
+          factor:
+            type: number
+
+    searchBoosts:
+      type: object
+      additionalProperties:
+        anyOf:
+        - $ref: "#/components/schemas/searchBoostParams"
+        - type: array
+          items:
+            $ref: "#/components/schemas/searchBoostParams"
+
+    searchGroup:
+      type: object
+      required:
+      - field
+      properties:
+        field:
+          type: string
+        size:
+          type: integer
+        sort:
+          $ref: "#/components/schemas/searchSimpleSortOrder"
+
+    searchRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - query
+      properties:
+        query:
+          type: string
+        page:
+          $ref: "#/components/schemas/pageListParams"
+        filters:
+          $ref: "#/components/schemas/searchFilters"
+        facets:
+          $ref: "#/components/schemas/searchFacets"
+        search_fields:
+          $ref: "#/components/schemas/searchFields"
+        boost:
+          $ref: "#/components/schemas/searchBoosts"
+        result_fields:
+          $ref: "#/components/schemas/searchResultFields"
+        sort:
+          $ref: "#/components/schemas/searchSortOrder"
+        group:
+          $ref: "#/components/schemas/searchGroup"
+        analytics:
+          type: object
+          properties:
+            tags:
+              type: array
+              items:
+                type: string
+
+    searchResponse:
+      type: object
+      # TODO
+
+    searchRequestList:
+      type: array
+      items:
+        $ref: "#/components/schemas/searchRequest"
+
+    searchResponseList:
+      type: array
+      items:
+        $ref: "#/components/schemas/searchResponse"
+
+    schemaData:
+      type: object
+      additionalProperties:
+        type: string
+
+    searchSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        search_fields:
+          $ref: "#/components/schemas/searchFields"
+        boosts:
+          $ref: "#/components/schemas/searchBoosts"
+
+    synonymSetData:
+      type: object
+      additionalProperties: false
+      required:
+      - synonyms
+      properties:
+        synonyms:
+          type: array
+          items:
+            type: string
+
+    synonymSet:
+      allOf:
+      - $ref: "#/components/schemas/synonymSetData"
+      - type: object
+        properties:
+          id:
+            type: string
+
+    synonymSetList:
+      type: array
+      items:
+        $ref: "#/components/schemas/synonymSet"
+
+    synonymSetListResponse:
+      type: object
+      properties:
+        meta:
+          $ref: "#/components/schemas/pageListMeta"
+        results:
+          $ref: "#/components/schemas/documentList"
+
+    curationData:
+      allOf:
+      - type: object
+        required:
+        - queries
+        properties:
+          queries:
+            type: array
+            items:
+              type: string
+      - anyOf:
+        - type: object
+          required: [promoted]
+          properties:
+            promoted:
+              $ref: "#/components/schemas/documentIds"
+        - type: object
+          required: [hidden]
+          properties:
+            hidden:
+              $ref: "#/components/schemas/documentIds"
+
+    curation:
+      allOf:
+      - type: object
+        properties:
+          id:
+            type: string
+      - $ref: "#/components/schemas/curationData"
+
+    curationList:
+      type: array
+      items:
+        $ref: "#/components/schemas/curation"
+
+    curationResponse:
+      type: object
+      properties:
+        meta:
+          $ref: "#/components/schemas/pageListMeta"
+        results:
+          $ref: "#/components/schemas/curationList"
+
+    clickData:
+      type: object
+      additionalProperties: false
+      required:
+      - query
+      - document_id
+      properties:
+        query:
+          type: string
+        document_id:
+          type: string
+        request_id:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+
+  # Reusable parameters definitions --------------------------------------------
   parameters:
-    pageCurrent:
-      name: page.current
-      in: query
-      description: The current page.
-      schema:
-        type: integer
-        format: int32
-    pageSize:
-      name: page.size
-      in: query
-      description: The number of results to show on each page.
-      schema:
-        type: integer
-        format: int32
     engineNameParam:
       name: engine_name
       in: path
@@ -29,515 +511,569 @@ components:
       schema:
         type: string
 
+    synonymSetId:
+      name: synonym_set_id
+      in: path
+      description: Synonym set id.
+      required: true
+      schema:
+        type: string
+
+    curationId:
+      name: curation_id
+      in: path
+      description: Curation id.
+      required: true
+      schema:
+        type: string
+
+  # Reusable request bodies ----------------------------------------------------
+  requestBodies:
+    listParamsRequest:
+      description: Listing params (include page[current] and page[size]).
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/listParams"
+
+    engineRequest:
+      required: true
+      description: Engine data.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/engine"
+
+    documentIdsRequest:
+      required: true
+      description: List of document ids.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/documentIds"
+
+    documentListRequest :
+      required: true
+      description: List of documents.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/documentList"
+
+    searchRequest:
+      required: true
+      description: Search request.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/searchRequest"
+
+    multiSearchRequest:
+      required: true
+      description: Array of search requests.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/searchRequestList"
+
+    schemaRequest:
+      required: true
+      description: Schema description.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/schemaData"
+
+    searchSettingsRequest:
+      required: true
+      description: Search settings.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/searchSettings"
+
+    synonymSetRequest:
+      required: true
+      description: Synonym set data.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/synonymSetData"
+
+    curationRequest:
+      required: true
+      description: Curation data.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/curationData"
+
+    clickRequest:
+      required: true
+      description: Click data (include query text and document id).
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/clickData"
+
+  # Cross API reusable response bodies -----------------------------------------
+  responses:
+    jsonResponse:
+      description: A simple JSON response.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/simpleObject"
+
+    engineListResponse:
+      description: List of available engines.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/engineListResponse"
+
+    engineResponse:
+      description: Engine data.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/engine"
+
+    documentListResponse:
+      description: "Document list."
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/documentListResponse"
+
+    searchResponse:
+      description: "Search response."
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/searchResponse"
+
+    multiSearchResponse:
+      description: "Multi search response."
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/searchResponseList"
+
+    documentsIndexingResponse:
+      description: "Indexing response"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/documentsIndexingResponse"
+
+    documentsDeleteResponse:
+      description: "Delete response"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/documentsDeleteResponse"
+
+    schemaResponse:
+      description: "Engine schema."
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/schemaData"
+
+    searchSettingsResponse:
+      description: "Engine search settings."
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/searchSettings"
+
+    synonymSetResponse:
+      description: "Synonym set."
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/synonymSet"
+
+    synonymSetListResponse:
+      description: "Synonym sets list."
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/synonymSetListResponse"
+
+    curationResponse:
+      description: "Curation."
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/curation"
+
+    curationListResponse:
+      description: "List of curations."
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/curationListResponse"
+
 paths:
   /engines:
     get:
       operationId: listEngines
+      summary: Retrieves all engines with optional pagination support.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/engines#list
       tags:
-      - engine
-      parameters:
-      - $ref: "#/components/parameters/pageCurrent"
-      - $ref: "#/components/parameters/pageSize"
+      - Engine API
+      requestBody:
+        $ref: "#/components/requestBodies/listParamsRequest"
+      x-codegen-request-body-name: params
       responses:
-        "application/json":
-          description: "List of available engines."
+        default:
+          $ref: "#/components/responseBodies/engineListResponse"
     post:
       operationId: createEngine
+      summary: Creates a new engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/engines#create
       tags:
-      - engine
-      parameters:
-      - name: name
-        in: query
-        description: Engine name.
-        required: true
-        schema:
-          type: string
-      - name: language
-        in: query
-        description: Language code.
-        schema:
-          type: string
+      - Engine API
+      requestBody:
+        $ref: "#/components/requestBodies/engineRequest"
       responses:
-        "application/json":
-          description: "Engine data."
+        default:
+          $ref: "#/components/responseBodies/engineResponse"
 
   /engines/{engine_name}:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
     get:
       operationId: getEngine
+      summary: Retrieves an engine by name.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/engines#get
       tags:
-      - engine
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
+      - Engine API
       responses:
-        "application/json":
-          description: "Engine data."
+        default:
+          $ref: "#/components/responseBodies/engineResponse"
     delete:
       operationId: deleteEngine
+      summary: Delete an engine by name.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/engines#delete
       tags:
-      - engine
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
+      - Engine API
       responses:
-        "application/json":
-          description: "Engine deletion result."
-
-  /engines/{engine_name}/search:
-    post:
-      operationId: search
-      tags:
-      - search
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      - name: query
-        in: query
-        description: Search query text.
-        schema:
-          type: string
-        required: true
-      - $ref: "#/components/parameters/pageCurrent"
-      - $ref: "#/components/parameters/pageSize"
-      - name: filters
-        in: query
-        description: Search query filters.
-        schema:
-          type: array
-          items:
-            type: object
-        required: false
-      - name: sort
-        in: query
-        description: Search query sort orders.
-        schema:
-          type: array
-          items:
-            type: object
-        required: false
-      - name: facets
-        in: query
-        description: Search query facets.
-        schema:
-          type: array
-          items:
-            type: object
-        required: false
-      - name: search_fields
-        in: query
-        description: Search query fields and weights.
-        schema:
-          type: array
-          items:
-            type: object
-        required: false
-      - name: boosts
-        in: query
-        description: Search query boosts.
-        schema:
-          type: array
-          items:
-            type: object
-        required: false
-      - name: group
-        in: query
-        description: Search result group specification.
-        x-php-default-value: []
-        schema:
-          type: array
-          items:
-            type: object
-        required: false
-      - name: result_fields
-        in: query
-        description: Search result fields.
-        x-php-default-value: []
-        schema:
-          type: array
-          items:
-            type: object
-        required: false
-      - name: analytics.tags
-        in: query
-        description: Analytics tags for the current search.
-        x-php-default-value: []
-        schema:
-          type: array
-          items:
-            type: string
-        required: false
-      responses:
-        "application/json":
-          description: "Search result response."
-
-  /engines/{engine_name}/multi_search:
-    post:
-      operationId: multiSearch
-      tags:
-      - search
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      - name: queries
-        in: query
-        description: Array of search queries.
-        schema:
-          type: array
-          items:
-            type: object
-        required: false
-      responses:
-        "application/json":
-          description: "Array of search result response."
-
-  /engines/{engine_name}/schema:
-    get:
-      operationId: getSchema
-      tags:
-      - schema
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      responses:
-        "application/json":
-          description: "Engine schema"
-    post:
-      operationId: updateSchema
-      tags:
-      - schema
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      requestBody:
-        description: Schema description.
-        content:
-          "*":
-            schema:
-              type: array
-              items:
-                type: object
-      responses:
-        "application/json":
-          description: "Engine schema"
-
-  /engines/{engine_name}/search_settings:
-    get:
-      operationId: getSearchSettings
-      tags:
-      - search_settings
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      responses:
-        "application/json":
-          description: "Search settings."
-    put:
-      operationId: updateSearchSettings
-      tags:
-      - search_settings
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      requestBody:
-        description: Schema description.
-        content:
-          "*":
-            schema:
-              type: array
-              items:
-                type: object
-      responses:
-        "application/json":
-          description: "Search settings."
-
-  /engines/{engine_name}/search_settings/reset:
-    post:
-      operationId: resetSearchSettings
-      tags:
-      - search_settings
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      responses:
-        "application/json":
-          description: "Search settings."
+        default:
+          $ref: "#/components/responseBodies/jsonResponse"
 
   /engines/{engine_name}/documents:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
     get:
       operationId: getDocuments
+      summary: Retrieves one or more documents by id.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/documents#get
       tags:
-      - documents
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      - name: ids
-        in: query
-        description: Documents ids.
-        schema:
-          type: array
-          items:
-            type: string
-        required: true
+      - Documents API
+      requestBody:
+        $ref: "#/components/requestBodies/documentIdsRequest"
+      x-codegen-request-body-name: documentIds
       responses:
-        "application/json":
-          description: "Document indexing response."
+        default:
+          $ref: "#/components/responseBodies/documentListResponse"
     post:
       operationId: indexDocuments
+      summary: Create or update documents.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/documents#create
       tags:
-      - documents
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
+      - Documents API
       requestBody:
-        description: Indexed documents.
-        content:
-          "*":
-            schema:
-              type: array
-              items:
-                type: object
+        $ref: "#/components/requestBodies/documentListRequest"
+      x-codegen-request-body-name: documents
       responses:
-        "application/json":
-          description: "Document indexing response."
+        default:
+          $ref: "#/components/responseBodies/documentsIndexingResponse"
     patch:
       operationId: updateDocuments
+      summary: Partial update of documents.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/documents#partial
       tags:
-      - documents
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
+      - Documents API
       requestBody:
-        description: Documents update.
-        content:
-          "*":
-            schema:
-              type: array
-              items:
-                type: object
+        $ref: "#/components/requestBodies/documentListRequest"
+      x-codegen-request-body-name: documents
       responses:
-        "application/json":
-          description: "Document update response."
+        default:
+          $ref: "#/components/responseBodies/documentsIndexingResponse"
     delete:
       operationId: deleteDocuments
+      summary: Delete documents by id.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/documents#partial
       tags:
-      - documents
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
+      - Documents API
       requestBody:
-        description: Documents update.
-        content:
-          "*":
-            schema:
-              type: array
-              items:
-                type: string
+        $ref: "#/components/requestBodies/documentIdsRequest"
+      x-codegen-request-body-name: documentIds
       responses:
-        "application/json":
-          description: "Document delete response."
+        default:
+          $ref: "#/components/responseBodies/documentsDeleteResponse"
 
   /engines/{engine_name}/documents/list:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
     get:
       operationId: listDocuments
+      summary: List all available documents with optional pagination support.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/documents#list
       tags:
-      - documents
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      - $ref: "#/components/parameters/pageCurrent"
-      - $ref: "#/components/parameters/pageSize"
+      - Documents API
+      requestBody:
+        $ref: "#/components/requestBodies/listParamsRequest"
+      x-codegen-request-body-name: params
       responses:
-        "application/json":
-          description: "Document list."
+        default:
+          $ref: "#/components/responseBodies/documentListResponse"
+
+  /engines/{engine_name}/search:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    post:
+      operationId: search
+      summary: Allows you to search over, facet and filter your data.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/search
+      tags:
+      - Schema API
+      requestBody:
+        $ref: "#/components/requestBodies/searchRequest"
+      responses:
+        default:
+          $ref: "#/components/responseBodies/searchResponse"
+
+  /engines/{engine_name}/multi_search:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    post:
+      operationId: multiSearch
+      summary: Run several search in the same request.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/search#multi
+      tags:
+      - Schema API
+      requestBody:
+        $ref: "#/components/requestBodies/multiSearchRequest"
+      x-codegen-request-body-name: queries
+      responses:
+        default:
+          $ref: "#/components/responseBodies/multiSearchResponse"
+
+  /engines/{engine_name}/schema:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    get:
+      operationId: getSchema
+      summary: Retrieve current schema for then engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/schema#read
+      tags:
+      - Schema API
+      responses:
+        default:
+          $ref: "#/components/responseBodies/schemaResponse"
+    post:
+      operationId: updateSchema
+      summary: Update schema for the current engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/schema#patch
+      tags:
+      - Schema API
+      requestBody:
+        $ref: "#/components/requestBodies/schemaRequest"
+      x-codegen-request-body-name: schema
+      responses:
+        default:
+          $ref: "#/components/responseBodies/schemaResponse"
+
+  /engines/{engine_name}/search_settings:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    get:
+      operationId: getSearchSettings
+      summary: Retrive current search settings for the engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/search-settings#show
+      tags:
+      - Search settings API
+      responses:
+        default:
+          $ref: "#/components/responseBodies/searchSettingsResponse"
+    put:
+      operationId: updateSearchSettings
+      summary: Update search settings for the engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/search-settings#update
+      tags:
+      - Search settings API
+      requestBody:
+        $ref: "#/components/requestBodies/searchSettingsRequest"
+      responses:
+        default:
+          $ref: "#/components/responseBodies/searchSettingsResponse"
+
+  /engines/{engine_name}/search_settings/reset:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    post:
+      operationId: resetSearchSettings
+      summary: Reset search settings for the engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/search-settings#reset
+      tags:
+      - Search settings API
+      responses:
+        default:
+          $ref: "#/components/responseBodies/searchSettingsResponse"
 
   /engines/{engine_name}/synonyms:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
     get:
       operationId: listSynonyms
+      summary: Retrieve available synonym sets for the engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/synonyms#get
       tags:
-      - synonyms
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      - $ref: "#/components/parameters/pageCurrent"
-      - $ref: "#/components/parameters/pageSize"
+      - Synonyms API
+      requestBody:
+        $ref: "#/components/requestBodies/listParamsRequest"
+      x-codegen-request-body-name: params
       responses:
-        "application/json":
-          description: "List of synonyms set"
+        default:
+          $ref: "#/components/responseBodies/synonymSetListResponse"
     post:
       operationId: createSynonymSet
+      summary: Create a new synonym set.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/synonyms#create
       tags:
-      - synonyms
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      - name: synonyms
-        in: query
-        required: true
-        schema:
-          type: array
-          items:
-            type: string
+      - Synonyms API
+      requestBody:
+        $ref: "#/components/requestBodies/synonymSetRequest"
       responses:
-        "application/json":
-          description: "Synonym set data."
+        default:
+          $ref: "#/components/responseBodies/synonymSetResponse"
 
   /engines/{engine_name}/synonyms/{synonym_set_id}:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    - $ref: "#/components/parameters/synonymSetId"
     get:
       operationId: getSynonymSet
+      summary: Retrieve a synonym set by id.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/synonyms#list-one
       tags:
-      - synonyms
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      - name: synonym_set_id
-        in: path
-        description: Synonym set id.
-        required: true
-        schema:
-          type: string
+      - Synonyms API
       responses:
-        "application/json":
-          description: "Synonym set data."
+        default:
+          $ref: "#/components/responseBodies/synonymSetResponse"
     delete:
       operationId: deleteSynonymSet
+      summary: Delete a synonym set by id.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/synonyms#delete
       tags:
-      - synonyms
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      - name: synonym_set_id
-        in: path
-        description: Synonym set id.
-        required: true
-        schema:
-          type: string
+      - Synonyms API
       responses:
-        "application/json":
-          description: "Delete operation result."
+        default:
+          $ref: "#/components/responseBodies/jsonResponse"
 
   /engines/{engine_name}/curations:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
     get:
       operationId: listCurations
+      summary: Retrieve available curations for the engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/curations#read
       tags:
-      - curations
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      - $ref: "#/components/parameters/pageCurrent"
-      - $ref: "#/components/parameters/pageSize"
+      - Curations API
+      requestBody:
+        $ref: "#/components/requestBodies/listParamsRequest"
+      x-codegen-request-body-name: params
       responses:
-       "application/json":
-         description: "List of curations."
+        default:
+          $ref: "#/components/requestBodies/curationListResponse"
     post:
-     operationId: createCuration
-     tags:
-     - curations
-     parameters:
-     - $ref: "#/components/parameters/engineNameParam"
-     - name: queries
-       in: query
-       required: true
-       schema:
-         type: array
-         items:
-           type: string
-     - name: promoted
-       in: query
-       schema:
-         type: array
-         items:
-           type: string
-     - name: hidden
-       in: query
-       schema:
-         type: array
-         items:
-           type: string
-     responses:
-       "application/json":
-         description: "Curations data."
+      operationId: createCuration
+      summary: Create a new curation.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/curations#create
+      tags:
+      - Curations API
+      requestBody:
+        $ref: "#/components/requestBodies/curationRequest"
+      responses:
+        default:
+          $ref: "#/components/requestBodies/curationResponse"
 
   /engines/{engine_name}/curations/{curation_id}:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    - $ref: "#/components/parameters/curationId"
     get:
       operationId: getCuration
+      summary: Retrieve a curation by id.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/curations#single
       tags:
-      - curations
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      - name: curation_id
-        in: path
-        description: Curation id.
-        required: true
-        schema:
-          type: string
+      - Curations API
       responses:
-        "application/json":
-          description: "Curation data."
-    delete:
-      operationId: deleteCuration
-      tags:
-      - synonyms
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      - name: curation_id
-        in: path
-        description: Curation id.
-        required: true
-        schema:
-          type: string
-      responses:
-        "application/json":
-          description: "Delete operation result."
+        default:
+          $ref: "#/components/requestBodies/curationResponse"
     put:
       operationId: updateCuration
+      summary: Update an existing curation.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/curations#update
       tags:
-      - synonyms
-      parameters:
-      - $ref: "#/components/parameters/engineNameParam"
-      - name: curation_id
-        in: path
-        description: Curation id.
+      - Curations API
+      requestBody:
         required: true
-        schema:
-          type: string
-      - name: queries
-        in: query
-        required: true
-        description: Curated queries.
-        schema:
-          type: array
-          items:
-            type: string
-      - name: promoted
-        in: query
-        description: Promoted doc ids.
-        schema:
-          type: array
-          items:
-            type: string
-      - name: hidden
-        in: query
-        description: Hidden doc ids.
-        schema:
-          type: array
-          items:
-            type: string
+        $ref: "#/components/requestBodies/curationRequest"
       responses:
-        "application/json":
-          description: "Delete operation result."
+        default:
+          $ref: "#/components/requestBodies/curationResponse"
+    delete:
+      operationId: deleteCuration
+      summary: Delete a curation by id.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/curations#destroy
+      tags:
+      - Curations API
+      responses:
+        default:
+          $ref: "#/components/responseBodies/jsonResponse"
 
   /engines/{engine_name}/click:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
     post:
-     operationId: sendClick
-     tags:
-     - clickthrough
-     parameters:
-     - $ref: "#/components/parameters/engineNameParam"
-     - name: query
-       in: query
-       required: true
-       description: The query that the user searched with.
-       schema:
-         type: string
-     - name: document_id
-       in: query
-       required: true
-       description: The id of the document that was clicked on.
-       schema:
-         type: string
-     - name: request_id
-       in: query
-       description: The request id returned in the meta tag of a search API response.
-       schema:
-         type: string
-     - name: tags
-       in: query
-       description: Array of strings representing additional information you wish to track with the clickthrough.
-       schema:
-         type: array
-         items:
-           type: string
-     responses:
-       "application/json":
-         description: "Delete operation result."
+      operationId: sendClick
+      summary: Send data about clicked results.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/clickthrough
+      tags:
+      - Click API
+      requestBody:
+        $ref: "#/components/requestBodies/clickRequest"
+      responses:
+        default:
+          $ref: "#/components/responseBodies/jsonResponse"
