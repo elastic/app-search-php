@@ -41,12 +41,18 @@ class Client
     // phpcs:disable
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}
     /**
-     * Operation: {{{operationId}}}
-     *
-{{#description}}
+{{#summary}}
      * {{.}}
      *
-{{/description}}
+{{/summary}}
+{{#notes}}
+     * {{.}}
+     *
+{{/notes}}
+{{#externalDocs}}
+     * Documentation: {{url}}
+     *
+{{/externalDocs}}
 {{#allParams}}
      * @param {{dataType}} ${{paramName}}{{#description}} {{description}}{{/description}}
 {{/allParams}}

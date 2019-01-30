@@ -530,7 +530,7 @@ components:
   # Reusable request bodies ----------------------------------------------------
   requestBodies:
     listParamsRequest:
-      description: TODO
+      description: Listing params (include page[current] and page[size]).
       content:
         application/json:
           schema:
@@ -538,7 +538,7 @@ components:
 
     engineRequest:
       required: true
-      description: TODO
+      description: Engine data.
       content:
         application/json:
           schema:
@@ -546,7 +546,7 @@ components:
 
     documentIdsRequest:
       required: true
-      description: TODO
+      description: List of document ids.
       content:
         application/json:
           schema:
@@ -554,7 +554,7 @@ components:
 
     documentListRequest :
       required: true
-      description: TODO
+      description: List of documents.
       content:
         application/json:
           schema:
@@ -562,7 +562,7 @@ components:
 
     searchRequest:
       required: true
-      description: TODO
+      description: Search request.
       content:
         application/json:
           schema:
@@ -570,7 +570,7 @@ components:
 
     multiSearchRequest:
       required: true
-      description: TODO
+      description: Array of search requests.
       content:
         application/json:
           schema:
@@ -578,7 +578,7 @@ components:
 
     schemaRequest:
       required: true
-      description: TODO
+      description: Schema description.
       content:
         application/json:
           schema:
@@ -586,7 +586,7 @@ components:
 
     searchSettingsRequest:
       required: true
-      description: TODO
+      description: Search settings.
       content:
         application/json:
           schema:
@@ -594,7 +594,7 @@ components:
 
     synonymSetRequest:
       required: true
-      description: TODO
+      description: Synonym set data.
       content:
         application/json:
           schema:
@@ -602,7 +602,7 @@ components:
 
     curationRequest:
       required: true
-      description: TODO
+      description: Curation data.
       content:
         application/json:
           schema:
@@ -610,7 +610,7 @@ components:
 
     clickRequest:
       required: true
-      description: TODO
+      description: Click data (include query text and document id).
       content:
         application/json:
           schema:
@@ -720,8 +720,9 @@ paths:
   /engines:
     get:
       operationId: listEngines
-      summary: TODO
-      description: TODO
+      summary: Retrieves all engines with optional pagination support.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/engines#list
       tags:
       - Engine API
       requestBody:
@@ -732,8 +733,9 @@ paths:
           $ref: "#/components/responseBodies/engineListResponse"
     post:
       operationId: createEngine
-      summary: TODO
-      description: TODO
+      summary: Creates a new engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/engines#create
       tags:
       - Engine API
       requestBody:
@@ -747,8 +749,9 @@ paths:
     - $ref: "#/components/parameters/engineNameParam"
     get:
       operationId: getEngine
-      summary: TODO
-      description: TODO
+      summary: Retrieves an engine by name.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/engines#get
       tags:
       - Engine API
       responses:
@@ -756,8 +759,9 @@ paths:
           $ref: "#/components/responseBodies/engineResponse"
     delete:
       operationId: deleteEngine
-      summary: TODO
-      description: TODO
+      summary: Delete an engine by name.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/engines#delete
       tags:
       - Engine API
       responses:
@@ -769,8 +773,9 @@ paths:
     - $ref: "#/components/parameters/engineNameParam"
     get:
       operationId: getDocuments
-      summary: TODO
-      description: TODO
+      summary: Retrieves one or more documents by id.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/documents#get
       tags:
       - Documents API
       requestBody:
@@ -781,8 +786,9 @@ paths:
           $ref: "#/components/responseBodies/documentListResponse"
     post:
       operationId: indexDocuments
-      summary: TODO
-      description: TODO
+      summary: Create or update documents.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/documents#create
       tags:
       - Documents API
       requestBody:
@@ -793,8 +799,9 @@ paths:
           $ref: "#/components/responseBodies/documentsIndexingResponse"
     patch:
       operationId: updateDocuments
-      summary: TODO
-      description: TODO
+      summary: Partial update of documents.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/documents#partial
       tags:
       - Documents API
       requestBody:
@@ -805,8 +812,9 @@ paths:
           $ref: "#/components/responseBodies/documentsIndexingResponse"
     delete:
       operationId: deleteDocuments
-      summary: TODO
-      description: TODO
+      summary: Delete documents by id.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/documents#partial
       tags:
       - Documents API
       requestBody:
@@ -821,8 +829,9 @@ paths:
     - $ref: "#/components/parameters/engineNameParam"
     get:
       operationId: listDocuments
-      summary: TODO
-      description: TODO
+      summary: List all available documents with optional pagination support.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/documents#list
       tags:
       - Documents API
       requestBody:
@@ -837,8 +846,9 @@ paths:
     - $ref: "#/components/parameters/engineNameParam"
     post:
       operationId: search
-      summary: TODO
-      description: TODO
+      summary: Allows you to search over, facet and filter your data.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/search
       tags:
       - Schema API
       requestBody:
@@ -852,8 +862,9 @@ paths:
     - $ref: "#/components/parameters/engineNameParam"
     post:
       operationId: multiSearch
-      summary: TODO
-      description: TODO
+      summary: Run several search in the same request.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/search#multi
       tags:
       - Schema API
       requestBody:
@@ -868,8 +879,9 @@ paths:
     - $ref: "#/components/parameters/engineNameParam"
     get:
       operationId: getSchema
-      summary: TODO
-      description: TODO
+      summary: Retrieve current schema for then engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/schema#read
       tags:
       - Schema API
       responses:
@@ -877,8 +889,9 @@ paths:
           $ref: "#/components/responseBodies/schemaResponse"
     post:
       operationId: updateSchema
-      summary: TODO
-      description: TODO
+      summary: Update schema for the current engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/schema#patch
       tags:
       - Schema API
       requestBody:
@@ -893,8 +906,9 @@ paths:
     - $ref: "#/components/parameters/engineNameParam"
     get:
       operationId: getSearchSettings
-      summary: TODO
-      description: TODO
+      summary: Retrive current search settings for the engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/search-settings#show
       tags:
       - Search settings API
       responses:
@@ -902,8 +916,9 @@ paths:
           $ref: "#/components/responseBodies/searchSettingsResponse"
     put:
       operationId: updateSearchSettings
-      summary: TODO
-      description: TODO
+      summary: Update search settings for the engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/search-settings#update
       tags:
       - Search settings API
       requestBody:
@@ -917,8 +932,9 @@ paths:
     - $ref: "#/components/parameters/engineNameParam"
     post:
       operationId: resetSearchSettings
-      summary: TODO
-      description: TODO
+      summary: Reset search settings for the engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/search-settings#reset
       tags:
       - Search settings API
       responses:
@@ -930,8 +946,9 @@ paths:
     - $ref: "#/components/parameters/engineNameParam"
     get:
       operationId: listSynonyms
-      summary: TODO
-      description: TODO
+      summary: Retrieve available synonym sets for the engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/synonyms#get
       tags:
       - Synonyms API
       requestBody:
@@ -942,8 +959,9 @@ paths:
           $ref: "#/components/responseBodies/synonymSetListResponse"
     post:
       operationId: createSynonymSet
-      summary: TODO
-      description: TODO
+      summary: Create a new synonym set.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/synonyms#create
       tags:
       - Synonyms API
       requestBody:
@@ -958,8 +976,9 @@ paths:
     - $ref: "#/components/parameters/synonymSetId"
     get:
       operationId: getSynonymSet
-      summary: TODO
-      description: TODO
+      summary: Retrieve a synonym set by id.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/synonyms#list-one
       tags:
       - Synonyms API
       responses:
@@ -967,8 +986,9 @@ paths:
           $ref: "#/components/responseBodies/synonymSetResponse"
     delete:
       operationId: deleteSynonymSet
-      summary: TODO
-      description: TODO
+      summary: Delete a synonym set by id.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/synonyms#delete
       tags:
       - Synonyms API
       responses:
@@ -980,8 +1000,9 @@ paths:
     - $ref: "#/components/parameters/engineNameParam"
     get:
       operationId: listCurations
-      summary: TODO
-      description: TODO
+      summary: Retrieve available curations for the engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/curations#read
       tags:
       - Curations API
       requestBody:
@@ -992,8 +1013,9 @@ paths:
           $ref: "#/components/requestBodies/curationListResponse"
     post:
       operationId: createCuration
-      summary: TODO
-      description: TODO
+      summary: Create a new curation.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/curations#create
       tags:
       - Curations API
       requestBody:
@@ -1008,8 +1030,9 @@ paths:
     - $ref: "#/components/parameters/curationId"
     get:
       operationId: getCuration
-      summary: TODO
-      description: TODO
+      summary: Retrieve a curation by id.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/curations#single
       tags:
       - Curations API
       responses:
@@ -1017,8 +1040,9 @@ paths:
           $ref: "#/components/requestBodies/curationResponse"
     put:
       operationId: updateCuration
-      summary: TODO
-      description: TODO
+      summary: Update an existing curation.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/curations#update
       tags:
       - Curations API
       requestBody:
@@ -1029,8 +1053,9 @@ paths:
           $ref: "#/components/requestBodies/curationResponse"
     delete:
       operationId: deleteCuration
-      summary: TODO
-      description: TODO
+      summary: Delete a curation by id.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/curations#destroy
       tags:
       - Curations API
       responses:
@@ -1042,8 +1067,9 @@ paths:
     - $ref: "#/components/parameters/engineNameParam"
     post:
       operationId: sendClick
-      summary: TODO
-      description: TODO
+      summary: Send data about clicked results.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/clickthrough
       tags:
       - Click API
       requestBody:

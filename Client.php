@@ -42,10 +42,12 @@ class Client
     // phpcs:disable
 
     /**
-     * Operation: createCuration.
+     * Create a new curation.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/curations#create
      *
      * @param string $engineName   Name of the engine.
-     * @param array  $curationData TODO
+     * @param array  $curationData Curation data.
      *
      * @return array
      */
@@ -63,9 +65,11 @@ class Client
     }
 
     /**
-     * Operation: createEngine.
+     * Creates a new engine.
      *
-     * @param array $engine TODO
+     * Documentation: https://swiftype.com/documentation/app-search/api/engines#create
+     *
+     * @param array $engine Engine data.
      *
      * @return array
      */
@@ -82,10 +86,12 @@ class Client
     }
 
     /**
-     * Operation: createSynonymSet.
+     * Create a new synonym set.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/synonyms#create
      *
      * @param string $engineName     Name of the engine.
-     * @param array  $synonymSetData TODO
+     * @param array  $synonymSetData Synonym set data.
      *
      * @return array
      */
@@ -103,7 +109,9 @@ class Client
     }
 
     /**
-     * Operation: deleteCuration.
+     * Delete a curation by id.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/curations#destroy
      *
      * @param string $engineName Name of the engine.
      * @param string $curationId Curation id.
@@ -124,10 +132,12 @@ class Client
     }
 
     /**
-     * Operation: deleteDocuments.
+     * Delete documents by id.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/documents#partial
      *
      * @param string $engineName  Name of the engine.
-     * @param array  $documentIds TODO
+     * @param array  $documentIds List of document ids.
      *
      * @return array
      */
@@ -145,7 +155,9 @@ class Client
     }
 
     /**
-     * Operation: deleteEngine.
+     * Delete an engine by name.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/engines#delete
      *
      * @param string $engineName Name of the engine.
      *
@@ -164,7 +176,9 @@ class Client
     }
 
     /**
-     * Operation: deleteSynonymSet.
+     * Delete a synonym set by id.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/synonyms#delete
      *
      * @param string $engineName   Name of the engine.
      * @param string $synonymSetId Synonym set id.
@@ -185,7 +199,9 @@ class Client
     }
 
     /**
-     * Operation: getCuration.
+     * Retrieve a curation by id.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/curations#single
      *
      * @param string $engineName Name of the engine.
      * @param string $curationId Curation id.
@@ -206,10 +222,12 @@ class Client
     }
 
     /**
-     * Operation: getDocuments.
+     * Retrieves one or more documents by id.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/documents#get
      *
      * @param string $engineName  Name of the engine.
-     * @param array  $documentIds TODO
+     * @param array  $documentIds List of document ids.
      *
      * @return array
      */
@@ -227,7 +245,9 @@ class Client
     }
 
     /**
-     * Operation: getEngine.
+     * Retrieves an engine by name.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/engines#get
      *
      * @param string $engineName Name of the engine.
      *
@@ -246,7 +266,9 @@ class Client
     }
 
     /**
-     * Operation: getSchema.
+     * Retrieve current schema for then engine.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/schema#read
      *
      * @param string $engineName Name of the engine.
      *
@@ -265,7 +287,9 @@ class Client
     }
 
     /**
-     * Operation: getSearchSettings.
+     * Retrive current search settings for the engine.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/search-settings#show
      *
      * @param string $engineName Name of the engine.
      *
@@ -284,7 +308,9 @@ class Client
     }
 
     /**
-     * Operation: getSynonymSet.
+     * Retrieve a synonym set by id.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/synonyms#list-one
      *
      * @param string $engineName   Name of the engine.
      * @param string $synonymSetId Synonym set id.
@@ -305,10 +331,12 @@ class Client
     }
 
     /**
-     * Operation: indexDocuments.
+     * Create or update documents.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/documents#create
      *
      * @param string $engineName Name of the engine.
-     * @param array  $documents  TODO
+     * @param array  $documents  List of documents.
      *
      * @return array
      */
@@ -326,10 +354,12 @@ class Client
     }
 
     /**
-     * Operation: listCurations.
+     * Retrieve available curations for the engine.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/curations#read
      *
      * @param string $engineName Name of the engine.
-     * @param array  $params     TODO
+     * @param array  $params     Listing params (include page[current] and page[size]).
      *
      * @return array
      */
@@ -347,10 +377,12 @@ class Client
     }
 
     /**
-     * Operation: listDocuments.
+     * List all available documents with optional pagination support.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/documents#list
      *
      * @param string $engineName Name of the engine.
-     * @param array  $params     TODO
+     * @param array  $params     Listing params (include page[current] and page[size]).
      *
      * @return array
      */
@@ -368,9 +400,11 @@ class Client
     }
 
     /**
-     * Operation: listEngines.
+     * Retrieves all engines with optional pagination support.
      *
-     * @param array $params TODO
+     * Documentation: https://swiftype.com/documentation/app-search/api/engines#list
+     *
+     * @param array $params Listing params (include page[current] and page[size]).
      *
      * @return array
      */
@@ -387,10 +421,12 @@ class Client
     }
 
     /**
-     * Operation: listSynonyms.
+     * Retrieve available synonym sets for the engine.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/synonyms#get
      *
      * @param string $engineName Name of the engine.
-     * @param array  $params     TODO
+     * @param array  $params     Listing params (include page[current] and page[size]).
      *
      * @return array
      */
@@ -408,10 +444,12 @@ class Client
     }
 
     /**
-     * Operation: multiSearch.
+     * Run several search in the same request.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/search#multi
      *
      * @param string $engineName Name of the engine.
-     * @param array  $queries    TODO
+     * @param array  $queries    Array of search requests.
      *
      * @return array
      */
@@ -429,7 +467,9 @@ class Client
     }
 
     /**
-     * Operation: resetSearchSettings.
+     * Reset search settings for the engine.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/search-settings#reset
      *
      * @param string $engineName Name of the engine.
      *
@@ -448,10 +488,12 @@ class Client
     }
 
     /**
-     * Operation: search.
+     * Allows you to search over, facet and filter your data.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/search
      *
      * @param string $engineName    Name of the engine.
-     * @param array  $searchRequest TODO
+     * @param array  $searchRequest Search request.
      *
      * @return array
      */
@@ -469,10 +511,12 @@ class Client
     }
 
     /**
-     * Operation: sendClick.
+     * Send data about clicked results.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/clickthrough
      *
      * @param string $engineName Name of the engine.
-     * @param array  $clickData  TODO
+     * @param array  $clickData  Click data (include query text and document id).
      *
      * @return array
      */
@@ -490,11 +534,13 @@ class Client
     }
 
     /**
-     * Operation: updateCuration.
+     * Update an existing curation.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/curations#update
      *
      * @param string $engineName   Name of the engine.
      * @param string $curationId   Curation id.
-     * @param array  $curationData TODO
+     * @param array  $curationData Curation data.
      *
      * @return array
      */
@@ -513,10 +559,12 @@ class Client
     }
 
     /**
-     * Operation: updateDocuments.
+     * Partial update of documents.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/documents#partial
      *
      * @param string $engineName Name of the engine.
-     * @param array  $documents  TODO
+     * @param array  $documents  List of documents.
      *
      * @return array
      */
@@ -534,10 +582,12 @@ class Client
     }
 
     /**
-     * Operation: updateSchema.
+     * Update schema for the current engine.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/schema#patch
      *
      * @param string $engineName Name of the engine.
-     * @param array  $schema     TODO
+     * @param array  $schema     Schema description.
      *
      * @return array
      */
@@ -555,10 +605,12 @@ class Client
     }
 
     /**
-     * Operation: updateSearchSettings.
+     * Update search settings for the engine.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/search-settings#update
      *
      * @param string $engineName     Name of the engine.
-     * @param array  $searchSettings TODO
+     * @param array  $searchSettings Search settings.
      *
      * @return array
      */
