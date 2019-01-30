@@ -408,6 +408,27 @@ class Client
     }
 
     /**
+     * Operation: multiSearch.
+     *
+     * @param string $engineName Name of the engine.
+     * @param array  $queries    TODO
+     *
+     * @return array
+     */
+    public function multiSearch($engineName, $queries)
+    {
+        $params = [
+            'engine_name' => $engineName,
+        ];
+
+        $endpoint = ($this->endpointBuilder)('MultiSearch');
+        $endpoint->setParams($params);
+        $endpoint->setBody($queries);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Operation: resetSearchSettings.
      *
      * @param string $engineName Name of the engine.

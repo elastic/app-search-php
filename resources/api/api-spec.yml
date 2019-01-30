@@ -384,6 +384,16 @@ components:
       type: object
       # TODO
 
+    searchRequestList:
+      type: array
+      items:
+        $ref: "#/components/schemas/searchRequest"
+
+    searchResponseList:
+      type: array
+      items:
+        $ref: "#/components/schemas/searchResponse"
+
     schemaData:
       type: object
       additionalProperties:
@@ -558,6 +568,14 @@ components:
           schema:
             $ref: "#/components/schemas/searchRequest"
 
+    multiSearchRequest:
+      required: true
+      description: TODO
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/searchRequestList"
+
     schemaRequest:
       required: true
       description: TODO
@@ -634,6 +652,13 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/searchResponse"
+
+    multiSearchResponse:
+      description: "Multi search response."
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/searchResponseList"
 
     documentsIndexingResponse:
       description: "Indexing response"
@@ -821,6 +846,22 @@ paths:
       responses:
         default:
           $ref: "#/components/responseBodies/searchResponse"
+
+  /engines/{engine_name}/multi_search:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    post:
+      operationId: multiSearch
+      summary: TODO
+      description: TODO
+      tags:
+      - Schema API
+      requestBody:
+        $ref: "#/components/requestBodies/multiSearchRequest"
+      x-codegen-request-body-name: queries
+      responses:
+        default:
+          $ref: "#/components/responseBodies/multiSearchResponse"
 
   /engines/{engine_name}/schema:
     parameters:
