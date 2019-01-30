@@ -41,13 +41,13 @@ class EngineManagementTest extends TestCase
         $client = ClientBuilder::create($this->apiEndpoint, $this->apiKey);
         $this->assertInstanceOf(Client::class, $client);
 
-        $this->assertEquals($this->engineName, $client->createEngine($this->engineName)['name']);
+        $this->assertEquals($this->engineName, $client->createEngine(['name' => $this->engineName])['name']);
 
         $engine = $client->getEngine($this->engineName);
         $this->assertEquals($this->engineName, $engine['name']);
         $this->assertNull($engine['language']);
 
-        $engineList = $client->listEngines(1, 20);
+        $engineList = $client->listEngines(['page' => ['current' => 1, 'size' => 20]]);
         $this->assertContains($engine, $engineList['results']);
 
         $this->assertTrue($client->deleteEngine($this->engineName)['deleted']);

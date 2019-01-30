@@ -27,7 +27,5 @@ class CreateEngine extends AbstractEndpoint
      * @var string
      */
     protected $uri = '/engines';
-
-    protected $paramWhitelist = ['name', 'language'];
     // phpcs:enable
 }

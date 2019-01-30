@@ -29,7 +29,5 @@ class GetDocuments extends AbstractEndpoint
     protected $uri = '/engines/{engine_name}/documents';
 
     protected $routeParams = ['engine_name'];
-
-    protected $paramWhitelist = ['ids'];
     // phpcs:enable
 }

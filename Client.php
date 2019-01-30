@@ -44,24 +44,20 @@ class Client
     /**
      * Operation: createCuration.
      *
-     * @param string   $engineName Name of the engine.
-     * @param string[] $queries
-     * @param string[] $promoted
-     * @param string[] $hidden
+     * @param string $engineName   Name of the engine.
+     * @param array  $curationData TODO
      *
      * @return array
      */
-    public function createCuration($engineName, $queries, $promoted = null, $hidden = null)
+    public function createCuration($engineName, $curationData)
     {
         $params = [
             'engine_name' => $engineName,
-            'queries' => $queries,
-            'promoted' => $promoted,
-            'hidden' => $hidden,
         ];
 
         $endpoint = ($this->endpointBuilder)('CreateCuration');
         $endpoint->setParams($params);
+        $endpoint->setBody($curationData);
 
         return $this->performRequest($endpoint);
     }
@@ -69,20 +65,18 @@ class Client
     /**
      * Operation: createEngine.
      *
-     * @param string $name     Engine name.
-     * @param string $language Language code.
+     * @param array $engine TODO
      *
      * @return array
      */
-    public function createEngine($name, $language = null)
+    public function createEngine($engine)
     {
         $params = [
-            'name' => $name,
-            'language' => $language,
         ];
 
         $endpoint = ($this->endpointBuilder)('CreateEngine');
         $endpoint->setParams($params);
+        $endpoint->setBody($engine);
 
         return $this->performRequest($endpoint);
     }
@@ -90,20 +84,20 @@ class Client
     /**
      * Operation: createSynonymSet.
      *
-     * @param string   $engineName Name of the engine.
-     * @param string[] $synonyms
+     * @param string $engineName     Name of the engine.
+     * @param array  $synonymSetData TODO
      *
      * @return array
      */
-    public function createSynonymSet($engineName, $synonyms)
+    public function createSynonymSet($engineName, $synonymSetData)
     {
         $params = [
             'engine_name' => $engineName,
-            'synonyms' => $synonyms,
         ];
 
         $endpoint = ($this->endpointBuilder)('CreateSynonymSet');
         $endpoint->setParams($params);
+        $endpoint->setBody($synonymSetData);
 
         return $this->performRequest($endpoint);
     }
@@ -132,12 +126,12 @@ class Client
     /**
      * Operation: deleteDocuments.
      *
-     * @param string   $engineName  Name of the engine.
-     * @param string[] $requestBody Documents update.
+     * @param string $engineName  Name of the engine.
+     * @param array  $documentIds TODO
      *
      * @return array
      */
-    public function deleteDocuments($engineName, $requestBody = null)
+    public function deleteDocuments($engineName, $documentIds)
     {
         $params = [
             'engine_name' => $engineName,
@@ -145,7 +139,7 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('DeleteDocuments');
         $endpoint->setParams($params);
-        $endpoint->setBody(requestBody);
+        $endpoint->setBody($documentIds);
 
         return $this->performRequest($endpoint);
     }
@@ -214,20 +208,20 @@ class Client
     /**
      * Operation: getDocuments.
      *
-     * @param string   $engineName Name of the engine.
-     * @param string[] $ids        Documents ids.
+     * @param string $engineName  Name of the engine.
+     * @param array  $documentIds TODO
      *
      * @return array
      */
-    public function getDocuments($engineName, $ids)
+    public function getDocuments($engineName, $documentIds)
     {
         $params = [
             'engine_name' => $engineName,
-            'ids' => $ids,
         ];
 
         $endpoint = ($this->endpointBuilder)('GetDocuments');
         $endpoint->setParams($params);
+        $endpoint->setBody($documentIds);
 
         return $this->performRequest($endpoint);
     }
@@ -313,12 +307,12 @@ class Client
     /**
      * Operation: indexDocuments.
      *
-     * @param string  $engineName  Name of the engine.
-     * @param array[] $requestBody Indexed documents.
+     * @param string $engineName Name of the engine.
+     * @param array  $documents  TODO
      *
      * @return array
      */
-    public function indexDocuments($engineName, $requestBody = null)
+    public function indexDocuments($engineName, $documents)
     {
         $params = [
             'engine_name' => $engineName,
@@ -326,7 +320,7 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('IndexDocuments');
         $endpoint->setParams($params);
-        $endpoint->setBody(requestBody);
+        $endpoint->setBody($documents);
 
         return $this->performRequest($endpoint);
     }
@@ -334,22 +328,20 @@ class Client
     /**
      * Operation: listCurations.
      *
-     * @param string $engineName  Name of the engine.
-     * @param int    $pageCurrent The current page.
-     * @param int    $pageSize    The number of results to show on each page.
+     * @param string $engineName Name of the engine.
+     * @param array  $params     TODO
      *
      * @return array
      */
-    public function listCurations($engineName, $pageCurrent = null, $pageSize = null)
+    public function listCurations($engineName, $params = null)
     {
         $params = [
             'engine_name' => $engineName,
-            'page.current' => $pageCurrent,
-            'page.size' => $pageSize,
         ];
 
         $endpoint = ($this->endpointBuilder)('ListCurations');
         $endpoint->setParams($params);
+        $endpoint->setBody($params);
 
         return $this->performRequest($endpoint);
     }
@@ -357,22 +349,20 @@ class Client
     /**
      * Operation: listDocuments.
      *
-     * @param string $engineName  Name of the engine.
-     * @param int    $pageCurrent The current page.
-     * @param int    $pageSize    The number of results to show on each page.
+     * @param string $engineName Name of the engine.
+     * @param array  $params     TODO
      *
      * @return array
      */
-    public function listDocuments($engineName, $pageCurrent = null, $pageSize = null)
+    public function listDocuments($engineName, $params = null)
     {
         $params = [
             'engine_name' => $engineName,
-            'page.current' => $pageCurrent,
-            'page.size' => $pageSize,
         ];
 
         $endpoint = ($this->endpointBuilder)('ListDocuments');
         $endpoint->setParams($params);
+        $endpoint->setBody($params);
 
         return $this->performRequest($endpoint);
     }
@@ -380,20 +370,18 @@ class Client
     /**
      * Operation: listEngines.
      *
-     * @param int $pageCurrent The current page.
-     * @param int $pageSize    The number of results to show on each page.
+     * @param array $params TODO
      *
      * @return array
      */
-    public function listEngines($pageCurrent = null, $pageSize = null)
+    public function listEngines($params = null)
     {
         $params = [
-            'page.current' => $pageCurrent,
-            'page.size' => $pageSize,
         ];
 
         $endpoint = ($this->endpointBuilder)('ListEngines');
         $endpoint->setParams($params);
+        $endpoint->setBody($params);
 
         return $this->performRequest($endpoint);
     }
@@ -401,43 +389,20 @@ class Client
     /**
      * Operation: listSynonyms.
      *
-     * @param string $engineName  Name of the engine.
-     * @param int    $pageCurrent The current page.
-     * @param int    $pageSize    The number of results to show on each page.
+     * @param string $engineName Name of the engine.
+     * @param array  $params     TODO
      *
      * @return array
      */
-    public function listSynonyms($engineName, $pageCurrent = null, $pageSize = null)
+    public function listSynonyms($engineName, $params = null)
     {
         $params = [
             'engine_name' => $engineName,
-            'page.current' => $pageCurrent,
-            'page.size' => $pageSize,
         ];
 
         $endpoint = ($this->endpointBuilder)('ListSynonyms');
         $endpoint->setParams($params);
-
-        return $this->performRequest($endpoint);
-    }
-
-    /**
-     * Operation: multiSearch.
-     *
-     * @param string  $engineName Name of the engine.
-     * @param array[] $queries    Array of search queries.
-     *
-     * @return array
-     */
-    public function multiSearch($engineName, $queries = null)
-    {
-        $params = [
-            'engine_name' => $engineName,
-            'queries' => $queries,
-        ];
-
-        $endpoint = ($this->endpointBuilder)('MultiSearch');
-        $endpoint->setParams($params);
+        $endpoint->setBody($params);
 
         return $this->performRequest($endpoint);
     }
@@ -464,40 +429,20 @@ class Client
     /**
      * Operation: search.
      *
-     * @param string   $engineName    Name of the engine.
-     * @param string   $query         Search query text.
-     * @param int      $pageCurrent   The current page.
-     * @param int      $pageSize      The number of results to show on each page.
-     * @param array[]  $filters       Search query filters.
-     * @param array[]  $sort          Search query sort orders.
-     * @param array[]  $facets        Search query facets.
-     * @param array[]  $searchFields  Search query fields and weights.
-     * @param array[]  $boosts        Search query boosts.
-     * @param array[]  $group         Search result group specification.
-     * @param array[]  $resultFields  Search result fields.
-     * @param string[] $analyticsTags Analytics tags for the current search.
+     * @param string $engineName    Name of the engine.
+     * @param array  $searchRequest TODO
      *
      * @return array
      */
-    public function search($engineName, $query, $pageCurrent = null, $pageSize = null, $filters = null, $sort = null, $facets = null, $searchFields = null, $boosts = null, $group = null, $resultFields = null, $analyticsTags = null)
+    public function search($engineName, $searchRequest)
     {
         $params = [
             'engine_name' => $engineName,
-            'query' => $query,
-            'page.current' => $pageCurrent,
-            'page.size' => $pageSize,
-            'filters' => $filters,
-            'sort' => $sort,
-            'facets' => $facets,
-            'search_fields' => $searchFields,
-            'boosts' => $boosts,
-            'group' => $group,
-            'result_fields' => $resultFields,
-            'analytics.tags' => $analyticsTags,
         ];
 
         $endpoint = ($this->endpointBuilder)('Search');
         $endpoint->setParams($params);
+        $endpoint->setBody($searchRequest);
 
         return $this->performRequest($endpoint);
     }
@@ -505,26 +450,20 @@ class Client
     /**
      * Operation: sendClick.
      *
-     * @param string   $engineName Name of the engine.
-     * @param string   $query      The query that the user searched with.
-     * @param string   $documentId The id of the document that was clicked on.
-     * @param string   $requestId  The request id returned in the meta tag of a search API response.
-     * @param string[] $tags       Array of strings representing additional information you wish to track with the clickthrough.
+     * @param string $engineName Name of the engine.
+     * @param array  $clickData  TODO
      *
      * @return array
      */
-    public function sendClick($engineName, $query, $documentId, $requestId = null, $tags = null)
+    public function sendClick($engineName, $clickData)
     {
         $params = [
             'engine_name' => $engineName,
-            'query' => $query,
-            'document_id' => $documentId,
-            'request_id' => $requestId,
-            'tags' => $tags,
         ];
 
         $endpoint = ($this->endpointBuilder)('SendClick');
         $endpoint->setParams($params);
+        $endpoint->setBody($clickData);
 
         return $this->performRequest($endpoint);
     }
@@ -532,26 +471,22 @@ class Client
     /**
      * Operation: updateCuration.
      *
-     * @param string   $engineName Name of the engine.
-     * @param string   $curationId Curation id.
-     * @param string[] $queries    Curated queries.
-     * @param string[] $promoted   Promoted doc ids.
-     * @param string[] $hidden     Hidden doc ids.
+     * @param string $engineName   Name of the engine.
+     * @param string $curationId   Curation id.
+     * @param array  $curationData TODO
      *
      * @return array
      */
-    public function updateCuration($engineName, $curationId, $queries, $promoted = null, $hidden = null)
+    public function updateCuration($engineName, $curationId, $curationData)
     {
         $params = [
             'engine_name' => $engineName,
             'curation_id' => $curationId,
-            'queries' => $queries,
-            'promoted' => $promoted,
-            'hidden' => $hidden,
         ];
 
         $endpoint = ($this->endpointBuilder)('UpdateCuration');
         $endpoint->setParams($params);
+        $endpoint->setBody($curationData);
 
         return $this->performRequest($endpoint);
     }
@@ -559,12 +494,12 @@ class Client
     /**
      * Operation: updateDocuments.
      *
-     * @param string  $engineName  Name of the engine.
-     * @param array[] $requestBody Documents update.
+     * @param string $engineName Name of the engine.
+     * @param array  $documents  TODO
      *
      * @return array
      */
-    public function updateDocuments($engineName, $requestBody = null)
+    public function updateDocuments($engineName, $documents)
     {
         $params = [
             'engine_name' => $engineName,
@@ -572,7 +507,7 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('UpdateDocuments');
         $endpoint->setParams($params);
-        $endpoint->setBody(requestBody);
+        $endpoint->setBody($documents);
 
         return $this->performRequest($endpoint);
     }
@@ -580,12 +515,12 @@ class Client
     /**
      * Operation: updateSchema.
      *
-     * @param string  $engineName  Name of the engine.
-     * @param array[] $requestBody Schema description.
+     * @param string $engineName Name of the engine.
+     * @param array  $schema     TODO
      *
      * @return array
      */
-    public function updateSchema($engineName, $requestBody = null)
+    public function updateSchema($engineName, $schema)
     {
         $params = [
             'engine_name' => $engineName,
@@ -593,7 +528,7 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('UpdateSchema');
         $endpoint->setParams($params);
-        $endpoint->setBody(requestBody);
+        $endpoint->setBody($schema);
 
         return $this->performRequest($endpoint);
     }
@@ -601,12 +536,12 @@ class Client
     /**
      * Operation: updateSearchSettings.
      *
-     * @param string  $engineName  Name of the engine.
-     * @param array[] $requestBody Schema description.
+     * @param string $engineName     Name of the engine.
+     * @param array  $searchSettings TODO
      *
      * @return array
      */
-    public function updateSearchSettings($engineName, $requestBody = null)
+    public function updateSearchSettings($engineName, $searchSettings)
     {
         $params = [
             'engine_name' => $engineName,
@@ -614,7 +549,7 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('UpdateSearchSettings');
         $endpoint->setParams($params);
-        $endpoint->setBody(requestBody);
+        $endpoint->setBody($searchSettings);
 
         return $this->performRequest($endpoint);
     }

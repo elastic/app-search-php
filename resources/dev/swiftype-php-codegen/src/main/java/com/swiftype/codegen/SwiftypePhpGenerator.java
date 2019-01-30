@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.CodegenConfig;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenType;
@@ -71,11 +72,22 @@ public class SwiftypePhpGenerator extends PhpClientCodegen implements CodegenCon
 
   @Override
   public String getTypeDeclaration(Schema p) {
-    if (ModelUtils.isObjectSchema(p)) {
+    if (ModelUtils.isArraySchema(p) || ModelUtils.isMapSchema(p)) {
+      return "array";
+    } else if (ModelUtils.isObjectSchema(p) || ModelUtils.isModel(p) || StringUtils.isNotBlank(p.get$ref())) {
       return "array";
     }
 
     return super.getTypeDeclaration(p);
+  }
+
+  @Override
+  public String getTypeDeclaration(String name) {
+    if (!languageSpecificPrimitives.contains(name)) {
+      return "array";
+    }
+
+    return super.getTypeDeclaration(name);
   }
 
   private void resetTemplateFiles() {
