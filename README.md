@@ -152,7 +152,7 @@ Method name |Parameters| Description
 `listCurations` | - `$engineName` (required) <br /> - `$params` | Retrieve available curations for the engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#read)
 `listDocuments` | - `$engineName` (required) <br /> - `$params` | List all available documents with optional pagination support.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/documents#list)
 `listEngines` | - `$params` | Retrieves all engines with optional pagination support.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/engines#list)
-`listSynonyms` | - `$engineName` (required) <br /> - `$params` | Retrieve available synonym sets for the engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/synonyms#get)
+`listSynonymSets` | - `$engineName` (required) <br /> - `$params` | Retrieve available synonym sets for the engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/synonyms#get)
 `multiSearch` | - `$engineName` (required) <br /> - `$queries` (required)  | Run several search in the same request.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search#multi)
 `resetSearchSettings` | - `$engineName` (required)  | Reset search settings for the engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search-settings#reset)
 `search` | - `$engineName` (required) <br /> - `$searchRequest` (required)  | Allows you to search over, facet and filter your data.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search)

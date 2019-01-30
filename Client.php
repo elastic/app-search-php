@@ -430,13 +430,13 @@ class Client
      *
      * @return array
      */
-    public function listSynonyms($engineName, $params = null)
+    public function listSynonymSets($engineName, $params = null)
     {
         $params = [
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('ListSynonyms');
+        $endpoint = ($this->endpointBuilder)('ListSynonymSets');
         $endpoint->setParams($params);
         $endpoint->setBody($params);
 
