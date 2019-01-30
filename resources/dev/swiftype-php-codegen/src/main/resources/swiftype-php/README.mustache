@@ -38,19 +38,98 @@ To instantiate a new client you can use `\Swiftype\AppSearch\ClientBuilder`:
 
 - You can use any type of API Key (private, public or admin). The client will throw an exception if you try to execute an action that is not authorized for the key used.
 
-#### Logging
-
-The repo is still WIP and documentation is coming.
-
 ### Client usage
+
+Once the client is instantiated you can use it to access to the App Search API.
 
 #### Basic usage
 
-##### Create an engine
+##### Retrieve or create an engine
+
+Most method of the API require that you have access to an engine.
+
+To check an engine exists and retrieve its configuration, you can use the `Client::getEngine` method :
+
+```php
+    $engine = $client->getEngine('my-engine');
+```
+
+If the engine does not exists yet, you can create it by using the `Client::createEngine` method :
+
+```php
+    $engine = $client->createEngine(['name' => 'my-engine', 'language' => 'en']);
+```
+
+The language parameter is optional or can be set to null. Then the engine will be created using the `universal` language.
+The list of supported language is available here : https://swiftype.com/documentation/app-search/api/engines#multi-language
 
 ##### Index some documents
 
+In order to index some documents in the engine you can use the `Client::indexDocuments` method :
+
+```php
+    $documents = [
+      ['id' => 'first-document', 'name' => 'Document name', 'description' => 'Document description'],
+      ['id' => 'other-document', 'name' => 'Other document name', 'description' => 'Other description'],
+    ];
+
+    $indexingResults = $client->indexDocuments('my-engine', $documents);
+```
+
+The `$indexingResults` array will contains the result of the indexation of each documents. You should always check the content of the result.
+
+Full documentation is available here : https://swiftype.com/documentation/app-search/api/documents#create.
+
 ##### Search
+
+In order to search in your engine you can use the `Client::search` method :
+
+```php
+    $searchRequest = [
+      'query' => 'search text',
+      'page'  => ['current' => 1, 'size' => 10];
+    ];
+
+    $searchResponse = $client->search('my-engine', $searchRequest);
+```
+Search request should contains at least a query (use `''` to match all docs).
+The page param allow you to configure pagination and is optional.
+
+Other allowed params are :
+
+Param name|Documentation URL
+----------|-----------------
+`filters` | https://swiftype.com/documentation/app-search/api/search/filters
+`facets` | https://swiftype.com/documentation/app-search/api/search/facets
+`sort` | https://swiftype.com/documentation/app-search/api/search/sorting
+`boosts` | https://swiftype.com/documentation/app-search/api/search/boosts
+`search_fields` | https://swiftype.com/documentation/app-search/api/search/search-fields
+`result_fields` | https://swiftype.com/documentation/app-search/api/search/result-fields
+`group` | https://swiftype.com/documentation/app-search/api/search/grouping
+
+The search response will contains at least a meta field and a results field as shown in this example:
+
+```php
+[
+  'meta' = [
+    'warnings' => [],
+    'page' => [
+      'current' => 1,
+      'total_pages' => 1,
+      'total_results' => 1,
+      'size' => 10
+    ],
+    'request_id' => 'feff7cf2359a6f6da84586969ef0ca89'
+  ],
+  'results' => [
+    [
+      'id' => ['raw' => 'first-document'],
+      'name' => ['raw' => 'Document name'],
+      'description' => ['raw' => ['Document description']
+    ]
+  ]
+]
+```
 
 #### Clients methods
 
