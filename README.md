@@ -1,6 +1,6 @@
 # PHP client for the Swiftype App Search API
 
-[![CircleCI](https://circleci.com/gh/swiftype/swiftype-app-search-php.svg?style=svg)](https://circleci.com/gh/swiftype/swiftype-app-search-php)
+[![CircleCI](https://circleci.com/gh/swiftype/swiftype-app-search-php.svg?style=svg&circle-token=c5aa66b0ee683b0f485c414eb6554837c29cc150)](https://circleci.com/gh/swiftype/swiftype-app-search-php)
 
 ### Requirements
 
