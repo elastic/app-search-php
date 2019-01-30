@@ -6,7 +6,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch\Tests\Integration;
+namespace Swiftype\AppSearch\Tests\Integration\Helper;
 
 /**
  * Allow to load config from environnement variable.
@@ -17,6 +17,11 @@ namespace Swiftype\AppSearch\Tests\Integration;
  */
 class Config
 {
+    public function getEngineName()
+    {
+        return 'php-integration-test';
+    }
+
     public function getApiEndpoint()
     {
         return $_ENV['ST_API_ENDPOINT'];

@@ -8,48 +8,106 @@
 
 namespace Swiftype\AppSearch\Tests\Integration;
 
-use PHPUnit\Framework\TestCase;
-use Swiftype\AppSearch\Client;
-use Swiftype\AppSearch\ClientBuilder;
-
 /**
- * A basic test of the index management.
- *
- * @todo : replace with better implementation.
+ * Integrations test for the Engine API.
  *
  * @package Swiftype\AppSearch\Test\Integration
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class EngineManagementTest extends TestCase
+class EngineApiTest extends AbstractTestCase
 {
-    private $engineName = 'test-engine';
-    private $docSamples = [
-        ['id' => '678', 'name' => 'an indexed doc'],
-        ['id' => '671', 'name' => 'another doc'],
-    ];
-
     public function setUp()
     {
-        $config = new Config();
-        $this->apiEndpoint = $config->getApiEndpoint();
-        $this->apiKey = $config->getApiKey();
+        // Skip automatic engine creation.
     }
 
-    public function testClient()
+    /**
+     * This test run the following scenario:
+     * - Create a new engine and check the name in the return.
+     * - Retrieve this engine and test name and the language.
+     * - Try to list the engines and check the new engine is present in the entries.
+     * - Delete the engine and check the result.
+     *
+     * @dataProvider getLanguages
+     */
+    public function testApiMethods($language)
     {
-        $client = ClientBuilder::create($this->apiEndpoint, $this->apiKey)->build();
-        $this->assertInstanceOf(Client::class, $client);
+        $client = self::$defaultClient;
 
-        $this->assertEquals($this->engineName, $client->createEngine(['name' => $this->engineName])['name']);
+        $engineData = ['name' => self::$defaultEngine, 'language' => $language];
+        $this->assertEquals(self::$defaultEngine, $client->createEngine($engineData)['name']);
 
-        $engine = $client->getEngine($this->engineName);
-        $this->assertEquals($this->engineName, $engine['name']);
-        $this->assertNull($engine['language']);
+        $engine = $client->getEngine(self::$defaultEngine);
+        $this->assertEquals(self::$defaultEngine, $engine['name']);
+        $this->assertEquals($language, $engine['language']);
 
         $engineList = $client->listEngines(['page' => ['current' => 1, 'size' => 20]]);
         $this->assertContains($engine, $engineList['results']);
 
-        $this->assertTrue($client->deleteEngine($this->engineName)['deleted']);
+        $this->assertTrue($client->deleteEngine(self::$defaultEngine)['deleted']);
+    }
+
+    /**
+     * Try to get a non existing engine.
+     *
+     * @expectedException \Swiftype\AppSearch\Exception\NotFoundException
+     */
+    public function testGetNonExistingEngine()
+    {
+        self::$defaultClient->getEngine('some-non-existing-engine');
+    }
+
+    /**
+     * Try to delete a non existing engine.
+     *
+     * @expectedException \Swiftype\AppSearch\Exception\NotFoundException
+     */
+    public function testDeleteNonExistingEngine()
+    {
+        self::$defaultClient->getEngine('some-non-existing-engine');
+    }
+
+    /**
+     * Try to delete a non existing engine.
+     *
+     * @expectedException \Swiftype\AppSearch\Exception\BadRequestException
+     */
+    public function testCreateAlreadyExistingEngine()
+    {
+        self::$defaultClient->createEngine(['name' => self::$defaultEngine]);
+        self::$defaultClient->createEngine(['name' => self::$defaultEngine]);
+    }
+
+    /**
+     * Try to create engine with invalid params.
+     *
+     * @dataProvider getInvalidCreateEngineRequest
+     *
+     * @expectedException \Swiftype\AppSearch\Exception\BadRequestException
+     */
+    public function testCreateEngineFromInvalidParams($engineData)
+    {
+        self::$defaultClient->createEngine($engineData);
+    }
+
+    /**
+     * List of languages used in test.
+     *
+     * @return array
+     */
+    public function getLanguages()
+    {
+        return [['en'], [null]];
+    }
+
+    public function getInvalidCreateEngineRequest()
+    {
+        return [
+            [[]],
+            [['name' => 'Default Engine']],
+            [['name' => self::$defaultEngine, 'langugage' => 'ca']],
+            [['name' => self::$defaultEngine, 'foo' => 'bar']],
+        ];
     }
 }
