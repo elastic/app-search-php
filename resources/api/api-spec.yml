@@ -727,7 +727,7 @@ paths:
       - Engine API
       requestBody:
         $ref: "#/components/requestBodies/listParamsRequest"
-      x-codegen-request-body-name: params
+      x-codegen-request-body-name: listParams
       responses:
         default:
           $ref: "#/components/responseBodies/engineListResponse"
@@ -836,7 +836,7 @@ paths:
       - Documents API
       requestBody:
         $ref: "#/components/requestBodies/listParamsRequest"
-      x-codegen-request-body-name: params
+      x-codegen-request-body-name: listParams
       responses:
         default:
           $ref: "#/components/responseBodies/documentListResponse"
@@ -953,7 +953,7 @@ paths:
       - Synonyms API
       requestBody:
         $ref: "#/components/requestBodies/listParamsRequest"
-      x-codegen-request-body-name: params
+      x-codegen-request-body-name: listParams
       responses:
         default:
           $ref: "#/components/responseBodies/synonymSetListResponse"
@@ -1007,7 +1007,7 @@ paths:
       - Curations API
       requestBody:
         $ref: "#/components/requestBodies/listParamsRequest"
-      x-codegen-request-body-name: params
+      x-codegen-request-body-name: listParams
       responses:
         default:
           $ref: "#/components/requestBodies/curationListResponse"

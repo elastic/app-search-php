@@ -57,7 +57,6 @@ class AbstractTestCase extends TestCase
         try {
             self::$defaultClient->deleteEngine(self::$defaultEngine);
         } catch (NotFoundException $e) {
-            ;
         }
         sleep(1); // TODO : report a self managed bug ?
     }
