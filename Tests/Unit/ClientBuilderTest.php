@@ -30,7 +30,7 @@ class ClientBuilderTest extends TestCase
      */
     public function testInstantiation($apiEndpoint)
     {
-        $client = ClientBuilder::create($apiEndpoint, 'apiKey');
+        $client = ClientBuilder::create($apiEndpoint, 'apiKey')->build();
         $this->assertInstanceOf(Client::class, $client);
     }
 
@@ -45,8 +45,7 @@ class ClientBuilderTest extends TestCase
      */
     public function testInvalidEndpoints($apiEndpoint)
     {
-        $client = ClientBuilder::create($apiEndpoint, 'apiKey');
-        $this->assertInstanceOf(Client::class, $client);
+        $client = ClientBuilder::create($apiEndpoint, 'apiKey')->build();
     }
 
     /**

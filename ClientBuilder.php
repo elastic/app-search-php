@@ -68,11 +68,11 @@ class ClientBuilder
      * @param string $hostIdentifier
      * @param string $apiKey
      *
-     * @return \Swiftype\AppSearch\Client
+     * @return \Swiftype\AppSearch\ClientBuilder
      */
     public static function create($apiEndpoint = null, $apiKey = null)
     {
-        return (new static())->setApiEndpoint($apiEndpoint)->setApiKey($apiKey)->build();
+        return (new static())->setApiEndpoint($apiEndpoint)->setApiKey($apiKey);
     }
 
     /**

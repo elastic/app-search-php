@@ -38,7 +38,7 @@ class EngineManagementTest extends TestCase
 
     public function testClient()
     {
-        $client = ClientBuilder::create($this->apiEndpoint, $this->apiKey);
+        $client = ClientBuilder::create($this->apiEndpoint, $this->apiKey)->build();
         $this->assertInstanceOf(Client::class, $client);
 
         $this->assertEquals($this->engineName, $client->createEngine(['name' => $this->engineName])['name']);
