@@ -38,6 +38,7 @@ public class SwiftypePhpGenerator extends PhpClientCodegen implements CodegenCon
     this.resetTemplateFiles();
 
     supportingFiles.add(new SupportingFile("Client.mustache", "", "Client.php"));
+    supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
   }
 
   @Override
