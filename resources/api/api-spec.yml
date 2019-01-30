@@ -945,7 +945,7 @@ paths:
     parameters:
     - $ref: "#/components/parameters/engineNameParam"
     get:
-      operationId: listSynonyms
+      operationId: listSynonymSets
       summary: Retrieve available synonym sets for the engine.
       externalDocs:
         url: https://swiftype.com/documentation/app-search/api/synonyms#get
