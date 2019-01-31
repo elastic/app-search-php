@@ -100,6 +100,16 @@ class DocumentApiTest extends AbstractTestCase
         $this->assertEquals([null], self::$defaultClient->getDocuments(self::$defaultEngine, ['foo']));
     }
 
+    /**
+     * Test index in an engine that does not exists.
+     *
+     * @expectedException \Swiftype\AppSearch\Exception\NotFoundException
+     */
+    public function testIndexingInInvalidEngine()
+    {
+        self::$defaultClient->getDocuments("not-an-engine", $this->getDocuments());
+    }
+
     private function getDocuments()
     {
         $parser = new \Symfony\Component\Yaml\Parser();
