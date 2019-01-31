@@ -359,11 +359,11 @@ class Client
      * Documentation: https://swiftype.com/documentation/app-search/api/curations#read
      *
      * @param string $engineName Name of the engine.
-     * @param array  $params     Listing params (include page[current] and page[size]).
+     * @param array  $listParams Listing params (include page[current] and page[size]).
      *
      * @return array
      */
-    public function listCurations($engineName, $params = null)
+    public function listCurations($engineName, $listParams = null)
     {
         $params = [
             'engine_name' => $engineName,
@@ -371,7 +371,7 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('ListCurations');
         $endpoint->setParams($params);
-        $endpoint->setBody($params);
+        $endpoint->setBody($listParams);
 
         return $this->performRequest($endpoint);
     }
@@ -382,11 +382,11 @@ class Client
      * Documentation: https://swiftype.com/documentation/app-search/api/documents#list
      *
      * @param string $engineName Name of the engine.
-     * @param array  $params     Listing params (include page[current] and page[size]).
+     * @param array  $listParams Listing params (include page[current] and page[size]).
      *
      * @return array
      */
-    public function listDocuments($engineName, $params = null)
+    public function listDocuments($engineName, $listParams = null)
     {
         $params = [
             'engine_name' => $engineName,
@@ -394,7 +394,7 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('ListDocuments');
         $endpoint->setParams($params);
-        $endpoint->setBody($params);
+        $endpoint->setBody($listParams);
 
         return $this->performRequest($endpoint);
     }
@@ -404,18 +404,18 @@ class Client
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/engines#list
      *
-     * @param array $params Listing params (include page[current] and page[size]).
+     * @param array $listParams Listing params (include page[current] and page[size]).
      *
      * @return array
      */
-    public function listEngines($params = null)
+    public function listEngines($listParams = null)
     {
         $params = [
         ];
 
         $endpoint = ($this->endpointBuilder)('ListEngines');
         $endpoint->setParams($params);
-        $endpoint->setBody($params);
+        $endpoint->setBody($listParams);
 
         return $this->performRequest($endpoint);
     }
@@ -426,11 +426,11 @@ class Client
      * Documentation: https://swiftype.com/documentation/app-search/api/synonyms#get
      *
      * @param string $engineName Name of the engine.
-     * @param array  $params     Listing params (include page[current] and page[size]).
+     * @param array  $listParams Listing params (include page[current] and page[size]).
      *
      * @return array
      */
-    public function listSynonymSets($engineName, $params = null)
+    public function listSynonymSets($engineName, $listParams = null)
     {
         $params = [
             'engine_name' => $engineName,
@@ -438,7 +438,7 @@ class Client
 
         $endpoint = ($this->endpointBuilder)('ListSynonymSets');
         $endpoint->setParams($params);
-        $endpoint->setBody($params);
+        $endpoint->setBody($listParams);
 
         return $this->performRequest($endpoint);
     }

@@ -10,6 +10,7 @@ namespace Swiftype\AppSearch\Tests\Integration;
 
 use PHPUnit\Framework\TestCase;
 use Swiftype\AppSearch\ClientBuilder;
+use Swiftype\AppSearch\Exception\BadRequestException;
 use Swiftype\AppSearch\Exception\NotFoundException;
 
 /**
@@ -46,7 +47,15 @@ class AbstractTestCase extends TestCase
      */
     public function setUp()
     {
-        self::$defaultClient->createEngine(['name' => self::$defaultEngine]);
+        do {
+            try {
+                self::$defaultClient->createEngine(['name' => self::$defaultEngine]);
+                $engineCreated = true;
+            } catch (BadRequestException $e) {
+                $engineCreated = false;
+                usleep(100);
+            }
+        } while (!$engineCreated);
     }
 
     /**
@@ -57,8 +66,18 @@ class AbstractTestCase extends TestCase
         try {
             self::$defaultClient->deleteEngine(self::$defaultEngine);
         } catch (NotFoundException $e) {
-            ;
+            // Engine is already deleted. Exception can be ignored.
         }
-        sleep(1); // TODO : report a self managed bug ?
+
+        $deletionIsPending = true;
+        while ($deletionIsPending) {
+            try {
+                self::$defaultClient->getEngine(self::$defaultEngine);
+                $deletionIsPending = true;
+                usleep(100);
+            } catch (NotFoundException $e) {
+                $deletionIsPending = false;
+            }
+        }
     }
 }

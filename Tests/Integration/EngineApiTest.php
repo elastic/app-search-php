@@ -19,6 +19,7 @@ class EngineApiTest extends AbstractTestCase
 {
     public function setUp()
     {
+        sleep(2);
         // Skip automatic engine creation.
     }
 
