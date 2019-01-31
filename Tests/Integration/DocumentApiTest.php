@@ -11,12 +11,6 @@ namespace Swiftype\AppSearch\Tests\Integration;
 /**
  * Integration test for the Documents API.
  *
- * TODO:
- * - Index to a invalid engine
- * - Update documents
- * - Test getting non existing documents
- * - Test ingesting invalid documents
- *
  * @package Swiftype\AppSearch\Test\Integration
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
@@ -29,17 +23,9 @@ class DocumentApiTest extends AbstractTestCase
     public const SAMPLE_DOC_FILE = __DIR__ . '/_data/sampleDocs.yml';
 
     /**
-     * Test all API methods to validate nominal behavior.
-     *
-     * Test scenario :
-     * - Index documents from sample data and verify there is no indexing errors
-     * - Retrieve all documents and check the number of docs is OK
-     * - Retrieve documents by id
-     * - Delete one document
-     * - Retrieve all documents and check the number of docs is still OK
-     * -
+     * Test indexing documents from sample data and check there is no errors.
      */
-    public function testApiMethods()
+    public function testIndexing()
     {
         $documents = $this->getDocuments();
 
@@ -48,19 +34,70 @@ class DocumentApiTest extends AbstractTestCase
         foreach ($indexingResponse as $documentIndexingResponse) {
             $this->assertEmpty($documentIndexingResponse['errors']);
         }
+    }
+
+    /**
+     * Test getting documents after they have been indexed.
+     */
+    public function testGetDocuments()
+    {
+        $documents = $this->getDocuments();
+        $documentIds = array_column($documents, 'id');
+
+        self::$defaultClient->indexDocuments(self::$defaultEngine, $documents);
+        $this->assertEquals($documents, self::$defaultClient->getDocuments(self::$defaultEngine, $documentIds));
+    }
+
+    /**
+     * Test listing documents after they have been indexed.
+     */
+    public function testListDocuments()
+    {
+        $documents = $this->getDocuments();
+        self::$defaultClient->indexDocuments(self::$defaultEngine, $documents);
 
         $listParams = ['page' => ['current' => 1, 'size' => 25]];
         $documentListResponse = self::$defaultClient->listDocuments(self::$defaultEngine, $listParams);
         $this->assertEquals($listParams['page']['current'], $documentListResponse['meta']['page']['current']);
         $this->assertEquals($listParams['page']['size'], $documentListResponse['meta']['page']['size']);
         $this->assertCount(count($documents), $documentListResponse['results']);
+    }
 
-        $docIds = array_column($documents, 'id');
-        $this->assertEquals($documents, self::$defaultClient->getDocuments(self::$defaultEngine, $docIds));
+    /**
+     * Test delete documents after they have been indexed.
+     */
+    public function testDeleteDocuments()
+    {
+        $documents = $this->getDocuments();
+        $documentIds = array_column($documents, 'id');
+        self::$defaultClient->indexDocuments(self::$defaultEngine, $documents);
 
-        self::$defaultClient->deleteDocuments(self::$defaultEngine, [current($docIds)]);
+        self::$defaultClient->deleteDocuments(self::$defaultEngine, [current($documentIds)]);
+
         $documentListResponse = self::$defaultClient->listDocuments(self::$defaultEngine);
         $this->assertCount(count($documents) - 1, $documentListResponse['results']);
+    }
+
+    /**
+     * Test delete documents after they have been indexed.
+     */
+    public function testUpdatingDocuments()
+    {
+        $documents = $this->getDocuments();
+        self::$defaultClient->updateSchema(self::$defaultEngine, ['title' => 'text']);
+        self::$defaultClient->indexDocuments(self::$defaultEngine, $documents);
+
+        $documentsUpdates = [['id' => $documents[0]['id'], 'title' => 'foo']];
+        $updateResponse = self::$defaultClient->updateDocuments(self::$defaultEngine, $documentsUpdates);
+        $this->assertEmpty(current($updateResponse)['errors']);
+    }
+
+    /**
+     * Test getting a document that does not exists.
+     */
+    public function testGetNonExistingDocuments()
+    {
+        $this->assertEquals([null], self::$defaultClient->getDocuments(self::$defaultEngine, ['foo']));
     }
 
     private function getDocuments()
