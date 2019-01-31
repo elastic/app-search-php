@@ -33,7 +33,7 @@ class SearchApiTest extends AbstractTestCase
             // We wait for the doc to be searchable before launching the test.
             $searchResponse = self::$defaultClient->search(self::$defaultEngine, ['query' => '']);
             $searchableDocs = $searchResponse['meta']['page']['total_results'];
-        } while($searchableDocs == 0);
+        } while ($searchableDocs == 0);
     }
 
     /**
@@ -61,7 +61,11 @@ class SearchApiTest extends AbstractTestCase
             $this->assertEquals($searchRequest['page']['current'], $searchResponse['meta']['page']['current']);
         }
 
-        $expectedResultCount = min($searchResponse['meta']['page']['total_results'], $searchResponse['meta']['page']['size']);
+        $expectedResultCount = min(
+            $searchResponse['meta']['page']['total_results'],
+            $searchResponse['meta']['page']['size']
+        );
+
         $this->assertCount($expectedResultCount, $searchResponse['results']);
 
         if ($expectedResultCount > 0) {
