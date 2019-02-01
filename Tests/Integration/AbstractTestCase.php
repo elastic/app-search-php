@@ -22,6 +22,9 @@ use Swiftype\AppSearch\Exception\NotFoundException;
  */
 class AbstractTestCase extends TestCase
 {
+    public const MAX_TRY_SETUP       = 10;
+    public const RETRY_SETUP_TIMEOUT = 500000;
+
     /**
      * @var \Swiftype\AppSearch\Client
      */
@@ -47,13 +50,27 @@ class AbstractTestCase extends TestCase
      */
     public function setUp()
     {
+        $tries = 0;
+
+        try {
+            // Make sure no test engine already exists.
+            self::$defaultClient->deleteEngine(self::$defaultEngine);
+        } catch (NotFoundException $e) {
+            // Engine is already deleted. Exception can be ignored.
+        }
+
+        // Try to create the engine as long you can try.
         do {
             try {
+                $tries++;
                 self::$defaultClient->createEngine(['name' => self::$defaultEngine]);
                 $engineCreated = true;
             } catch (BadRequestException $e) {
+                if ($tries > self::MAX_TRY_SETUP) {
+                    throw $e;
+                }
                 $engineCreated = false;
-                usleep(100);
+                usleep(self::RETRY_SETUP_TIMEOUT);
             }
         } while (!$engineCreated);
     }
@@ -67,17 +84,6 @@ class AbstractTestCase extends TestCase
             self::$defaultClient->deleteEngine(self::$defaultEngine);
         } catch (NotFoundException $e) {
             // Engine is already deleted. Exception can be ignored.
-        }
-
-        $deletionIsPending = true;
-        while ($deletionIsPending) {
-            try {
-                self::$defaultClient->getEngine(self::$defaultEngine);
-                $deletionIsPending = true;
-                usleep(100);
-            } catch (NotFoundException $e) {
-                $deletionIsPending = false;
-            }
         }
     }
 }

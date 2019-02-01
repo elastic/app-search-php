@@ -37,6 +37,7 @@ class SearchApiTest extends AbstractTestCase
             // We also wait for the schema to be synced.
             $schema = self::$defaultClient->getSchema(self::$defaultEngine);
             $isSchemaSynced = !empty($schema);
+            usleep(self::RETRY_SETUP_TIMEOUT);
         } while (!($areDocsSynced && $isSchemaSynced));
     }
 
