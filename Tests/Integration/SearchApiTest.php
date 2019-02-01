@@ -8,8 +8,6 @@
 
 namespace Swiftype\AppSearch\Tests\Integration;
 
-use Swiftype\AppSearch\Tests\Integration\Helper\SampleDocuments;
-
 /**
  * Integration test for the Search API.
  *
@@ -17,29 +15,12 @@ use Swiftype\AppSearch\Tests\Integration\Helper\SampleDocuments;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class SearchApiTest extends AbstractTestCase
+class SearchApiTest extends AbstractEngineTestCase
 {
     /**
-     * Import the documents into the default engine before running tests.
+     * @var boolean
      */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $documents = (new SampleDocuments())->getDocuments();
-        self::$defaultClient->indexDocuments(self::$defaultEngine, $documents);
-
-        do {
-            // We wait for the doc to be searchable before launching the test.
-            $searchResponse = self::$defaultClient->search(self::$defaultEngine, ['query' => '']);
-            $areDocsSynced = $searchResponse['meta']['page']['total_results'] == count($documents);
-
-            // We also wait for the schema to be synced.
-            $schema = self::$defaultClient->getSchema(self::$defaultEngine);
-            $isSchemaSynced = !empty($schema);
-            usleep(self::RETRY_SETUP_TIMEOUT);
-        } while (!($areDocsSynced && $isSchemaSynced));
-    }
+    protected static $importSampleDocs = true;
 
     /**
      * Run simple searches with optional pagination and check result returned.
@@ -54,7 +35,7 @@ class SearchApiTest extends AbstractTestCase
      */
     public function testSimpleSearch($searchRequest)
     {
-        $searchResponse = self::$defaultClient->search(self::$defaultEngine, $searchRequest);
+        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), $searchRequest);
 
         $this->assertArrayHasKey('meta', $searchResponse);
         $this->assertArrayHasKey('results', $searchResponse);
@@ -96,7 +77,7 @@ class SearchApiTest extends AbstractTestCase
     public function testFilteredSearch($filters, $expectedResultsCount)
     {
         $searchRequest = ['query' => '', 'filters' => $filters];
-        $searchResponse = self::$defaultClient->search(self::$defaultEngine, $searchRequest);
+        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), $searchRequest);
         $this->assertCount($expectedResultsCount, $searchResponse['results']);
     }
 
@@ -112,7 +93,7 @@ class SearchApiTest extends AbstractTestCase
     public function testFacetedSearch($facets, $expectedValueCount)
     {
         $searchRequest = ['query' => '', 'facets' => $facets];
-        $searchResponse = self::$defaultClient->search(self::$defaultEngine, $searchRequest);
+        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), $searchRequest);
         $this->assertArrayHasKey('facets', $searchResponse);
 
         foreach ($facets as $facetName => $facetDefinition) {
@@ -143,7 +124,7 @@ class SearchApiTest extends AbstractTestCase
     public function testSortedSearch($sortOrder, $expectedFirstDocId)
     {
         $searchRequest = ['query' => '', 'sort' => $sortOrder];
-        $searchResponse = self::$defaultClient->search(self::$defaultEngine, $searchRequest);
+        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), $searchRequest);
         $this->assertEquals($expectedFirstDocId, $searchResponse['results'][0]['id']['raw']);
     }
 
@@ -162,7 +143,7 @@ class SearchApiTest extends AbstractTestCase
     public function testSearchFields($queryText, $searchFields, $expectedResultsCount)
     {
         $searchRequest = ['query' => $queryText, 'search_fields' => $searchFields];
-        $searchResponse = self::$defaultClient->search(self::$defaultEngine, $searchRequest);
+        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), $searchRequest);
         $this->assertCount($expectedResultsCount, $searchResponse['results']);
     }
 }
