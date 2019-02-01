@@ -146,4 +146,23 @@ class SearchApiTest extends AbstractTestCase
         $searchResponse = self::$defaultClient->search(self::$defaultEngine, $searchRequest);
         $this->assertEquals($expectedFirstDocId, $searchResponse['results'][0]['id']['raw']);
     }
+
+    /**
+     * Run simple searches against sample data using search fields and check the number of results.
+     *
+     * @param string  $queryText            Search query text.
+     * @param array   $searchFields         Search fields.
+     * @param integer $expectedResultsCount Number of expected results in the sample data.
+     *
+     * @testWith ["cat", {"title": {}}, 2]
+     *           ["cat", {"title": {"weight": 1}}, 2]
+     *           ["cat", {"text" : {}}, 0]
+     *           ["cat", {"title": {"weight": 1}, "text": {}}, 2]
+     */
+    public function testSearchFields($queryText, $searchFields, $expectedResultsCount)
+    {
+        $searchRequest = ['query' => $queryText, 'search_fields' => $searchFields];
+        $searchResponse = self::$defaultClient->search(self::$defaultEngine, $searchRequest);
+        $this->assertCount($expectedResultsCount, $searchResponse['results']);
+    }
 }

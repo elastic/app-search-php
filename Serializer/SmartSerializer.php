@@ -44,6 +44,7 @@ class SmartSerializer implements SerializerInterface
         if (true === is_string($data)) {
             return $data;
         } else {
+            $this->prepareData($data);
             if (version_compare($this->PHP_VERSION, '5.6.6', '<') || !defined('JSON_PRESERVE_ZERO_FRACTION')) {
                 $data = json_encode($data);
             } else {
@@ -75,6 +76,21 @@ class SmartSerializer implements SerializerInterface
         }
 
         return $this->decode($data);
+    }
+
+    /**
+     * Prepare data for serialization :
+     * - Convert all empty arrays in stdClass, so we can get an object
+     *
+     * @param array $data
+     */
+    private function prepareData(&$data)
+    {
+        if (is_array($data) && empty($data)) {
+            $data = new \stdClass();
+        } else if (is_array($data)) {
+            array_walk($data, [$this, __METHOD__]);
+        }
     }
 
     /**
