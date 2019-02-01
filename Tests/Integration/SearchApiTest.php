@@ -126,4 +126,24 @@ class SearchApiTest extends AbstractTestCase
             $this->assertCount($expectedValueCount, $currentFacet['data']);
         }
     }
+
+    /**
+     * Run simple sorted searches against sample data and check the first result.
+     *
+     * @param array  $sortOrder          Sort order definition.
+     * @param string $expectedFirstDocId Id of the first expected match.
+     *
+     * @testWith [{"title": "asc"}, "JNDFojsd02"]
+     *           [{"title": "desc"}, "INscMGmhmX4"]
+     *           [[{"title": "asc"}], "JNDFojsd02"]
+     *           [[{"title": "desc"}], "INscMGmhmX4"]
+     *           [[{"_score": "desc"}], "JNDFojsd02"]
+     *           [[{"title": "asc"}, {"_score": "desc"}], "JNDFojsd02"]
+     */
+    public function testSortedSearch($sortOrder, $expectedFirstDocId)
+    {
+        $searchRequest = ['query' => '', 'sort' => $sortOrder];
+        $searchResponse = self::$defaultClient->search(self::$defaultEngine, $searchRequest);
+        $this->assertEquals($expectedFirstDocId, $searchResponse['results'][0]['id']['raw']);
+    }
 }
