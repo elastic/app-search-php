@@ -88,7 +88,7 @@ class SmartSerializer implements SerializerInterface
     {
         if (is_array($data) && empty($data)) {
             $data = new \stdClass();
-        } else if (is_array($data)) {
+        } elseif (is_array($data)) {
             array_walk($data, [$this, __METHOD__]);
         }
     }
