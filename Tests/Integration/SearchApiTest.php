@@ -32,8 +32,12 @@ class SearchApiTest extends AbstractTestCase
         do {
             // We wait for the doc to be searchable before launching the test.
             $searchResponse = self::$defaultClient->search(self::$defaultEngine, ['query' => '']);
-            $searchableDocs = $searchResponse['meta']['page']['total_results'];
-        } while ($searchableDocs == 0);
+            $areDocsSynced = $searchResponse['meta']['page']['total_results'] == count($documents);
+
+            // We also wait for the schema to be synced.
+            $schema = self::$defaultClient->getSchema(self::$defaultEngine);
+            $isSchemaSynced = !empty($schema);
+        } while (!($areDocsSynced && $isSchemaSynced));
     }
 
     /**
