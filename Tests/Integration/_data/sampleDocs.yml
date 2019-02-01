@@ -1,9 +1,19 @@
-- id: INscMGmhmX4,
+- id: INscMGmhmX4
   url: http://www.youtube.com/watch?v=v1uyQZNg2vE
   title: The Original Grumpy Cat
-  body: this is a test
+  text: this is a test
+  tags:
+  - LOL
+  - Cats
+  - Internet
+  - Hall Of Fame
 
 - id: JNDFojsd02
   url: http://www.youtube.com/watch?v=tsdfhk2j
   title: Another Grumpy Cat
-  body: this is also a test
+  text: this is also a test
+  tags:
+  - LOL
+  - Copycat
+  - Cats
+  - Internet

@@ -19,7 +19,7 @@ class Config
 {
     public function getEngineName()
     {
-        return 'php-integration-test';
+        return $_ENV['ST_ENGINE_NAME'] ?? 'php-integration-test';
     }
 
     public function getApiEndpoint()

@@ -23,6 +23,12 @@ class DocumentApiTest extends AbstractTestCase
     public const SAMPLE_DOC_FILE = __DIR__ . '/_data/sampleDocs.yml';
 
     /**
+     * @var array
+     */
+    private $documents;
+
+
+    /**
      * Test indexing documents from sample data and check there is no errors.
      */
     public function testIndexing()
@@ -112,8 +118,10 @@ class DocumentApiTest extends AbstractTestCase
 
     private function getDocuments()
     {
-        $parser = new \Symfony\Component\Yaml\Parser();
+        if ($this->documents == null) {
+            $this->documents = (new Helper\SampleDocuments())->getDocuments();
+        }
 
-        return $parser->parseFile(self::SAMPLE_DOC_FILE);
+        return $this->documents;
     }
 }
