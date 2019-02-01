@@ -22,7 +22,7 @@ use Swiftype\AppSearch\Exception\SwiftypeException;
  */
 class AbstractTestCase extends TestCase
 {
-    public const MAX_TRY_SETUP       = 10;
+    public const MAX_TRY_SETUP       = 20;
     public const RETRY_SETUP_TIMEOUT = 500000;
 
     /**
