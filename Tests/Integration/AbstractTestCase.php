@@ -52,12 +52,7 @@ class AbstractTestCase extends TestCase
     {
         $tries = 0;
 
-        try {
-            // Make sure no test engine already exists.
-            self::$defaultClient->deleteEngine(self::$defaultEngine);
-        } catch (NotFoundException $e) {
-            // Engine is already deleted. Exception can be ignored.
-        }
+        $this->tryDeleteDefaultEngine();
 
         // Try to create the engine as long you can try.
         do {
@@ -67,7 +62,8 @@ class AbstractTestCase extends TestCase
                 $engineCreated = true;
             } catch (BadRequestException $e) {
                 if ($tries > self::MAX_TRY_SETUP) {
-                    throw $e;
+                    $errorMessage = "Unable to create the default engine (%s) after %d tries";
+                    throw new \Exception(sprintf($errorMessage, self::$defaultEngine, self::MAX_TRY_SETUP));
                 }
                 $engineCreated = false;
                 usleep(self::RETRY_SETUP_TIMEOUT);
@@ -79,6 +75,14 @@ class AbstractTestCase extends TestCase
      * Destroy the default engine when ending a test.
      */
     public function tearDown()
+    {
+        $this->tryDeleteDefaultEngine();
+    }
+
+    /**
+     * Try to delete the default engine if it exists.
+     */
+    private function tryDeleteDefaultEngine()
     {
         try {
             self::$defaultClient->deleteEngine(self::$defaultEngine);
