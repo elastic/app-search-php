@@ -11,7 +11,7 @@ namespace Swiftype\AppSearch\Tests\Integration;
 use PHPUnit\Framework\TestCase;
 use Swiftype\AppSearch\ClientBuilder;
 use Swiftype\AppSearch\Exception\BadRequestException;
-use Swiftype\AppSearch\Exception\NotFoundException;
+use Swiftype\AppSearch\Exception\SwiftypeException;
 
 /**
  * A base class for running client tests.
@@ -86,7 +86,7 @@ class AbstractTestCase extends TestCase
     {
         try {
             self::$defaultClient->deleteEngine(self::$defaultEngine);
-        } catch (NotFoundException $e) {
+        } catch (SwiftypeException $e) {
             // Engine is already deleted. Exception can be ignored.
         }
     }
