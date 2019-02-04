@@ -15,27 +15,19 @@ namespace Swiftype\AppSearch\Tests\Integration;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class DocumentApiTest extends AbstractTestCase
+class DocumentApiTest extends AbstractEngineTestCase
 {
-    /**
-     * @var string
-     */
-    public const SAMPLE_DOC_FILE = __DIR__ . '/_data/sampleDocs.yml';
-
-    /**
-     * @var array
-     */
-    private $documents;
-
-
     /**
      * Test indexing documents from sample data and check there is no errors.
      */
     public function testIndexing()
     {
-        $documents = $this->getDocuments();
+        $documents = $this->getSampleDocuments();
+        $engineName = $this->getDefaultEngineName();
+        $client = $this->getDefaultClient();
 
-        $indexingResponse = self::$defaultClient->indexDocuments(self::$defaultEngine, $documents);
+        $indexingResponse = $client->indexDocuments($engineName, $documents);
+
         $this->assertCount(count($documents), $indexingResponse);
         foreach ($indexingResponse as $documentIndexingResponse) {
             $this->assertEmpty($documentIndexingResponse['errors']);
@@ -47,11 +39,13 @@ class DocumentApiTest extends AbstractTestCase
      */
     public function testGetDocuments()
     {
-        $documents = $this->getDocuments();
+        $documents = $this->getSampleDocuments();
+        $engineName = $this->getDefaultEngineName();
+        $client = $this->getDefaultClient();
         $documentIds = array_column($documents, 'id');
 
-        self::$defaultClient->indexDocuments(self::$defaultEngine, $documents);
-        $this->assertEquals($documents, self::$defaultClient->getDocuments(self::$defaultEngine, $documentIds));
+        $client->indexDocuments($engineName, $documents);
+        $this->assertEquals($documents, $client->getDocuments($engineName, $documentIds));
     }
 
     /**
@@ -59,11 +53,13 @@ class DocumentApiTest extends AbstractTestCase
      */
     public function testListDocuments()
     {
-        $documents = $this->getDocuments();
-        self::$defaultClient->indexDocuments(self::$defaultEngine, $documents);
+        $documents = $this->getSampleDocuments();
+        $engineName = $this->getDefaultEngineName();
+        $client = $this->getDefaultClient();
+        $client->indexDocuments($engineName, $documents);
 
         $listParams = ['page' => ['current' => 1, 'size' => 25]];
-        $documentListResponse = self::$defaultClient->listDocuments(self::$defaultEngine, $listParams);
+        $documentListResponse = $client->listDocuments($engineName, $listParams);
         $this->assertEquals($listParams['page']['current'], $documentListResponse['meta']['page']['current']);
         $this->assertEquals($listParams['page']['size'], $documentListResponse['meta']['page']['size']);
         $this->assertCount(count($documents), $documentListResponse['results']);
@@ -74,13 +70,15 @@ class DocumentApiTest extends AbstractTestCase
      */
     public function testDeleteDocuments()
     {
-        $documents = $this->getDocuments();
+        $documents = $this->getSampleDocuments();
+        $engineName = $this->getDefaultEngineName();
+        $client = $this->getDefaultClient();
         $documentIds = array_column($documents, 'id');
-        self::$defaultClient->indexDocuments(self::$defaultEngine, $documents);
+        $client->indexDocuments($engineName, $documents);
 
-        self::$defaultClient->deleteDocuments(self::$defaultEngine, [current($documentIds)]);
+        $client->deleteDocuments($engineName, [current($documentIds)]);
 
-        $documentListResponse = self::$defaultClient->listDocuments(self::$defaultEngine);
+        $documentListResponse = $client->listDocuments($engineName);
         $this->assertCount(count($documents) - 1, $documentListResponse['results']);
     }
 
@@ -89,12 +87,14 @@ class DocumentApiTest extends AbstractTestCase
      */
     public function testUpdatingDocuments()
     {
-        $documents = $this->getDocuments();
-        self::$defaultClient->updateSchema(self::$defaultEngine, ['title' => 'text']);
-        self::$defaultClient->indexDocuments(self::$defaultEngine, $documents);
+        $documents = $this->getSampleDocuments();
+        $engineName = $this->getDefaultEngineName();
+        $client = $this->getDefaultClient();
+        $client ->updateSchema($engineName, ['title' => 'text']);
+        $client ->indexDocuments($engineName, $documents);
 
         $documentsUpdates = [['id' => $documents[0]['id'], 'title' => 'foo']];
-        $updateResponse = self::$defaultClient->updateDocuments(self::$defaultEngine, $documentsUpdates);
+        $updateResponse = $client->updateDocuments($engineName, $documentsUpdates);
         $this->assertEmpty(current($updateResponse)['errors']);
     }
 
@@ -103,7 +103,7 @@ class DocumentApiTest extends AbstractTestCase
      */
     public function testGetNonExistingDocuments()
     {
-        $this->assertEquals([null], self::$defaultClient->getDocuments(self::$defaultEngine, ['foo']));
+        $this->assertEquals([null], $this->getDefaultClient()->getDocuments($this->getDefaultEngineName(), ['foo']));
     }
 
     /**
@@ -113,15 +113,6 @@ class DocumentApiTest extends AbstractTestCase
      */
     public function testIndexingInInvalidEngine()
     {
-        self::$defaultClient->getDocuments("not-an-engine", $this->getDocuments());
-    }
-
-    private function getDocuments()
-    {
-        if ($this->documents == null) {
-            $this->documents = (new Helper\SampleDocuments())->getDocuments();
-        }
-
-        return $this->documents;
+        $this->getDefaultClient()->getDocuments("not-an-engine", $this->getSampleDocuments());
     }
 }

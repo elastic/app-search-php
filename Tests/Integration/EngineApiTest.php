@@ -8,6 +8,8 @@
 
 namespace Swiftype\AppSearch\Tests\Integration;
 
+use Swiftype\AppSearch\Exception\NotFoundException;
+
 /**
  * Integrations test for the Engine API.
  *
@@ -15,12 +17,27 @@ namespace Swiftype\AppSearch\Tests\Integration;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class EngineApiTest extends AbstractTestCase
+class EngineApiTest extends AbstractClientTestCase
 {
-    public function setUp()
+    /**
+     * @var array
+     */
+    private $engines = [];
+
+    /**
+     * Delete the engines created during the test.
+     */
+    public function tearDown()
     {
-        sleep(2);
-        // Skip automatic engine creation.
+        foreach ($this->engines as $engineName) {
+            try {
+                $this->getDefaultClient()->deleteEngine($engineName);
+                var_dump($engineName);
+            } catch (NotFoundException $e) {
+                // The engine have already been deleted. Nothing to do.
+            }
+        }
+        $this->engines = [];
     }
 
     /**
@@ -30,23 +47,28 @@ class EngineApiTest extends AbstractTestCase
      * - Try to list the engines and check the new engine is present in the entries.
      * - Delete the engine and check the result.
      *
-     * @dataProvider getLanguages
+     * @param string $language Engine language.
+     *
+     * @testWith ["en"]
+     *           [null]
      */
     public function testApiMethods($language)
     {
-        $client = self::$defaultClient;
+        $client     = $this->getDefaultClient();
+        $engineName = $this->getEngineName(__METHOD__, func_get_args());
 
-        $engineData = ['name' => self::$defaultEngine, 'language' => $language];
-        $this->assertEquals(self::$defaultEngine, $client->createEngine($engineData)['name']);
+        $engineData = ['name' => $engineName, 'language' => $language];
+        $this->assertEquals($engineName, $client->createEngine($engineData)['name']);
+        $this->engines[] = $engineName;
 
-        $engine = $client->getEngine(self::$defaultEngine);
-        $this->assertEquals(self::$defaultEngine, $engine['name']);
+        $engine = $client->getEngine($engineName);
+        $this->assertEquals($engineName, $engine['name']);
         $this->assertEquals($language, $engine['language']);
 
         $engineList = $client->listEngines(['page' => ['current' => 1, 'size' => 20]]);
         $this->assertContains($engine, $engineList['results']);
 
-        $this->assertTrue($client->deleteEngine(self::$defaultEngine)['deleted']);
+        $this->assertTrue($client->deleteEngine($engineName)['deleted']);
     }
 
     /**
@@ -56,7 +78,7 @@ class EngineApiTest extends AbstractTestCase
      */
     public function testGetNonExistingEngine()
     {
-        self::$defaultClient->getEngine('some-non-existing-engine');
+        $this->getDefaultClient()->getEngine('some-non-existing-engine');
     }
 
     /**
@@ -66,49 +88,32 @@ class EngineApiTest extends AbstractTestCase
      */
     public function testDeleteNonExistingEngine()
     {
-        self::$defaultClient->getEngine('some-non-existing-engine');
+        $this->getDefaultClient()->getEngine('some-non-existing-engine');
     }
 
     /**
-     * Try to delete a non existing engine.
+     * Try to create an already existing engine.
      *
      * @expectedException \Swiftype\AppSearch\Exception\BadRequestException
      */
     public function testCreateAlreadyExistingEngine()
     {
-        self::$defaultClient->createEngine(['name' => self::$defaultEngine]);
-        self::$defaultClient->createEngine(['name' => self::$defaultEngine]);
+        $engineName = $this->getEngineName(__METHOD__);
+        $this->engines[] = $engineName;
+
+        $this->getDefaultClient()->createEngine(['name' => $engineName]);
+        $this->getDefaultClient()->createEngine(['name' => $engineName]);
     }
 
-    /**
-     * Try to create engine with invalid params.
-     *
-     * @dataProvider getInvalidCreateEngineRequest
-     *
-     * @expectedException \Swiftype\AppSearch\Exception\BadRequestException
-     */
-    public function testCreateEngineFromInvalidParams($engineData)
+    private function getEngineName($method, $params = [])
     {
-        self::$defaultClient->createEngine($engineData);
-    }
+        $nameParts = [$this->getDefaultEngineName()];
 
-    /**
-     * List of languages used in test.
-     *
-     * @return array
-     */
-    public function getLanguages()
-    {
-        return [['en'], [null]];
-    }
+        $methodParts = explode(":", $method);
+        $nameParts[]  = strtolower(end($methodParts));
 
-    public function getInvalidCreateEngineRequest()
-    {
-        return [
-            [[]],
-            [['name' => 'Default Engine']],
-            [['name' => self::$defaultEngine, 'langugage' => 'ca']],
-            [['name' => self::$defaultEngine, 'foo' => 'bar']],
-        ];
+        $nameParts = array_merge($nameParts, array_filter($params));
+
+        return implode('-', $nameParts);
     }
 }
