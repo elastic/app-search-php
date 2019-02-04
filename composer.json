@@ -12,9 +12,15 @@
   "authors" : [
     {"name" : "Aurélien FOUCRET", "email": "aurelien.foucret@elastic.co"}
   ],
+  "repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/swiftype/swiftype-common-php"
+    }
+  ],
   "require" : {
     "php" : "^7.0",
-    "guzzlehttp/ringphp" : "^1.0",
+    "swiftype/swiftype-common-php" : "dev-master@dev",
     "psr/log" : "^1.0."
   },
   "require-dev" : {
