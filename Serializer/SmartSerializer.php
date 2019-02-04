@@ -8,7 +8,7 @@
 
 namespace Swiftype\AppSearch\Serializer;
 
-use Swiftype\AppSearch\Exception\JsonErrorException;
+use Swiftype\Exception\JsonErrorException;
 
 /**
  * Default serializer used by the client.
@@ -80,7 +80,7 @@ class SmartSerializer implements SerializerInterface
 
     /**
      * Prepare data for serialization :
-     * - Convert all empty arrays in stdClass, so we can get an object
+     * - Convert all empty arrays in stdClass, so we can get an object.
      *
      * @param array $data
      */

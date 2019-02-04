@@ -8,7 +8,7 @@
 
 namespace Swiftype\AppSearch\Endpoint;
 
-use Swiftype\AppSearch\Exception\UnexpectedValueException;
+use Swiftype\Exception\UnexpectedValueException;
 
 /**
  * Abstract endpoint implementation.
