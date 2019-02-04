@@ -15,7 +15,7 @@ namespace Swiftype\AppSearch\Tests\Integration;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class ClickApiTest extends AbstractEngineTestCase
+class SearchSettingsApiTest extends AbstractEngineTestCase
 {
     /**
      * @var boolean
