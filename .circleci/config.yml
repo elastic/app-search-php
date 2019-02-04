@@ -33,7 +33,7 @@ jobs:
         at: .
     - run:
         name: Unit testing
-        command: vendor/bin/phpunit -c resources/dev/tests/phpunit.xml.dist --testsuite unit
+        command: vendor/bin/phpunit -c phpunit.xml.dist --testsuite unit
 
   test_integration:
     <<: *defaults
@@ -42,7 +42,7 @@ jobs:
         at: .
     - run:
         name: Integration testing
-        command: ST_ENGINE_NAME="php-integration-test-$CIRCLE_BUILD_NUM" vendor/bin/phpunit -c resources/dev/tests/phpunit.xml.dist --testsuite integration
+        command: ST_ENGINE_NAME="php-integration-test-$CIRCLE_BUILD_NUM" vendor/bin/phpunit -c phpunit.xml.dist --testsuite integration
 
   test_phpcs:
     <<: *defaults
