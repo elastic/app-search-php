@@ -8,8 +8,6 @@
 
 namespace Swiftype\AppSearch;
 
-use Swiftype\AbstractClientBuilder;
-
 /**
  * Use this class to instantiate new client and all their dependencies.
  *
@@ -107,7 +105,7 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getHandler()
     {
@@ -120,7 +118,7 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getEndpointBuilder()
     {
