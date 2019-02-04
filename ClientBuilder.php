@@ -8,6 +8,8 @@
 
 namespace Swiftype\AppSearch;
 
+use Swiftype\AbstractClientBuilder;
+
 /**
  * Use this class to instantiate new client and all their dependencies.
  *
@@ -15,7 +17,7 @@ namespace Swiftype\AppSearch;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class ClientBuilder
+class ClientBuilder extends \Swiftype\AbstractClientBuilder
 {
     /**
      * @var string
@@ -31,37 +33,6 @@ class ClientBuilder
      * @var string
      */
     private $apiKey;
-
-    /**
-     * @var \Swiftype\Serializer\SerializerInterface
-     */
-    private $serializer;
-
-    /**
-     * @var callable
-     */
-    private $handler;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $tracer;
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->handler = new \GuzzleHttp\Ring\Client\CurlHandler();
-        $this->serializer = new \Swiftype\Serializer\SmartSerializer();
-        $this->logger = new \Psr\Log\NullLogger();
-        $this->tracer = new \Psr\Log\NullLogger();
-    }
 
     /**
      * Instantiate a new client builder.
@@ -132,34 +103,26 @@ class ClientBuilder
      */
     public function build()
     {
-        return $this->instantiate();
+        return new Client($this->getEndpointBuilder(), $this->getConnection());
     }
 
     /**
-     * Instantiate the client.
-     *
-     * @return \Swiftype\AppSearch\Client
+     * {@inheritDoc}
      */
-    private function instantiate()
+    protected function getHandler()
     {
-        $this->handler = new Connection\Handler\RequestAuthenticationHandler($this->handler, $this->apiKey);
-        $this->handler = new \Swiftype\Connection\Handler\RequestUrlHandler($this->handler, $this->apiEndpoint, self::URI_PREFIX);
-        $this->handler = new \Swiftype\Connection\Handler\RequestSerializationHandler($this->handler, $this->serializer);
-        $this->handler = new \Swiftype\Connection\Handler\ConnectionErrorHandler($this->handler);
-        $this->handler = new \Swiftype\Connection\Handler\ResponseSerializationHandler($this->handler, $this->serializer);
-        $this->handler = new Connection\Handler\ApiErrorHandler($this->handler);
+        $handler = parent::getHandler();
+        $handler = new Connection\Handler\RequestAuthenticationHandler($handler, $this->apiKey);
+        $handler = new \Swiftype\Connection\Handler\RequestUrlHandler($handler, $this->apiEndpoint, self::URI_PREFIX);
+        $handler = new Connection\Handler\ApiErrorHandler($handler);
 
-        $connection = new \Swiftype\Connection\Connection($this->handler, $this->logger, $this->tracer);
-
-        return new Client($this->endpointBuilder(), $connection);
+        return $handler;
     }
 
     /**
-     * Instantiate the endpoint builder.
-     *
-     * @return \Swiftype\Endpoint\Builder
+     * {@inheritDoc}
      */
-    private function endpointBuilder()
+    protected function getEndpointBuilder()
     {
         return new \Swiftype\Endpoint\Builder(__NAMESPACE__ . "\Endpoint");
     }
