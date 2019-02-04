@@ -23,12 +23,12 @@ class AbstractEngineTestCase extends AbstractClientTestCase
     public const DOC_SAMPLE_FILE = __DIR__ . '/_data/sampleDocs.yml';
 
     /**
-     * @var integer
+     * @var int
      */
     public const SYNC_RETRY_INTERVAL = 500000;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected static $importSampleDocs = false;
 
@@ -47,7 +47,6 @@ class AbstractEngineTestCase extends AbstractClientTestCase
     }
 
     /**
-     *
      * Delete the default engine before exiting the class.
      */
     public static function tearDownAfterClass()
@@ -60,9 +59,9 @@ class AbstractEngineTestCase extends AbstractClientTestCase
      */
     protected static function importSampleDocuments($waitForSearchableDocs = true)
     {
-        $client     = self::getDefaultClient();
+        $client = self::getDefaultClient();
         $engineName = self::getDefaultEngineName();
-        $documents  = self::getSampleDocuments();
+        $documents = self::getSampleDocuments();
 
         $indexingResponse = $client->indexDocuments($engineName, $documents);
 
@@ -84,7 +83,8 @@ class AbstractEngineTestCase extends AbstractClientTestCase
 
     protected static function getSampleDocuments()
     {
-        $parser     = new \Symfony\Component\Yaml\Parser();
+        $parser = new \Symfony\Component\Yaml\Parser();
+
         return $parser->parseFile(self::DOC_SAMPLE_FILE);
     }
 }

@@ -18,7 +18,7 @@ namespace Swiftype\AppSearch\Tests\Integration;
 class SchemaApiTest extends AbstractEngineTestCase
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected static $importSampleDocs = true;
 
@@ -56,14 +56,13 @@ class SchemaApiTest extends AbstractEngineTestCase
         $this->assertEquals($fieldType, $schema[$fieldName]);
     }
 
-
     /**
      * Test invalid schema updates.
      *
      * @param string $fieldName
      * @param string $fieldType
      *
-     * @expectedException \Swiftype\AppSearch\Exception\BadRequestException
+     * @expectedException \Swiftype\Exception\BadRequestException
      *
      * @testWith ["string_field", "not-a-valid-type"]
      *           ["id", "number"]

@@ -18,7 +18,7 @@ namespace Swiftype\AppSearch\Tests\Integration;
 class SearchApiTest extends AbstractEngineTestCase
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected static $importSampleDocs = true;
 
@@ -64,8 +64,8 @@ class SearchApiTest extends AbstractEngineTestCase
     /**
      * Run simple filtered searches and check the number of results.
      *
-     * @param array   $filters              Search filters.
-     * @param integer $expectedResultsCount Number of expected results in the sample data.
+     * @param array $filters              Search filters.
+     * @param int   $expectedResultsCount Number of expected results in the sample data.
      *
      * @testWith [{"tags": ["Cats"]}, 2]
      *           [{"tags": ["Copycat"]}, 1]
@@ -84,8 +84,8 @@ class SearchApiTest extends AbstractEngineTestCase
     /**
      * Run simple facets searches and check the number of results.
      *
-     * @param array   $facets             Search Facets.
-     * @param integer $expectedValueCount Number of values expected in the facet.
+     * @param array $facets             Search Facets.
+     * @param int   $expectedValueCount Number of values expected in the facet.
      *
      * @testWith [{"tags": {"type": "value"}}, 5]
      *           [{"tags": [{"type": "value", "size": 3, "sort": {"value": "asc"}}]}, 3]
@@ -131,9 +131,9 @@ class SearchApiTest extends AbstractEngineTestCase
     /**
      * Run simple searches against sample data using search fields and check the number of results.
      *
-     * @param string  $queryText            Search query text.
-     * @param array   $searchFields         Search fields.
-     * @param integer $expectedResultsCount Number of expected results in the sample data.
+     * @param string $queryText            Search query text.
+     * @param array  $searchFields         Search fields.
+     * @param int    $expectedResultsCount Number of expected results in the sample data.
      *
      * @testWith ["cat", {"title": {}}, 2]
      *           ["cat", {"title": {"weight": 1}}, 2]

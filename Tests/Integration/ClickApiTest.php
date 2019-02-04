@@ -18,7 +18,7 @@ namespace Swiftype\AppSearch\Tests\Integration;
 class ClickApiTest extends AbstractEngineTestCase
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected static $importSampleDocs = true;
 

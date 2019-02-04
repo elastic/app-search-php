@@ -9,10 +9,10 @@
 namespace Swiftype\AppSearch\Connection\Handler;
 
 use GuzzleHttp\Ring\Core;
-use Swiftype\AppSearch\Exception\ConnectionException;
-use Swiftype\AppSearch\Exception\CouldNotConnectToHostException;
-use Swiftype\AppSearch\Exception\CouldNotResolveHostException;
-use Swiftype\AppSearch\Exception\OperationTimeoutException;
+use Swiftype\Exception\ConnectionException;
+use Swiftype\Exception\CouldNotConnectToHostException;
+use Swiftype\Exception\CouldNotResolveHostException;
+use Swiftype\Exception\OperationTimeoutException;
 
 /**
  * This handler manage connections errors and throw comprehensive exceptions to the user.

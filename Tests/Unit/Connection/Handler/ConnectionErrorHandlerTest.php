@@ -54,27 +54,27 @@ class ConnectionErrornHandlerTest extends TestCase
         $data = [
           [
             ['error' => new \Exception('Unknown exception')],
-            \Swiftype\AppSearch\Exception\ConnectionException::class,
+            \Swiftype\Exception\ConnectionException::class,
             'Unknown exception',
           ],
           [
             ['error' => new \Exception('Unknown exception'), 'curl' => []],
-            \Swiftype\AppSearch\Exception\ConnectionException::class,
+            \Swiftype\Exception\ConnectionException::class,
             'Unknown exception',
           ],
           [
             ['error' => new \Exception('Could not resolve host'), 'curl' => ['errno' => CURLE_COULDNT_RESOLVE_HOST]],
-            \Swiftype\AppSearch\Exception\CouldNotResolveHostException::class,
+            \Swiftype\Exception\CouldNotResolveHostException::class,
             'Could not resolve host',
           ],
           [
             ['error' => new \Exception('Could not connect to host'), 'curl' => ['errno' => CURLE_COULDNT_CONNECT]],
-            \Swiftype\AppSearch\Exception\CouldNotConnectToHostException::class,
+            \Swiftype\Exception\CouldNotConnectToHostException::class,
             'Could not connect to host',
           ],
           [
             ['error' => new \Exception('Timeout exception'), 'curl' => ['errno' => CURLE_OPERATION_TIMEOUTED]],
-            \Swiftype\AppSearch\Exception\OperationTimeoutException::class,
+            \Swiftype\Exception\OperationTimeoutException::class,
             'Timeout exception',
           ],
           [

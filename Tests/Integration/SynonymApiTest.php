@@ -18,7 +18,7 @@ namespace Swiftype\AppSearch\Tests\Integration;
 class SynonymApiTest extends AbstractEngineTestCase
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected static $importSampleDocs = false;
 

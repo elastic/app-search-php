@@ -9,10 +9,10 @@
 namespace Swiftype\AppSearch\Connection\Handler;
 
 use GuzzleHttp\Ring\Core;
-use Swiftype\AppSearch\Exception\ApiException;
-use Swiftype\AppSearch\Exception\AuthenticationException;
-use Swiftype\AppSearch\Exception\BadRequestException;
-use Swiftype\AppSearch\Exception\NotFoundException;
+use Swiftype\Exception\ApiException;
+use Swiftype\Exception\AuthenticationException;
+use Swiftype\Exception\BadRequestException;
+use Swiftype\Exception\NotFoundException;
 
 /**
  * This handler manage server side errors and throw comprehensive exceptions to the user.

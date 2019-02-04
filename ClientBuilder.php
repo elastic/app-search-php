@@ -10,7 +10,7 @@ namespace Swiftype\AppSearch;
 
 use Swiftype\AppSearch\Connection\Connection;
 use Swiftype\AppSearch\Connection\Handler;
-use Swiftype\AppSearch\Exception\UnexpectedValueException;
+use Swiftype\Exception\UnexpectedValueException;
 
 /**
  * Use this class to instantiate new client and all their dependencies.

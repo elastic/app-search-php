@@ -8,7 +8,7 @@
 
 namespace Swiftype\AppSearch\Tests\Integration;
 
-use Swiftype\AppSearch\Exception\NotFoundException;
+use Swiftype\Exception\NotFoundException;
 
 /**
  * Integrations test for the Engine API.
@@ -54,7 +54,7 @@ class EngineApiTest extends AbstractClientTestCase
      */
     public function testApiMethods($language)
     {
-        $client     = $this->getDefaultClient();
+        $client = $this->getDefaultClient();
         $engineName = $this->getEngineName(__METHOD__, func_get_args());
 
         $engineData = ['name' => $engineName, 'language' => $language];
@@ -74,7 +74,7 @@ class EngineApiTest extends AbstractClientTestCase
     /**
      * Try to get a non existing engine.
      *
-     * @expectedException \Swiftype\AppSearch\Exception\NotFoundException
+     * @expectedException \Swiftype\Exception\NotFoundException
      */
     public function testGetNonExistingEngine()
     {
@@ -84,7 +84,7 @@ class EngineApiTest extends AbstractClientTestCase
     /**
      * Try to delete a non existing engine.
      *
-     * @expectedException \Swiftype\AppSearch\Exception\NotFoundException
+     * @expectedException \Swiftype\Exception\NotFoundException
      */
     public function testDeleteNonExistingEngine()
     {
@@ -94,7 +94,7 @@ class EngineApiTest extends AbstractClientTestCase
     /**
      * Try to create an already existing engine.
      *
-     * @expectedException \Swiftype\AppSearch\Exception\BadRequestException
+     * @expectedException \Swiftype\Exception\BadRequestException
      */
     public function testCreateAlreadyExistingEngine()
     {
@@ -109,8 +109,8 @@ class EngineApiTest extends AbstractClientTestCase
     {
         $nameParts = [$this->getDefaultEngineName()];
 
-        $methodParts = explode(":", $method);
-        $nameParts[]  = strtolower(end($methodParts));
+        $methodParts = explode(':', $method);
+        $nameParts[] = strtolower(end($methodParts));
 
         $nameParts = array_merge($nameParts, array_filter($params));
 
