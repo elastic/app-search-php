@@ -11,34 +11,12 @@ namespace Swiftype\AppSearch;
 /**
  * Client implementation.
  *
- * @package Swiftype\AppSearch
+ * @package Swiftype
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class Client
+class Client extends \Swiftype\AbstractClient
 {
-    /**
-     * @var Connection\Connection
-     */
-    private $connection;
-
-    /**
-     * @var callable
-     */
-    private $endpointBuilder;
-
-    /**
-     * Client constructor.
-     *
-     * @param callable              $endpointBuilder Allow to access endpoints.
-     * @param Connection\Connection $connection      HTTP connection handler.
-     */
-    public function __construct(callable $endpointBuilder, Connection\Connection $connection)
-    {
-        $this->endpointBuilder = $endpointBuilder;
-        $this->connection = $connection;
-    }
-
     // phpcs:disable
 
     /**
@@ -57,7 +35,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('CreateCuration');
+        $endpoint = $this->getEndpoint('CreateCuration');
         $endpoint->setParams($params);
         $endpoint->setBody($curationData);
 
@@ -78,7 +56,7 @@ class Client
         $params = [
         ];
 
-        $endpoint = ($this->endpointBuilder)('CreateEngine');
+        $endpoint = $this->getEndpoint('CreateEngine');
         $endpoint->setParams($params);
         $endpoint->setBody($engine);
 
@@ -101,7 +79,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('CreateSynonymSet');
+        $endpoint = $this->getEndpoint('CreateSynonymSet');
         $endpoint->setParams($params);
         $endpoint->setBody($synonymSetData);
 
@@ -125,7 +103,7 @@ class Client
             'curation_id' => $curationId,
         ];
 
-        $endpoint = ($this->endpointBuilder)('DeleteCuration');
+        $endpoint = $this->getEndpoint('DeleteCuration');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -147,7 +125,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('DeleteDocuments');
+        $endpoint = $this->getEndpoint('DeleteDocuments');
         $endpoint->setParams($params);
         $endpoint->setBody($documentIds);
 
@@ -169,7 +147,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('DeleteEngine');
+        $endpoint = $this->getEndpoint('DeleteEngine');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -192,7 +170,7 @@ class Client
             'synonym_set_id' => $synonymSetId,
         ];
 
-        $endpoint = ($this->endpointBuilder)('DeleteSynonymSet');
+        $endpoint = $this->getEndpoint('DeleteSynonymSet');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -215,7 +193,7 @@ class Client
             'curation_id' => $curationId,
         ];
 
-        $endpoint = ($this->endpointBuilder)('GetCuration');
+        $endpoint = $this->getEndpoint('GetCuration');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -237,7 +215,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('GetDocuments');
+        $endpoint = $this->getEndpoint('GetDocuments');
         $endpoint->setParams($params);
         $endpoint->setBody($documentIds);
 
@@ -259,7 +237,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('GetEngine');
+        $endpoint = $this->getEndpoint('GetEngine');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -280,7 +258,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('GetSchema');
+        $endpoint = $this->getEndpoint('GetSchema');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -301,7 +279,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('GetSearchSettings');
+        $endpoint = $this->getEndpoint('GetSearchSettings');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -324,7 +302,7 @@ class Client
             'synonym_set_id' => $synonymSetId,
         ];
 
-        $endpoint = ($this->endpointBuilder)('GetSynonymSet');
+        $endpoint = $this->getEndpoint('GetSynonymSet');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -346,7 +324,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('IndexDocuments');
+        $endpoint = $this->getEndpoint('IndexDocuments');
         $endpoint->setParams($params);
         $endpoint->setBody($documents);
 
@@ -369,7 +347,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('ListCurations');
+        $endpoint = $this->getEndpoint('ListCurations');
         $endpoint->setParams($params);
         $endpoint->setBody($listParams);
 
@@ -392,7 +370,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('ListDocuments');
+        $endpoint = $this->getEndpoint('ListDocuments');
         $endpoint->setParams($params);
         $endpoint->setBody($listParams);
 
@@ -413,7 +391,7 @@ class Client
         $params = [
         ];
 
-        $endpoint = ($this->endpointBuilder)('ListEngines');
+        $endpoint = $this->getEndpoint('ListEngines');
         $endpoint->setParams($params);
         $endpoint->setBody($listParams);
 
@@ -436,7 +414,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('ListSynonymSets');
+        $endpoint = $this->getEndpoint('ListSynonymSets');
         $endpoint->setParams($params);
         $endpoint->setBody($listParams);
 
@@ -459,7 +437,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('MultiSearch');
+        $endpoint = $this->getEndpoint('MultiSearch');
         $endpoint->setParams($params);
         $endpoint->setBody($queries);
 
@@ -481,7 +459,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('ResetSearchSettings');
+        $endpoint = $this->getEndpoint('ResetSearchSettings');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -503,7 +481,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('Search');
+        $endpoint = $this->getEndpoint('Search');
         $endpoint->setParams($params);
         $endpoint->setBody($searchRequest);
 
@@ -526,7 +504,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('SendClick');
+        $endpoint = $this->getEndpoint('SendClick');
         $endpoint->setParams($params);
         $endpoint->setBody($clickData);
 
@@ -551,7 +529,7 @@ class Client
             'curation_id' => $curationId,
         ];
 
-        $endpoint = ($this->endpointBuilder)('UpdateCuration');
+        $endpoint = $this->getEndpoint('UpdateCuration');
         $endpoint->setParams($params);
         $endpoint->setBody($curationData);
 
@@ -574,7 +552,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('UpdateDocuments');
+        $endpoint = $this->getEndpoint('UpdateDocuments');
         $endpoint->setParams($params);
         $endpoint->setBody($documents);
 
@@ -597,7 +575,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('UpdateSchema');
+        $endpoint = $this->getEndpoint('UpdateSchema');
         $endpoint->setParams($params);
         $endpoint->setBody($schema);
 
@@ -620,7 +598,7 @@ class Client
             'engine_name' => $engineName,
         ];
 
-        $endpoint = ($this->endpointBuilder)('UpdateSearchSettings');
+        $endpoint = $this->getEndpoint('UpdateSearchSettings');
         $endpoint->setParams($params);
         $endpoint->setBody($searchSettings);
 
@@ -628,16 +606,4 @@ class Client
     }
 
     // phpcs:enable
-
-    private function performRequest(Endpoint\EndpointInterface $endpoint)
-    {
-        $method = $endpoint->getMethod();
-        $uri = $endpoint->getURI();
-        $params = $endpoint->getParams();
-        $body = $endpoint->getBody();
-
-        $response = $this->connection->performRequest($method, $uri, $params, $body)->wait();
-
-        return $response['body'] ?? $response;
-    }
 }

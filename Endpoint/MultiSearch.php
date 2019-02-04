@@ -15,7 +15,7 @@ namespace Swiftype\AppSearch\Endpoint;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class MultiSearch extends AbstractEndpoint
+class MultiSearch extends \Swiftype\Endpoint\AbstractEndpoint
 {
     // phpcs:disable
     /**

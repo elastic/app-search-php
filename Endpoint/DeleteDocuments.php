@@ -15,7 +15,7 @@ namespace Swiftype\AppSearch\Endpoint;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class DeleteDocuments extends AbstractEndpoint
+class DeleteDocuments extends \Swiftype\Endpoint\AbstractEndpoint
 {
     // phpcs:disable
     /**

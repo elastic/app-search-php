@@ -15,7 +15,7 @@ namespace Swiftype\AppSearch\Endpoint;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class GetEngine extends AbstractEndpoint
+class GetEngine extends \Swiftype\Endpoint\AbstractEndpoint
 {
     // phpcs:disable
     /**

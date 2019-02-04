@@ -15,7 +15,7 @@ namespace Swiftype\AppSearch\Endpoint;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class CreateSynonymSet extends AbstractEndpoint
+class CreateSynonymSet extends \Swiftype\Endpoint\AbstractEndpoint
 {
     // phpcs:disable
     /**

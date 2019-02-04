@@ -15,7 +15,7 @@ namespace Swiftype\AppSearch\Endpoint;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class ResetSearchSettings extends AbstractEndpoint
+class ResetSearchSettings extends \Swiftype\Endpoint\AbstractEndpoint
 {
     // phpcs:disable
     /**

@@ -15,7 +15,7 @@ namespace Swiftype\AppSearch\Endpoint;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class GetSearchSettings extends AbstractEndpoint
+class GetSearchSettings extends \Swiftype\Endpoint\AbstractEndpoint
 {
     // phpcs:disable
     /**

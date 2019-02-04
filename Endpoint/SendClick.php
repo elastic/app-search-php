@@ -15,7 +15,7 @@ namespace Swiftype\AppSearch\Endpoint;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class SendClick extends AbstractEndpoint
+class SendClick extends \Swiftype\Endpoint\AbstractEndpoint
 {
     // phpcs:disable
     /**

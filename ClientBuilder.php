@@ -8,10 +8,6 @@
 
 namespace Swiftype\AppSearch;
 
-use Swiftype\AppSearch\Connection\Connection;
-use Swiftype\AppSearch\Connection\Handler;
-use Swiftype\Exception\UnexpectedValueException;
-
 /**
  * Use this class to instantiate new client and all their dependencies.
  *
@@ -24,6 +20,11 @@ class ClientBuilder
     /**
      * @var string
      */
+    private const URI_PREFIX = '/api/as/v1/';
+
+    /**
+     * @var string
+     */
     private $apiEndpoint;
 
     /**
@@ -32,7 +33,7 @@ class ClientBuilder
     private $apiKey;
 
     /**
-     * @var Serializer\SerializerInterface
+     * @var \Swiftype\Serializer\SerializerInterface
      */
     private $serializer;
 
@@ -57,7 +58,7 @@ class ClientBuilder
     public function __construct()
     {
         $this->handler = new \GuzzleHttp\Ring\Client\CurlHandler();
-        $this->serializer = new Serializer\SmartSerializer();
+        $this->serializer = new \Swiftype\Serializer\SmartSerializer();
         $this->logger = new \Psr\Log\NullLogger();
         $this->tracer = new \Psr\Log\NullLogger();
     }
@@ -116,7 +117,7 @@ class ClientBuilder
         }
 
         if (!$isValidEndpoint) {
-            throw new UnexpectedValueException("Invalid API endpoint : $apiEndpoint");
+            throw new \Swiftype\Exception\UnexpectedValueException("Invalid API endpoint : $apiEndpoint");
         }
 
         $this->apiEndpoint = $testedEndpoint;
@@ -141,14 +142,14 @@ class ClientBuilder
      */
     private function instantiate()
     {
-        $this->handler = new Handler\RequestAuthenticationHandler($this->handler, $this->apiKey);
-        $this->handler = new Handler\RequestUrlHandler($this->handler, $this->apiEndpoint);
-        $this->handler = new Handler\RequestSerializationHandler($this->handler, $this->serializer);
-        $this->handler = new Handler\ConnectionErrorHandler($this->handler);
-        $this->handler = new Handler\ResponseSerializationHandler($this->handler, $this->serializer);
-        $this->handler = new Handler\ApiErrorHandler($this->handler);
+        $this->handler = new Connection\Handler\RequestAuthenticationHandler($this->handler, $this->apiKey);
+        $this->handler = new \Swiftype\Connection\Handler\RequestUrlHandler($this->handler, $this->apiEndpoint, self::URI_PREFIX);
+        $this->handler = new \Swiftype\Connection\Handler\RequestSerializationHandler($this->handler, $this->serializer);
+        $this->handler = new \Swiftype\Connection\Handler\ConnectionErrorHandler($this->handler);
+        $this->handler = new \Swiftype\Connection\Handler\ResponseSerializationHandler($this->handler, $this->serializer);
+        $this->handler = new Connection\Handler\ApiErrorHandler($this->handler);
 
-        $connection = new Connection($this->handler, $this->logger, $this->tracer);
+        $connection = new \Swiftype\Connection\Connection($this->handler, $this->logger, $this->tracer);
 
         return new Client($this->endpointBuilder(), $connection);
     }
@@ -156,10 +157,10 @@ class ClientBuilder
     /**
      * Instantiate the endpoint builder.
      *
-     * @return endpoint\Builder
+     * @return \Swiftype\Endpoint\Builder
      */
     private function endpointBuilder()
     {
-        return new Endpoint\Builder();
+        return new \Swiftype\Endpoint\Builder(__NAMESPACE__ . "\Endpoint");
     }
 }

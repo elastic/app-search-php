@@ -15,7 +15,7 @@ namespace Swiftype\AppSearch\Endpoint;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class CreateCuration extends AbstractEndpoint
+class CreateCuration extends \Swiftype\Endpoint\AbstractEndpoint
 {
     // phpcs:disable
     /**
