@@ -195,7 +195,7 @@ If something is not working as expected, please open an [issue](https://github.c
 
 ### Where can I find the full API documentation ?
 
-Your best bet is to read the [documentation](https://swiftype.com/documentation/site-search).
+Your best bet is to read the [documentation](https://swiftype.com/documentation/app-search).
 
 ### Where else can I go to get help?
 
