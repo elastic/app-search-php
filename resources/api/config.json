@@ -2,5 +2,7 @@
   "gitUserId": "swiftype",
   "gitRepoId": "swiftype-app-search-php",
   "artifactVersion": "1.0.0",
-  "invokerPackage": "Swiftype\\AppSearch"
+  "invokerPackage": "Swiftype\\AppSearch",
+  "helpUrl": "https://discuss.elastic.co/c/app-search",
+  "copyright": "[Elastic](https://github.com/elastic)"
 }

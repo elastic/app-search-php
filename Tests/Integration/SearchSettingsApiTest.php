@@ -18,7 +18,7 @@ namespace Swiftype\AppSearch\Tests\Integration;
 class SearchSettingsApiTest extends AbstractEngineTestCase
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected static $importSampleDocs = true;
 
@@ -32,12 +32,12 @@ class SearchSettingsApiTest extends AbstractEngineTestCase
 
         $searchSettings = $client->getSearchSettings($engineName);
 
-        $this->assertArrayHasKey("search_fields", $searchSettings);
+        $this->assertArrayHasKey('search_fields', $searchSettings);
         $this->assertNotEmpty($searchSettings['search_fields']);
-        $this->assertArrayHasKey("id", $searchSettings['search_fields']);
+        $this->assertArrayHasKey('id', $searchSettings['search_fields']);
         $this->assertEquals(1, $searchSettings['search_fields']['id']['weight']);
 
-        $this->assertArrayHasKey("boosts", $searchSettings);
+        $this->assertArrayHasKey('boosts', $searchSettings);
         $this->assertEmpty($searchSettings['boosts']);
     }
 
@@ -63,11 +63,11 @@ class SearchSettingsApiTest extends AbstractEngineTestCase
     }
 
     /**
-     * Test update search weights with invalid data
+     * Test update search weights with invalid data.
      *
      * @param array $searchFields
      *
-     * @expectedException \Swiftype\AppSearch\Exception\BadRequestException
+     * @expectedException \Swiftype\Exception\BadRequestException
      *
      * @testWith [{"not_a_valid_field": {"weight": 2}}]
      *           [{"title": {"weight": "not-a-number"}}]
@@ -90,12 +90,12 @@ class SearchSettingsApiTest extends AbstractEngineTestCase
     {
         $searchSettings = $this->getDefaultClient()->resetSearchSettings($this->getDefaultEngineName());
 
-        $this->assertArrayHasKey("search_fields", $searchSettings);
+        $this->assertArrayHasKey('search_fields', $searchSettings);
         $this->assertNotEmpty($searchSettings['search_fields']);
-        $this->assertArrayHasKey("id", $searchSettings['search_fields']);
+        $this->assertArrayHasKey('id', $searchSettings['search_fields']);
         $this->assertEquals(1, $searchSettings['search_fields']['id']['weight']);
 
-        $this->assertArrayHasKey("boosts", $searchSettings);
+        $this->assertArrayHasKey('boosts', $searchSettings);
         $this->assertEmpty($searchSettings['boosts']);
     }
 

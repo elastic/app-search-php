@@ -1,12 +1,23 @@
-# PHP client for the Swiftype App Search API
+<p align="center"><img src="https://github.com/swiftype/swiftype-app-search-php/blob/master/logo-app-search.png?raw=true" alt="Elastic App Search Logo"></p>
 
-[![CircleCI](https://circleci.com/gh/swiftype/swiftype-app-search-php.svg?style=svg&circle-token=c5aa66b0ee683b0f485c414eb6554837c29cc150)](https://circleci.com/gh/swiftype/swiftype-app-search-php)
+<p align="center"><a href="https://circleci.com/gh/swiftype/swiftype-app-search-php"><img src="https://circleci.com/gh/swiftype/swiftype-app-search-php.svg?style=svg&circle-token=c5aa66b0ee683b0f485c414eb6554837c29cc150" alt="CircleCI buidl"></a></p>
 
-### Requirements
+> A first-party PHP client for building excellent, relevant search experiences with [Elastic App Search](https://www.elastic.co/cloud/app-search-service).
 
-Using this client assumes that you have already created an App Search account on https://swiftype.com/ or you have a self managed version of App Search available.
+## Contents
 
-## Installation
+- [Getting started](#getting-started-)
+- [Usage](#usage)
+- [Development](#development)
+- [FAQ](#faq-)
+- [Contribute](#contribute-)
+- [License](#license-)
+
+***
+
+## Getting started 🐣
+
+Using this client assumes that you have already created an App Search account on https://swiftype.com/ or you have a [self managed version](https://swiftype.com/documentation/app-search/self-managed/overview) of App Search available.
 
 You can install the client in your project by using composer:
 
@@ -23,11 +34,11 @@ composer require swiftype/swiftype-app-search-php
 To instantiate a new client you can use `\Swiftype\AppSearch\ClientBuilder`:
 
 ```php
-    $apiEndpoint   = 'http://localhost:3002/';
-    $apiKey        = 'private-XXXXXXXXXXXX';
-    $clientBuilder = \Swiftype\AppSearch\ClientBuilder::create($apiEndpoint, $apiKey);
+  $apiEndpoint   = 'http://localhost:3002/';
+  $apiKey        = 'private-XXXXXXXXXXXX';
+  $clientBuilder = \Swiftype\AppSearch\ClientBuilder::create($apiEndpoint, $apiKey);
 
-    $client = $clientBuilder->build();
+  $client = $clientBuilder->build();
 ```
 
 **Notes:**
@@ -38,34 +49,30 @@ To instantiate a new client you can use `\Swiftype\AppSearch\ClientBuilder`:
 
 - You can use any type of API Key (private, public or admin). The client will throw an exception if you try to execute an action that is not authorized for the key used.
 
-### Client usage
-
-Once the client is instantiated you can use it to access to the App Search API.
-
 #### Basic usage
 
 ##### Retrieve or create an engine
 
-Most method of the API require that you have access to an engine.
+Most methods of the API require that you have access to an Engine.
 
-To check an engine exists and retrieve its configuration, you can use the `Client::getEngine` method :
-
-```php
-    $engine = $client->getEngine('my-engine');
-```
-
-If the engine does not exists yet, you can create it by using the `Client::createEngine` method :
+To check if an Engine exists and retrieve its configuration, you can use the `Client::getEngine` method :
 
 ```php
-    $engine = $client->createEngine(['name' => 'my-engine', 'language' => 'en']);
+  $engine = $client->getEngine('my-engine');
 ```
 
-The language parameter is optional or can be set to null. Then the engine will be created using the `universal` language.
+If the Engine does not exists yet, you can create it by using the `Client::createEngine` method :
+
+```php
+  $engine = $client->createEngine(['name' => 'my-engine', 'language' => 'en']);
+```
+
+The language parameter is optional or can be set to null. Then the Engine will be created using the `universal` language.
 The list of supported language is available here : https://swiftype.com/documentation/app-search/api/engines#multi-language
 
 ##### Index some documents
 
-In order to index some documents in the engine you can use the `Client::indexDocuments` method :
+In order to index some documents in the Engine you can use the `Client::indexDocuments` method :
 
 ```php
     $documents = [
@@ -82,7 +89,7 @@ Full documentation is available here : https://swiftype.com/documentation/app-se
 
 ##### Search
 
-In order to search in your engine you can use the `Client::search` method :
+In order to search in your Engine you can use the `Client::search` method :
 
 ```php
     $searchRequest = [
@@ -93,6 +100,7 @@ In order to search in your engine you can use the `Client::search` method :
     $searchResponse = $client->search('my-engine', $searchRequest);
 ```
 Search request should contains at least a query (use `''` to match all docs).
+
 The page param allow you to configure pagination and is optional.
 
 Other allowed params are :
@@ -111,27 +119,28 @@ The search response will contains at least a meta field and a results field as s
 
 ```php
 [
-  'meta' = [
-    'warnings' => [],
-    'page' => [
-      'current' => 1,
-      'total_pages' => 1,
-      'total_results' => 1,
-      'size' => 10
+    'meta' => [
+      'warnings' => [],
+      'page' => [
+        'current' => 1,
+        'total_pages' => 1,
+        'total_results' => 1,
+        'size' => 10
+      ],
+      'request_id' => 'feff7cf2359a6f6da84586969ef0ca89'
     ],
-    'request_id' => 'feff7cf2359a6f6da84586969ef0ca89'
-  ],
-  'results' => [
-    [
-      'id' => ['raw' => 'first-document'],
-      'name' => ['raw' => 'Document name'],
-      'description' => ['raw' => ['Document description']
+    'results' => [
+      [
+        'id' => ['raw' => 'first-document'],
+        'name' => ['raw' => 'Document name'],
+        'description' => ['raw' => ['Document description']
+      ]
     ]
   ]
 ]
 ```
 
-#### Clients methods
+### Clients methods
 
 Method name |Parameters| Description
 ------------|----------|------------
@@ -162,22 +171,46 @@ Method name |Parameters| Description
 `updateSchema` | - `$engineName` (required) <br /> - `$schema` (required)  | Update schema for the current engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/schema#patch)
 `updateSearchSettings` | - `$engineName` (required) <br /> - `$searchSettings` (required)  | Update search settings for the engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search-settings#update)
 
-
-## Contributions
-
-To contribute code, please fork the repository and submit a pull request.
-
-### Developers
+## Development
 
 Code for the endpoints are generated automatically using a custom version of [OpenAPI Generator](https://github.com/openapitools/openapi-generator).
 
-The easier way to regenerate endpoints is to use the docker laucher packaged in `resources/dev`:
+The easier way to regenerate endpoints is to use the docker laucher packaged in `vendor/bin`:
 
 ```bash
-./dev/resources/generate-endpoints-code
+./vendor/bin/swiftype-codegen.sh
 ```
 
-The custom generator will be build and launched using the following the `resources/api/api-spec.yml` file.
+The custom generator will be build and launched using the following Open API spec file : `resources/api/api-spec.yml`.
 
 You can then commit and PR your endpoint code and modified api-spec files.
+
 The client class may be changed in some case. Do not forget to include it in your commit.
+
+## FAQ 🔮
+
+### Where do I report issues with the client?
+
+If something is not working as expected, please open an [issue](https://github.com/swiftype/swiftype-app-search-php/issues/new).
+
+### Where can I find the full API documentation ?
+
+Your best bet is to read the [documentation](https://swiftype.com/documentation/site-search).
+
+### Where else can I go to get help?
+
+You can checkout the [Elastic community discuss forums](https://discuss.elastic.co/c/app-search).
+
+## Contribute 🚀
+
+We welcome contributors to the project. Before you begin, a couple notes...
+
++ Before opening a pull request, please create an issue to [discuss the scope of your proposal](https://github.com/swiftype/swiftype-app-search-php/issues).
++ Please write simple code and concise documentation, when appropriate.
+
+## License 📗
+
+[Apache 2.0](https://github.com/swiftype/swiftype-app-search-php/blob/master/LICENSE) [Elastic](https://github.com/elastic)
+
+Thank you to all the [contributors](https://github.com/swiftype/swiftype-app-search-php/graphs/contributors)!
+

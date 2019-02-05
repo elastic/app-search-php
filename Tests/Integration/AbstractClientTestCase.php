@@ -10,7 +10,6 @@ namespace Swiftype\AppSearch\Tests\Integration;
 
 use PHPUnit\Framework\TestCase;
 use Swiftype\AppSearch\ClientBuilder;
-use Swiftype\AppSearch\Exception\SwiftypeException;
 
 /**
  * A base class for running client tests.
@@ -25,7 +24,6 @@ class AbstractClientTestCase extends TestCase
      * @var \Swiftype\AppSearch\Client
      */
     private static $defaultClient;
-
 
     /**
      * Init a default client to run all the tests.
@@ -49,7 +47,7 @@ class AbstractClientTestCase extends TestCase
     protected static function getDefaultEngineName()
     {
         $enginePrefix = $_ENV['ST_ENGINE_NAME'] ?? 'php-integration-test';
-        $className    = explode('\\', get_called_class());
+        $className = explode('\\', get_called_class());
         $engineSuffix = strtolower(end($className));
 
         return  sprintf('%s-%s', $enginePrefix, $engineSuffix);

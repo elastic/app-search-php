@@ -35,9 +35,9 @@ class ClientApiTest extends \PHPUnit\Framework\TestCase
      * @param string API Endpoint.
      * @param string Class of the exception that should be raised.
      *
-     * @testWith ["http://localhost:5000", "\\Swiftype\\AppSearch\\Exception\\CouldNotConnectToHostException"]
-     *           ["http://foo.bar:5000", "\\Swiftype\\AppSearch\\Exception\\CouldNotResolveHostException"]
-     *           ["_foo_", "\\Swiftype\\AppSearch\\Exception\\UnexpectedValueException"]
+     * @testWith ["http://localhost:5000", "\\Swiftype\\Exception\\CouldNotConnectToHostException"]
+     *           ["http://foo.bar:5000", "\\Swiftype\\Exception\\CouldNotResolveHostException"]
+     *           ["_foo_", "\\Swiftype\\Exception\\UnexpectedValueException"]
      */
     public function testConnectionErrors($apiEndpoint, $exceptionClass)
     {
@@ -49,11 +49,11 @@ class ClientApiTest extends \PHPUnit\Framework\TestCase
     /**
      * Test an Authentication exception is thrown when providing an in valid API Key.
      *
-     * @expectedException \Swiftype\AppSearch\Exception\AuthenticationException
+     * @expectedException \Swiftype\Exception\AuthenticationException
      */
     public function testAuthenticationError()
     {
-        $client = ClientBuilder::create($_ENV['ST_API_ENDPOINT'], "not-an-api-key")->build();
+        $client = ClientBuilder::create($_ENV['ST_API_ENDPOINT'], 'not-an-api-key')->build();
         $client->listEngines();
     }
 }

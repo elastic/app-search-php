@@ -90,8 +90,8 @@ class DocumentApiTest extends AbstractEngineTestCase
         $documents = $this->getSampleDocuments();
         $engineName = $this->getDefaultEngineName();
         $client = $this->getDefaultClient();
-        $client ->updateSchema($engineName, ['title' => 'text']);
-        $client ->indexDocuments($engineName, $documents);
+        $client->updateSchema($engineName, ['title' => 'text']);
+        $client->indexDocuments($engineName, $documents);
 
         $documentsUpdates = [['id' => $documents[0]['id'], 'title' => 'foo']];
         $updateResponse = $client->updateDocuments($engineName, $documentsUpdates);
@@ -109,10 +109,10 @@ class DocumentApiTest extends AbstractEngineTestCase
     /**
      * Test index in an engine that does not exists.
      *
-     * @expectedException \Swiftype\AppSearch\Exception\NotFoundException
+     * @expectedException \Swiftype\Exception\NotFoundException
      */
     public function testIndexingInInvalidEngine()
     {
-        $this->getDefaultClient()->getDocuments("not-an-engine", $this->getSampleDocuments());
+        $this->getDefaultClient()->getDocuments('not-an-engine', $this->getSampleDocuments());
     }
 }

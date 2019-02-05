@@ -5,7 +5,8 @@
   "keywords" : [
     "search",
     "client",
-    "swiftype"
+    "swiftype",
+    "php"
   ],
   "license" : "Apache-2.0",
   "type" : "library",
@@ -14,7 +15,7 @@
   ],
   "require" : {
     "php" : "^7.0",
-    "guzzlehttp/ringphp" : "^1.0",
+    "swiftype/swiftype-common-php" : "dev-master@dev",
     "psr/log" : "^1.0."
   },
   "require-dev" : {

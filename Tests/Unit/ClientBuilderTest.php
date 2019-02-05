@@ -39,13 +39,13 @@ class ClientBuilderTest extends TestCase
      *
      * @dataProvider invalidApiEndpoints
      *
-     * @expectedException \Swiftype\AppSearch\Exception\UnexpectedValueException
+     * @expectedException \Swiftype\Exception\UnexpectedValueException
      *
      * @param string $apiEndpoint
      */
     public function testInvalidEndpoints($apiEndpoint)
     {
-        $client = ClientBuilder::create($apiEndpoint, 'apiKey')->build();
+        ClientBuilder::create($apiEndpoint, 'apiKey')->build();
     }
 
     /**

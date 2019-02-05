@@ -8,10 +8,6 @@
 
 namespace Swiftype\AppSearch;
 
-use Swiftype\AppSearch\Connection\Connection;
-use Swiftype\AppSearch\Connection\Handler;
-use Swiftype\AppSearch\Exception\UnexpectedValueException;
-
 /**
  * Use this class to instantiate new client and all their dependencies.
  *
@@ -19,8 +15,13 @@ use Swiftype\AppSearch\Exception\UnexpectedValueException;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class ClientBuilder
+class ClientBuilder extends \Swiftype\AbstractClientBuilder
 {
+    /**
+     * @var string
+     */
+    private const URI_PREFIX = '/api/as/v1/';
+
     /**
      * @var string
      */
@@ -30,37 +31,6 @@ class ClientBuilder
      * @var string
      */
     private $apiKey;
-
-    /**
-     * @var Serializer\SerializerInterface
-     */
-    private $serializer;
-
-    /**
-     * @var callable
-     */
-    private $handler;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $tracer;
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->handler = new \GuzzleHttp\Ring\Client\CurlHandler();
-        $this->serializer = new Serializer\SmartSerializer();
-        $this->logger = new \Psr\Log\NullLogger();
-        $this->tracer = new \Psr\Log\NullLogger();
-    }
 
     /**
      * Instantiate a new client builder.
@@ -116,7 +86,7 @@ class ClientBuilder
         }
 
         if (!$isValidEndpoint) {
-            throw new UnexpectedValueException("Invalid API endpoint : $apiEndpoint");
+            throw new \Swiftype\Exception\UnexpectedValueException("Invalid API endpoint : $apiEndpoint");
         }
 
         $this->apiEndpoint = $testedEndpoint;
@@ -131,35 +101,27 @@ class ClientBuilder
      */
     public function build()
     {
-        return $this->instantiate();
+        return new Client($this->getEndpointBuilder(), $this->getConnection());
     }
 
     /**
-     * Instantiate the client.
-     *
-     * @return \Swiftype\AppSearch\Client
+     * {@inheritdoc}
      */
-    private function instantiate()
+    protected function getHandler()
     {
-        $this->handler = new Handler\RequestAuthenticationHandler($this->handler, $this->apiKey);
-        $this->handler = new Handler\RequestUrlHandler($this->handler, $this->apiEndpoint);
-        $this->handler = new Handler\RequestSerializationHandler($this->handler, $this->serializer);
-        $this->handler = new Handler\ConnectionErrorHandler($this->handler);
-        $this->handler = new Handler\ResponseSerializationHandler($this->handler, $this->serializer);
-        $this->handler = new Handler\ApiErrorHandler($this->handler);
+        $handler = parent::getHandler();
+        $handler = new Connection\Handler\RequestAuthenticationHandler($handler, $this->apiKey);
+        $handler = new \Swiftype\Connection\Handler\RequestUrlHandler($handler, $this->apiEndpoint, self::URI_PREFIX);
+        $handler = new Connection\Handler\ApiErrorHandler($handler);
 
-        $connection = new Connection($this->handler, $this->logger, $this->tracer);
-
-        return new Client($this->endpointBuilder(), $connection);
+        return $handler;
     }
 
     /**
-     * Instantiate the endpoint builder.
-     *
-     * @return endpoint\Builder
+     * {@inheritdoc}
      */
-    private function endpointBuilder()
+    protected function getEndpointBuilder()
     {
-        return new Endpoint\Builder();
+        return new \Swiftype\Endpoint\Builder(__NAMESPACE__ . "\Endpoint");
     }
 }

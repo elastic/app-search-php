@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Swiftype App Search PHP Client package.
+ * This file is part of the Swiftype PHP Client package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,7 +15,7 @@ namespace Swiftype\AppSearch\Endpoint;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class GetSynonymSet extends AbstractEndpoint
+class GetSynonymSet extends \Swiftype\Endpoint\AbstractEndpoint
 {
     // phpcs:disable
     /**
