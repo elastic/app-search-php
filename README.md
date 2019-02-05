@@ -13,7 +13,7 @@
 - [Contribute](#contribute-)
 - [License](#license-)
 
----
+***
 
 ## Getting started 🐣
 
@@ -119,7 +119,7 @@ The search response will contains at least a meta field and a results field as s
 
 ```php
 [
-    'meta' = [
+    'meta' => [
       'warnings' => [],
       'page' => [
         'current' => 1,
@@ -140,8 +140,7 @@ The search response will contains at least a meta field and a results field as s
 ]
 ```
 
-
-#### Clients methods
+### Clients methods
 
 Method name |Parameters| Description
 ------------|----------|------------
@@ -176,15 +175,13 @@ Method name |Parameters| Description
 
 Code for the endpoints are generated automatically using a custom version of [OpenAPI Generator](https://github.com/openapitools/openapi-generator).
 
-
 The easier way to regenerate endpoints is to use the docker laucher packaged in `vendor/bin`:
-
 
 ```bash
 ./vendor/bin/swiftype-codegen.sh
 ```
 
-The custom generator will be built and launched using the following the `resources/api/api-spec.yml` file.
+The custom generator will be build and launched using the following Open API spec file : `resources/api/api-spec.yml`.
 
 You can then commit and PR your endpoint code and modified api-spec files.
 
@@ -196,23 +193,24 @@ The client class may be changed in some case. Do not forget to include it in you
 
 If something is not working as expected, please open an [issue](https://github.com/swiftype/swiftype-app-search-php/issues/new).
 
-### Where can I learn more about App Search?
+### Where can I find the full API documentation ?
 
-Your best bet is to read the [documentation](https://swiftype.com/documentation/app-search).
+Your best bet is to read the [documentation](https://swiftype.com/documentation/site-search).
 
 ### Where else can I go to get help?
 
-You can checkout the [Elastic App Search community discuss forums](https://discuss.elastic.co/c/app-search).
+You can checkout the [Elastic community discuss forums](https://discuss.elastic.co/c/app-search).
 
 ## Contribute 🚀
 
 We welcome contributors to the project. Before you begin, a couple notes...
 
-- Prior to opening a pull request, please create an issue to [discuss the scope of your proposal](https://github.com/swiftype/swiftype-app-search-php/issues).
-- Please write simple code and concise documentation, when appropriate.
++ Before opening a pull request, please create an issue to [discuss the scope of your proposal](https://github.com/swiftype/swiftype-app-search-php/issues).
++ Please write simple code and concise documentation, when appropriate.
 
 ## License 📗
 
-[Apache 2.0](https://github.com/swiftype/swiftype-app-search-php/blob/master/LICENSE) © [Elastic](https://github.com/elastic)
+[Apache 2.0](https://github.com/swiftype/swiftype-app-search-php/blob/master/LICENSE) [Elastic](https://github.com/elastic)
 
 Thank you to all the [contributors](https://github.com/swiftype/swiftype-app-search-php/graphs/contributors)!
+
