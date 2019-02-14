@@ -62,8 +62,6 @@ commands:
 
   run_integration_tests:
     steps:
-    - attach_workspace:
-        at: .
     - run:
         name: Integration testing
         command: ST_ENGINE_NAME="php-integration-test-$CIRCLE_BUILD_NUM" vendor/bin/phpunit -c phpunit.xml.dist --testsuite integration
