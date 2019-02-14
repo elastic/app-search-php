@@ -4,5 +4,5 @@
   "artifactVersion": "1.0.0",
   "invokerPackage": "Swiftype\\AppSearch",
   "helpUrl": "https://discuss.elastic.co/c/app-search",
-  "copyright": "[Elastic](https://github.com/elastic)"
+  "copyright": "© [Elastic](https://github.com/elastic)"
 }
