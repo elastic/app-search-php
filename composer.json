@@ -22,7 +22,8 @@
     "phpunit/phpunit" : "^5.6.0|^6.3.0",
     "squizlabs/php_codesniffer" : "^3.4.0",
     "symfony/yaml" : "*",
-    "friendsofphp/php-cs-fixer": "^2.14"
+    "friendsofphp/php-cs-fixer": "^2.14",
+    "overtrue/phplint": "^1.1"
   },
   "autoload" : {
     "psr-4" : {
