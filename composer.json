@@ -15,7 +15,7 @@
   ],
   "require" : {
     "php" : "^7.0",
-    "swiftype/swiftype-common-php" : "dev-master@dev",
+    "swiftype/swiftype-common-php" : "1.0.0-beta1@beta",
     "psr/log" : "^1.0."
   },
   "require-dev" : {
