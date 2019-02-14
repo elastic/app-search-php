@@ -14,7 +14,7 @@
     {"name" : "Aurélien FOUCRET", "email": "aurelien.foucret@elastic.co"}
   ],
   "require" : {
-    "php" : "^7.0",
+    "php" : "^5.6|^7.0",
     "swiftype/swiftype-common-php" : "1.0.0-beta1@beta",
     "psr/log" : "^1.0."
   },
