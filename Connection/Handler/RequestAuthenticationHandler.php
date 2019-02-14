@@ -65,6 +65,6 @@ class RequestAuthenticationHandler
         $headerValue = [sprintf(self::HEADER_VALUE_PATTERN, $this->apiKey)];
         $request = Core::setHeader($request, self::HEADER_NAME, $headerValue);
 
-        return ($handler)($request);
+        return $handler($request);
     }
 }

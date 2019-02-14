@@ -48,7 +48,7 @@ class ApiErrorHandler
     public function __invoke($request)
     {
         $handler = $this->handler;
-        $response = Core::proxy(($handler)($request), function ($response) use ($request) {
+        $response = Core::proxy($handler($request), function ($response) use ($request) {
             if ($response['status'] >= 400) {
                 $exception = new ApiException($this->getErrorMessage($response));
                 switch ($response['status']) {
