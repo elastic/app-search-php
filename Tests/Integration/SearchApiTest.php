@@ -118,7 +118,7 @@ class SearchApiTest extends AbstractEngineTestCase
      *           [{"title": "desc"}, "INscMGmhmX4"]
      *           [[{"title": "asc"}], "JNDFojsd02"]
      *           [[{"title": "desc"}], "INscMGmhmX4"]
-     *           [[{"_score": "desc"}], "JNDFojsd02"]
+     *           [[{"_score": "desc"}], "INscMGmhmX4"]
      *           [[{"title": "asc"}, {"_score": "desc"}], "JNDFojsd02"]
      */
     public function testSortedSearch($sortOrder, $expectedFirstDocId)

@@ -42,7 +42,7 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
      */
     public static function create($apiEndpoint = null, $apiKey = null)
     {
-        return (new static())->setApiEndpoint($apiEndpoint)->setApiKey($apiKey);
+        return (new static())->setHost($apiEndpoint)->setApiKey($apiKey);
     }
 
     /**
@@ -62,14 +62,14 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
     /**
      * Set the api endpoint for the client.
      *
-     * @param string $apiEndpoint
+     * @param string $host
      *
      * @return ClientBuilder
      */
-    public function setApiEndpoint($apiEndpoint)
+    public function setHost($host)
     {
         $isValidEndpoint = false;
-        $testedEndpoint = $apiEndpoint;
+        $testedEndpoint = $host;
 
         if (filter_var($testedEndpoint, FILTER_VALIDATE_URL)) {
             $isValidEndpoint = true;
@@ -86,12 +86,10 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
         }
 
         if (!$isValidEndpoint) {
-            throw new \Swiftype\Exception\UnexpectedValueException("Invalid API endpoint : $apiEndpoint");
+            throw new \Swiftype\Exception\UnexpectedValueException("Invalid API endpoint : $host");
         }
 
-        $this->apiEndpoint = $testedEndpoint;
-
-        return $this;
+        return parent::setHost($testedEndpoint);
     }
 
     /**
@@ -111,7 +109,7 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
     {
         $handler = parent::getHandler();
         $handler = new Connection\Handler\RequestAuthenticationHandler($handler, $this->apiKey);
-        $handler = new \Swiftype\Connection\Handler\RequestUrlHandler($handler, $this->apiEndpoint, self::URI_PREFIX);
+        $handler = new \Swiftype\Connection\Handler\RequestUrlPrefixHandler($handler, self::URI_PREFIX);
         $handler = new Connection\Handler\ApiErrorHandler($handler);
 
         return $handler;
