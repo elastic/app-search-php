@@ -20,7 +20,7 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
     /**
      * @var string
      */
-    private const URI_PREFIX = '/api/as/v1/';
+    const URI_PREFIX = '/api/as/v1/';
 
     /**
      * @var string
