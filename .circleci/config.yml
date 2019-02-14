@@ -1,42 +1,66 @@
-version: 2
+version: 2.1
 
-defaults: &defaults
+unit_tests: &unit_tests
+  steps:
+  - install_deps
+  - run_unit_tests
+
+integration_tests: &integration_tests
+  environment:
+    ST_ENGINE_NAME: php-integration-test-$CIRCLE_BUILD_NUM
+  steps:
+  - install_deps
+  - run_integration_tests
+
+php73: &php73
+  docker:
+  - image: circleci/php:7.3-browsers
+
+php72: &php72
+  docker:
+  - image: circleci/php:7.2-browsers
+
+php71: &php71
   docker:
   - image: circleci/php:7.1-browsers
-  working_directory: ~/repo
 
-jobs:
-  build:
-    <<: *defaults
+php70: &php70
+  docker:
+  - image: circleci/php:7.0-browsers
+
+php56: &php56
+  docker:
+  - image: circleci/php:5.6-browsers
+
+commands:
+
+  install_deps:
     steps:
     - checkout
     - restore_cache:
         keys:
         - v1-dependencies-{{ checksum "composer.json" }}
-        - v1-dependencies-
+    - attach_workspace:
+        at: .
     - run:
         name: Install composer dependencies
         command: composer install -n --prefer-dist
-    - persist_to_workspace:
-        root: .
-        paths:
-        - .
     - save_cache:
         paths:
         - ~/.composer/cache/
         key: v1-dependencies-{{ checksum "composer.json" }}
+    - persist_to_workspace:
+        root: .
+        paths:
+        - .
 
-  test_unit:
-    <<: *defaults
+  run_unit_tests:
     steps:
-    - attach_workspace:
-        at: .
     - run:
         name: Unit testing
         command: vendor/bin/phpunit -c phpunit.xml.dist --testsuite unit
 
-  test_integration:
-    <<: *defaults
+  run_integration_tests:
     steps:
     - attach_workspace:
         at: .
@@ -44,26 +68,87 @@ jobs:
         name: Integration testing
         command: ST_ENGINE_NAME="php-integration-test-$CIRCLE_BUILD_NUM" vendor/bin/phpunit -c phpunit.xml.dist --testsuite integration
 
-  test_phpcs:
-    <<: *defaults
+jobs:
+
+  php-73-unit-tests:
+    <<: *unit_tests
+    <<: *php73
+
+  php-73-integration-tests:
+    <<: *integration_tests
+    <<: *php73
+
+  php-72-unit-tests:
+    <<: *unit_tests
+    <<: *php72
+
+  php-72-integration-tests:
+    <<: *integration_tests
+    <<: *php72
+
+  php-71-unit-tests:
+    <<: *unit_tests
+    <<: *php71
+
+  php-71-integration-tests:
+    <<: *integration_tests
+    <<: *php71
+
+  php-70-unit-tests:
+    <<: *unit_tests
+    <<: *php70
+
+  php-70-integration-tests:
+    <<: *integration_tests
+    <<: *php70
+
+  php-56-unit-tests:
+    <<: *unit_tests
+    <<: *php56
+
+  php-56-integration-tests:
+    <<: *integration_tests
+    <<: *php56
+
+  qa-phplint:
+    <<: *php73
     steps:
-    - attach_workspace:
-        at: .
+    - install_deps
+    - run:
+        name:
+        command: vendor/bin/phplint . --exclude=vendor
+
+  qa-phpcs:
+    <<: *php73
+    steps:
+    - install_deps
     - run:
         name: PHPCS
         command: vendor/bin/phpcs --ignore=vendor,resources --standard=PSR12 .
 
 workflows:
   version: 2
-  build_and_test:
+  qa:
     jobs:
-    - build
-    - test_unit:
-        requires:
-        - build
-    - test_integration:
-        requires:
-        - build
-    - test_phpcs:
-        requires:
-        - build
+    - qa-phplint
+    - qa-phpcs
+  php-73-tests:
+    jobs:
+    - php-73-unit-tests
+    - php-73-integration-tests
+  php-72-tests:
+    jobs:
+    - php-72-unit-tests
+    - php-72-integration-tests
+  php-71-tests:
+    jobs:
+    - php-71-unit-tests
+    - php-71-integration-tests
+  php-70-tests:
+    jobs:
+    - php-70-unit-tests
+    - php-70-integration-tests
+  php-56-tests:
+    jobs:
+    - php-56-unit-tests
+    - php-56-integration-tests
