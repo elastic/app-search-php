@@ -89,7 +89,7 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
             throw new \Swiftype\Exception\UnexpectedValueException("Invalid API endpoint : $host");
         }
 
-        return parent::setHost($host);
+        return parent::setHost($testedEndpoint);
     }
 
     /**
