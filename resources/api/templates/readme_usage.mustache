@@ -22,9 +22,9 @@ To instantiate a new client you can use `\Swiftype\AppSearch\ClientBuilder`:
 
 - You can use any type of API Key (private, public or admin). The client will throw an exception if you try to execute an action that is not authorized for the key used.
 
-#### Basic usage
+### Basic usage
 
-##### Retrieve or create an engine
+#### Retrieve or create an engine
 
 Most methods of the API require that you have access to an Engine.
 
@@ -43,7 +43,7 @@ If the Engine does not exists yet, you can create it by using the `Client::creat
 The language parameter is optional or can be set to null. Then the Engine will be created using the `universal` language.
 The list of supported language is available here : https://swiftype.com/documentation/app-search/api/engines#multi-language
 
-##### Index some documents
+#### Index some documents
 
 In order to index some documents in the Engine you can use the `Client::indexDocuments` method :
 
@@ -60,7 +60,7 @@ The `$indexingResults` array will contains the result of the indexation of each 
 
 Full documentation is available here : https://swiftype.com/documentation/app-search/api/documents#create.
 
-##### Search
+#### Search
 
 In order to search in your Engine you can use the `Client::search` method :
 

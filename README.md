@@ -49,9 +49,9 @@ To instantiate a new client you can use `\Swiftype\AppSearch\ClientBuilder`:
 
 - You can use any type of API Key (private, public or admin). The client will throw an exception if you try to execute an action that is not authorized for the key used.
 
-#### Basic usage
+### Basic usage
 
-##### Retrieve or create an engine
+#### Retrieve or create an engine
 
 Most methods of the API require that you have access to an Engine.
 
@@ -70,7 +70,7 @@ If the Engine does not exists yet, you can create it by using the `Client::creat
 The language parameter is optional or can be set to null. Then the Engine will be created using the `universal` language.
 The list of supported language is available here : https://swiftype.com/documentation/app-search/api/engines#multi-language
 
-##### Index some documents
+#### Index some documents
 
 In order to index some documents in the Engine you can use the `Client::indexDocuments` method :
 
@@ -87,7 +87,7 @@ The `$indexingResults` array will contains the result of the indexation of each 
 
 Full documentation is available here : https://swiftype.com/documentation/app-search/api/documents#create.
 
-##### Search
+#### Search
 
 In order to search in your Engine you can use the `Client::search` method :
 
@@ -142,34 +142,34 @@ The search response will contains at least a meta field and a results field as s
 
 ### Clients methods
 
-Method name |Parameters| Description
-------------|----------|------------
-`createCuration` | - `$engineName` (required) <br /> - `$curationData` (required)  | Create a new curation.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#create)
-`createEngine` | - `$engine` (required)  | Creates a new engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/engines#create)
-`createSynonymSet` | - `$engineName` (required) <br /> - `$synonymSetData` (required)  | Create a new synonym set.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/synonyms#create)
-`deleteCuration` | - `$engineName` (required) <br /> - `$curationId` (required)  | Delete a curation by id.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#destroy)
-`deleteDocuments` | - `$engineName` (required) <br /> - `$documentIds` (required)  | Delete documents by id.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/documents#partial)
-`deleteEngine` | - `$engineName` (required)  | Delete an engine by name.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/engines#delete)
-`deleteSynonymSet` | - `$engineName` (required) <br /> - `$synonymSetId` (required)  | Delete a synonym set by id.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/synonyms#delete)
-`getCuration` | - `$engineName` (required) <br /> - `$curationId` (required)  | Retrieve a curation by id.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#single)
-`getDocuments` | - `$engineName` (required) <br /> - `$documentIds` (required)  | Retrieves one or more documents by id.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/documents#get)
-`getEngine` | - `$engineName` (required)  | Retrieves an engine by name.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/engines#get)
-`getSchema` | - `$engineName` (required)  | Retrieve current schema for then engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/schema#read)
-`getSearchSettings` | - `$engineName` (required)  | Retrive current search settings for the engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search-settings#show)
-`getSynonymSet` | - `$engineName` (required) <br /> - `$synonymSetId` (required)  | Retrieve a synonym set by id.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/synonyms#list-one)
-`indexDocuments` | - `$engineName` (required) <br /> - `$documents` (required)  | Create or update documents.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/documents#create)
-`listCurations` | - `$engineName` (required) <br /> - `$listParams` | Retrieve available curations for the engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#read)
-`listDocuments` | - `$engineName` (required) <br /> - `$listParams` | List all available documents with optional pagination support.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/documents#list)
-`listEngines` | - `$listParams` | Retrieves all engines with optional pagination support.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/engines#list)
-`listSynonymSets` | - `$engineName` (required) <br /> - `$listParams` | Retrieve available synonym sets for the engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/synonyms#get)
-`multiSearch` | - `$engineName` (required) <br /> - `$queries` (required)  | Run several search in the same request.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search#multi)
-`resetSearchSettings` | - `$engineName` (required)  | Reset search settings for the engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search-settings#reset)
-`search` | - `$engineName` (required) <br /> - `$searchRequest` (required)  | Allows you to search over, facet and filter your data.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search)
-`sendClick` | - `$engineName` (required) <br /> - `$clickData` (required)  | Send data about clicked results.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/clickthrough)
-`updateCuration` | - `$engineName` (required) <br /> - `$curationId` (required) <br /> - `$curationData` (required)  | Update an existing curation.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#update)
-`updateDocuments` | - `$engineName` (required) <br /> - `$documents` (required)  | Partial update of documents.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/documents#partial)
-`updateSchema` | - `$engineName` (required) <br /> - `$schema` (required)  | Update schema for the current engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/schema#patch)
-`updateSearchSettings` | - `$engineName` (required) <br /> - `$searchSettings` (required)  | Update search settings for the engine.<br />[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search-settings#update)
+Method      | Description | Documentation
+------------|-------------|--------------
+**`createCuration`**| Create a new curation.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$curationData` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#create)
+**`createEngine`**| Creates a new engine.<br/> <br/> **Parameters :** <br />  - `$engine` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/engines#create)
+**`createSynonymSet`**| Create a new synonym set.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$synonymSetData` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/synonyms#create)
+**`deleteCuration`**| Delete a curation by id.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$curationId` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#destroy)
+**`deleteDocuments`**| Delete documents by id.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$documentIds` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/documents#partial)
+**`deleteEngine`**| Delete an engine by name.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/engines#delete)
+**`deleteSynonymSet`**| Delete a synonym set by id.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$synonymSetId` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/synonyms#delete)
+**`getCuration`**| Retrieve a curation by id.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$curationId` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#single)
+**`getDocuments`**| Retrieves one or more documents by id.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$documentIds` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/documents#get)
+**`getEngine`**| Retrieves an engine by name.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/engines#get)
+**`getSchema`**| Retrieve current schema for then engine.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/schema#read)
+**`getSearchSettings`**| Retrive current search settings for the engine.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search-settings#show)
+**`getSynonymSet`**| Retrieve a synonym set by id.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$synonymSetId` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/synonyms#list-one)
+**`indexDocuments`**| Create or update documents.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$documents` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/documents#create)
+**`listCurations`**| Retrieve available curations for the engine.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$listParams`<br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#read)
+**`listDocuments`**| List all available documents with optional pagination support.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$listParams`<br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/documents#list)
+**`listEngines`**| Retrieves all engines with optional pagination support.<br/> <br/> **Parameters :** <br />  - `$listParams`<br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/engines#list)
+**`listSynonymSets`**| Retrieve available synonym sets for the engine.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$listParams`<br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/synonyms#get)
+**`multiSearch`**| Run several search in the same request.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$queries` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search#multi)
+**`resetSearchSettings`**| Reset search settings for the engine.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search-settings#reset)
+**`search`**| Allows you to search over, facet and filter your data.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$searchRequest` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search)
+**`sendClick`**| Send data about clicked results.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$clickData` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/clickthrough)
+**`updateCuration`**| Update an existing curation.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$curationId` (required) <br />   - `$curationData` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#update)
+**`updateDocuments`**| Partial update of documents.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$documents` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/documents#partial)
+**`updateSchema`**| Update schema for the current engine.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$schema` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/schema#patch)
+**`updateSearchSettings`**| Update search settings for the engine.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$searchSettings` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/search-settings#update)
 
 ## Development
 
