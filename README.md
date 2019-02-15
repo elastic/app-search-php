@@ -64,10 +64,10 @@ To check if an Engine exists and retrieve its configuration, you can use the `Cl
 If the Engine does not exists yet, you can create it by using the `Client::createEngine` method :
 
 ```php
-  $engine = $client->createEngine(['name' => 'my-engine', 'language' => 'en']);
+  $engine = $client->createEngine('my-engine', 'en');
 ```
 
-The language parameter is optional or can be set to null. Then the Engine will be created using the `universal` language.
+The second parameter (`$language`) is optional or can be set to null. Then the Engine will be created using the `universal` language.
 The list of supported language is available here : https://swiftype.com/documentation/app-search/api/engines#multi-language
 
 #### Index some documents
@@ -92,28 +92,26 @@ Full documentation is available here : https://swiftype.com/documentation/app-se
 In order to search in your Engine you can use the `Client::search` method :
 
 ```php
-    $searchRequest = [
-      'query' => 'search text',
+    $searchParams = [
       'page'  => ['current' => 1, 'size' => 10];
     ];
 
-    $searchResponse = $client->search('my-engine', $searchRequest);
+    $searchResponse = $client->search('my-engine', 'search text', $searchParams);
 ```
-Search request should contains at least a query (use `''` to match all docs).
+If you want to match all documents you can use and empty search query `''` as second parameter (`$queryText`).
 
-The page param allow you to configure pagination and is optional.
+The `$searchRequestParams` parameter is optional and can be used to use advanced search features. Allowed params are :
 
-Other allowed params are :
-
-Param name|Documentation URL
-----------|-----------------
-`filters` | https://swiftype.com/documentation/app-search/api/search/filters
-`facets` | https://swiftype.com/documentation/app-search/api/search/facets
-`sort` | https://swiftype.com/documentation/app-search/api/search/sorting
-`boosts` | https://swiftype.com/documentation/app-search/api/search/boosts
+Param name      | Documentation URL
+--------------- | ----------------------------------------------------------------------
+`page`          | https://swiftype.com/documentation/app-search/api/search#paging
+`filters`       | https://swiftype.com/documentation/app-search/api/search/filters
+`facets`        | https://swiftype.com/documentation/app-search/api/search/facets
+`sort`          | https://swiftype.com/documentation/app-search/api/search/sorting
+`boosts`        | https://swiftype.com/documentation/app-search/api/search/boosts
 `search_fields` | https://swiftype.com/documentation/app-search/api/search/search-fields
 `result_fields` | https://swiftype.com/documentation/app-search/api/search/result-fields
-`group` | https://swiftype.com/documentation/app-search/api/search/grouping
+`group`         | https://swiftype.com/documentation/app-search/api/search/grouping
 
 The search response will contains at least a meta field and a results field as shown in this example:
 
