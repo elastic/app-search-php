@@ -46,7 +46,7 @@ class AbstractClientTestCase extends TestCase
      */
     protected static function getDefaultEngineName()
     {
-        $enginePrefix = $_ENV['ST_ENGINE_NAME'] ?? 'php-integration-test';
+        $enginePrefix = isset($_ENV['ST_ENGINE_NAME']) ? $_ENV['ST_ENGINE_NAME'] : 'php-integration-test';
         $className = explode('\\', get_called_class());
         $engineSuffix = strtolower(end($className));
 

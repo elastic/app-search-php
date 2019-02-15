@@ -20,12 +20,12 @@ class AbstractEngineTestCase extends AbstractClientTestCase
     /**
      * @var string
      */
-    public const DOC_SAMPLE_FILE = __DIR__ . '/_data/sampleDocs.yml';
+    const DOC_SAMPLE_FILE = __DIR__ . '/_data/sampleDocs.yml';
 
     /**
      * @var int
      */
-    public const SYNC_RETRY_INTERVAL = 500000;
+    const SYNC_RETRY_INTERVAL = 500000;
 
     /**
      * @var bool

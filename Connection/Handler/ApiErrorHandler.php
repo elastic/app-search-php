@@ -47,7 +47,8 @@ class ApiErrorHandler
      */
     public function __invoke($request)
     {
-        $response = Core::proxy(($this->handler)($request), function ($response) use ($request) {
+        $handler = $this->handler;
+        $response = Core::proxy($handler($request), function ($response) use ($request) {
             if ($response['status'] >= 400) {
                 $exception = new ApiException($this->getErrorMessage($response));
                 switch ($response['status']) {
@@ -81,7 +82,7 @@ class ApiErrorHandler
      */
     private function getErrorMessage($response)
     {
-        $message = $response['reason'] ?? 'Unexpected error.';
+        $message = isset($response['reason']) ? $response['reason'] : 'Unexpected error.';
 
         if (!empty($response['body']['errors'])) {
             $message = $response['body']['errors'];
