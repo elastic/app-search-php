@@ -27,18 +27,18 @@ class SynonymApiTest extends AbstractEngineTestCase
      *
      * @param array $synonymSetData
      *
-     * @testWith [{"synonyms": ["foo", "bar"]}]
+     * @testWith [["foo", "bar"]]
      */
-    public function testSynonymsApi($synonymSetData)
+    public function testSynonymsApi($synonyms)
     {
         $client = $this->getDefaultClient();
         $engineName = $this->getDefaultEngineName();
 
-        $synonymSet = $client->createSynonymSet($engineName, $synonymSetData);
+        $synonymSet = $client->createSynonymSet($engineName, $synonyms);
         $this->assertArrayHasKey('id', $synonymSet);
 
         $synonymSet = $client->getSynonymSet($engineName, $synonymSet['id']);
-        $this->assertEquals($synonymSetData['synonyms'], $synonymSet['synonyms']);
+        $this->assertEquals($synonyms, $synonymSet['synonyms']);
 
         $synonymSetListResponse = $client->listSynonymSets($engineName);
         $this->assertEquals(1, $synonymSetListResponse['meta']['page']['total_results']);

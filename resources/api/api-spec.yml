@@ -9,78 +9,35 @@ externalDocs:
   url: https://swiftype.com/documentation/app-search
 
 components:
-
   # Reusable schemas definitions -----------------------------------------------
   schemas:
     simpleObject:
       type: object
 
-    pageListParams:
-      type: object
-      properties:
-        current:
-          type: integer
-        size:
-          type: integer
+    documentId:
+      type: string
 
-    listParams:
-      type: object
-      properties:
-        page:
-          $ref: "#/components/schemas/pageListParams"
-
-    pageListMeta:
-      allOf:
-      - $ref: "#/components/schemas/pageListParams"
-      - type: object
-        properties:
-          total_results:
-            type: integer
-          total_pages:
-            type: integer
-
-    listMeta:
-      type: object
-      properties:
-        page:
-          $ref: "#/components/schemas/pageListMeta"
-
-    engine:
-      type: object
-      required:
-      - name
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        language:
-          type: string
-
-    engineList:
+    documentIds:
       type: array
       items:
-        $ref: "#/components/schemas/engine"
+        $ref: "#/components/schemas/documentId"
 
-    engineListResponse:
-      type: object
-      properties:
-        meta:
-          $ref: "#/components/schemas/pageListMeta"
-        results:
-          $ref: "#/components/schemas/engineList"
-
-    documentFieldValue:
+    simpleFieldValue:
       anyOf:
       - type: string
       - type: number
+
+    documentFieldValue:
+      anyOf:
+      - $ref: "#/components/schemas/simpleFieldValue"
       - type: array
         items:
-          anyOf:
-          - type: string
-          - type: number
+          $ref: "#/components/schemas/simpleFieldValue"
 
     document:
       type: object
+      required:
+      - id
       properties:
         id:
           type: string
@@ -92,89 +49,14 @@ components:
       items:
         $ref: "#/components/schemas/document"
 
-    documentIds:
-      type: array
-      items:
+    schemaData:
+      type: object
+      additionalProperties:
         type: string
 
-    documentListResponse:
+    searchBoosts:
       type: object
-      properties:
-        meta:
-          $ref: "#/components/schemas/pageListMeta"
-        results:
-          $ref: "#/components/schemas/documentList"
-
-    documentsIndexingResponse:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-          errors:
-            type: array
-            items:
-              type: string
-
-    documentsDeleteResponse:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-          deleted:
-            type: boolean
-
-    searchSimpleFilterValue:
-      anyOf:
-      - type: string
-      - type: number
-
-    searchFilterValue:
-      anyOf:
-      - $ref: "#/components/schemas/searchSimpleFilterValue"
-      - type: array
-        items:
-          $ref: "#/components/schemas/searchSimpleFilterValue"
-      - type: object
-        additionalProperties: false
-        minProperties: 1
-        properties:
-          from:
-            $ref: "#/components/schemas/searchSimpleFilterValue"
-          to:
-            $ref: "#/components/schemas/searchSimpleFilterValue"
-      - type: object
-        additionalProperties: false
-        minProperties: 1
-        properties:
-          center:
-            type: string
-          distance:
-            type: number
-          unit:
-            type: string
-
-    searchFilterList:
-      type: array
-      items:
-        $ref: "#/components/schemas/searchFilters"
-
-    searchFilters:
-      type: object
-      minProperties: 1
-      maxProperties: 1
-      properties:
-        any:
-          $ref: "#/components/schemas/searchFilterList"
-        all:
-          $ref: "#/components/schemas/searchFilterList"
-        none:
-          $ref: "#/components/schemas/searchFilterList"
-      additionalProperties:
-        $ref: "#/components/schemas/searchFilters"
+      #TODO
 
     searchFields:
       type: object
@@ -185,223 +67,6 @@ components:
           weight:
             type: integer
 
-    searchResultFields:
-      type: array
-      items:
-        type: object
-        properties:
-          raw:
-            type: object
-            properties:
-              size:
-                type: integer
-          snippet:
-            type: object
-            properties:
-              size:
-                type: integer
-              fallback:
-                type: boolean
-
-    searchSimpleSortOrder:
-      type: object
-      minProperties: 1
-      maxProperties: 1
-      additionalProperties:
-        type: string
-        enum: ['asc', 'desc']
-
-    searchSortOrder:
-      anyOf:
-      - $ref: "#/components/schemas/searchSimpleSortOrder"
-      - type: array
-        items:
-          $ref: "#/components/schemas/searchSimpleSortOrder"
-
-    searchValueFacetParams:
-      type: object
-      additionalProperties: false
-      required:
-      - type
-      properties:
-        type:
-          type: string
-        size:
-          type: integer
-        sort:
-          $ref: "#/components/schemas/searchSimpleSortOrder"
-
-    searchRangeFacetParams:
-      type: object
-      additionalProperties: false
-      required:
-      - type
-      properties:
-        type:
-          type: string
-        ranges:
-          type: array
-          items:
-            type: object
-            properties:
-              from:
-                $ref: "#/components/schemas/searchSimpleFilterValue"
-              to:
-                $ref: "#/components/schemas/searchSimpleFilterValue"
-              name:
-                type: string
-
-    searchGeoRangeFacetParams:
-      type: object
-      additionalProperties: false
-      required:
-      - type
-      - center
-      - unit
-      properties:
-        type:
-          type: string
-        center:
-          type: string
-        unit:
-          type: string
-        ranges:
-          type: array
-          items:
-            type: object
-            properties:
-              from:
-                $ref: "#/components/schemas/searchSimpleFilterValue"
-              to:
-                $ref: "#/components/schemas/searchSimpleFilterValue"
-              name:
-                type: string
-
-    searchFacetParams:
-      anyOf:
-      - $ref: "#/components/schemas/searchValueFacetParams"
-      - $ref: "#/components/schemas/searchRangeFacetParams"
-      - $ref: "#/components/schemas/searchGeoRangeFacetParams"
-
-    searchFacets:
-      type: object
-      additionalProperties:
-        type: array
-        items:
-          $ref: "#/components/schemas/searchFacetParams"
-
-    searchBoostParams:
-      anyOf:
-      - type: object
-        additionalProperties: false
-        properties:
-          type:
-            type: string
-          value:
-            anyOf:
-            - $ref: "#/components/schemas/searchSimpleFilterValue"
-            - type: array
-              items:
-                $ref: "#/components/schemas/searchSimpleFilterValue"
-          operation:
-            type: string
-          factor:
-            type: number
-      - type: object
-        additionalProperties: false
-        properties:
-          type:
-            type: string
-          function:
-            type: string
-          operation:
-            type: string
-          factor:
-            type: number
-      - type: object
-        additionalProperties: false
-        properties:
-          type:
-            type: string
-          center:
-            type: string
-          operation:
-            type: string
-          factor:
-            type: number
-
-    searchBoosts:
-      type: object
-      additionalProperties:
-        anyOf:
-        - $ref: "#/components/schemas/searchBoostParams"
-        - type: array
-          items:
-            $ref: "#/components/schemas/searchBoostParams"
-
-    searchGroup:
-      type: object
-      required:
-      - field
-      properties:
-        field:
-          type: string
-        size:
-          type: integer
-        sort:
-          $ref: "#/components/schemas/searchSimpleSortOrder"
-
-    searchRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - query
-      properties:
-        query:
-          type: string
-        page:
-          $ref: "#/components/schemas/pageListParams"
-        filters:
-          $ref: "#/components/schemas/searchFilters"
-        facets:
-          $ref: "#/components/schemas/searchFacets"
-        search_fields:
-          $ref: "#/components/schemas/searchFields"
-        boost:
-          $ref: "#/components/schemas/searchBoosts"
-        result_fields:
-          $ref: "#/components/schemas/searchResultFields"
-        sort:
-          $ref: "#/components/schemas/searchSortOrder"
-        group:
-          $ref: "#/components/schemas/searchGroup"
-        analytics:
-          type: object
-          properties:
-            tags:
-              type: array
-              items:
-                type: string
-
-    searchResponse:
-      type: object
-      # TODO
-
-    searchRequestList:
-      type: array
-      items:
-        $ref: "#/components/schemas/searchRequest"
-
-    searchResponseList:
-      type: array
-      items:
-        $ref: "#/components/schemas/searchResponse"
-
-    schemaData:
-      type: object
-      additionalProperties:
-        type: string
-
     searchSettings:
       type: object
       additionalProperties: false
@@ -411,98 +76,99 @@ components:
         boosts:
           $ref: "#/components/schemas/searchBoosts"
 
-    synonymSetData:
+    searchPageParam:
       type: object
       additionalProperties: false
-      required:
-      - synonyms
       properties:
-        synonyms:
-          type: array
-          items:
-            type: string
+        current:
+          type: integer
+        size:
+          type: integer
 
-    synonymSet:
-      allOf:
-      - $ref: "#/components/schemas/synonymSetData"
-      - type: object
-        properties:
-          id:
-            type: string
-
-    synonymSetList:
-      type: array
-      items:
-        $ref: "#/components/schemas/synonymSet"
-
-    synonymSetListResponse:
-      type: object
-      properties:
-        meta:
-          $ref: "#/components/schemas/pageListMeta"
-        results:
-          $ref: "#/components/schemas/documentList"
-
-    curationData:
-      allOf:
-      - type: object
-        required:
-        - queries
-        properties:
-          queries:
-            type: array
-            items:
-              type: string
-      - anyOf:
-        - type: object
-          required: [promoted]
-          properties:
-            promoted:
-              $ref: "#/components/schemas/documentIds"
-        - type: object
-          required: [hidden]
-          properties:
-            hidden:
-              $ref: "#/components/schemas/documentIds"
-
-    curation:
-      allOf:
-      - type: object
-        properties:
-          id:
-            type: string
-      - $ref: "#/components/schemas/curationData"
-
-    curationList:
-      type: array
-      items:
-        $ref: "#/components/schemas/curation"
-
-    curationResponse:
-      type: object
-      properties:
-        meta:
-          $ref: "#/components/schemas/pageListMeta"
-        results:
-          $ref: "#/components/schemas/curationList"
-
-    clickData:
+    searchRequestParams:
       type: object
       additionalProperties: false
-      required:
-      - query
-      - document_id
       properties:
         query:
           type: string
-        document_id:
-          type: string
-        request_id:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
+        page:
+          $ref: "#/components/schemas/searchPageParam"
+        filters:
+          $ref: "#/components/schemas/simpleObject" #TODO
+        facets:
+          $ref: "#/components/schemas/simpleObject" #TODO
+        search_fields:
+          $ref: "#/components/schemas/simpleObject" #TODO
+        boost:
+          $ref: "#/components/schemas/simpleObject" #TODO
+        result_fields:
+          $ref: "#/components/schemas/simpleObject" #TODO
+        sort:
+          $ref: "#/components/schemas/simpleObject" #TODO
+        group:
+          $ref: "#/components/schemas/simpleObject" #TODO
+        analytics:
+          $ref: "#/components/schemas/simpleObject" #TODO
+
+    searchRequestList:
+      type: array
+      items:
+        $ref: "#/components/schemas/searchRequestParams"
+
+    synonymList:
+      type: array
+      minLength: 2
+      items:
+        type: string
+
+  # Reusable request bodies ----------------------------------------------------
+  requestBodies:
+    documentIdsRequest:
+      required: true
+      description: List of document ids.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/documentIds"
+
+    documentsIndexingRequest:
+      required: true
+      description: List of document to index.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/documentList"
+
+    documentsPartialUpdateRequest:
+      required: true
+      description: List of document to update.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/documentList"
+
+    schemaUpdateRequest:
+      required: true
+      description: Schema description.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/schemaData"
+
+    searchRequestParams:
+      description: Search request parameters.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/searchRequestParams"
+
+    searchSettingsRequest:
+      required: true
+      description: Search settings.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/searchSettings"
 
   # Reusable parameters definitions --------------------------------------------
   parameters:
@@ -510,6 +176,30 @@ components:
       name: engine_name
       in: path
       description: Name of the engine.
+      required: true
+      schema:
+        type: string
+
+    currentPage:
+      name: page.current
+      in: query
+      description: The page to fetch. Defaults to 1.
+      schema:
+        type: string
+      x-codegen-param-name: currentPage
+
+    pageSize:
+      name: page.size
+      in: query
+      description: The number of results per page.
+      schema:
+        type: string
+
+    searchQueryText:
+      name: query
+      in: query
+      x-codegen-param-name: queryText
+      description: Search query text.
       required: true
       schema:
         type: string
@@ -530,96 +220,7 @@ components:
       schema:
         type: string
 
-  # Reusable request bodies ----------------------------------------------------
-  requestBodies:
-    listParamsRequest:
-      description: Listing params (include page[current] and page[size]).
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/listParams"
-
-    engineRequest:
-      required: true
-      description: Engine data.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/engine"
-
-    documentIdsRequest:
-      required: true
-      description: List of document ids.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/documentIds"
-
-    documentListRequest :
-      required: true
-      description: List of documents.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/documentList"
-
-    searchRequest:
-      required: true
-      description: Search request.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/searchRequest"
-
-    multiSearchRequest:
-      required: true
-      description: Array of search requests.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/searchRequestList"
-
-    schemaRequest:
-      required: true
-      description: Schema description.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/schemaData"
-
-    searchSettingsRequest:
-      required: true
-      description: Search settings.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/searchSettings"
-
-    synonymSetRequest:
-      required: true
-      description: Synonym set data.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/synonymSetData"
-
-    curationRequest:
-      required: true
-      description: Curation data.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/curationData"
-
-    clickRequest:
-      required: true
-      description: Click data (include query text and document id).
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/clickData"
-
-  # Cross API reusable response bodies -----------------------------------------
+  # Reusable responses definitions ---------------------------------------------
   responses:
     jsonResponse:
       description: A simple JSON response.
@@ -627,97 +228,6 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/simpleObject"
-
-    engineListResponse:
-      description: List of available engines.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/engineListResponse"
-
-    engineResponse:
-      description: Engine data.
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/engine"
-
-    documentListResponse:
-      description: "Document list."
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/documentListResponse"
-
-    searchResponse:
-      description: "Search response."
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/searchResponse"
-
-    multiSearchResponse:
-      description: "Multi search response."
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/searchResponseList"
-
-    documentsIndexingResponse:
-      description: "Indexing response"
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/documentsIndexingResponse"
-
-    documentsDeleteResponse:
-      description: "Delete response"
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/documentsDeleteResponse"
-
-    schemaResponse:
-      description: "Engine schema."
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/schemaData"
-
-    searchSettingsResponse:
-      description: "Engine search settings."
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/searchSettings"
-
-    synonymSetResponse:
-      description: "Synonym set."
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/synonymSet"
-
-    synonymSetListResponse:
-      description: "Synonym sets list."
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/synonymSetListResponse"
-
-    curationResponse:
-      description: "Curation."
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/curation"
-
-    curationListResponse:
-      description: "List of curations."
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/curationListResponse"
 
 paths:
   /engines:
@@ -728,12 +238,12 @@ paths:
         url: https://swiftype.com/documentation/app-search/api/engines#list
       tags:
       - Engine API
-      requestBody:
-        $ref: "#/components/requestBodies/listParamsRequest"
-      x-codegen-request-body-name: listParams
+      parameters:
+      - $ref: "#/components/parameters/currentPage"
+      - $ref: "#/components/parameters/pageSize"
       responses:
         default:
-          $ref: "#/components/responseBodies/engineListResponse"
+          $ref: "#/components/responses/jsonResponse"
     post:
       operationId: createEngine
       summary: Creates a new engine.
@@ -741,11 +251,21 @@ paths:
         url: https://swiftype.com/documentation/app-search/api/engines#create
       tags:
       - Engine API
-      requestBody:
-        $ref: "#/components/requestBodies/engineRequest"
+      parameters:
+      - name: name
+        in: query
+        required: true
+        description: Engine name.
+        schema:
+          type: string
+      - name: language
+        in: query
+        description: Engine language (null for universal).
+        schema:
+          type: string
       responses:
         default:
-          $ref: "#/components/responseBodies/engineResponse"
+          $ref: "#/components/responses/jsonResponse"
 
   /engines/{engine_name}:
     parameters:
@@ -759,7 +279,7 @@ paths:
       - Engine API
       responses:
         default:
-          $ref: "#/components/responseBodies/engineResponse"
+          $ref: "#/components/responses/jsonResponse"
     delete:
       operationId: deleteEngine
       summary: Delete an engine by name.
@@ -769,7 +289,7 @@ paths:
       - Engine API
       responses:
         default:
-          $ref: "#/components/responseBodies/jsonResponse"
+          $ref: "#/components/responses/jsonResponse"
 
   /engines/{engine_name}/documents:
     parameters:
@@ -786,7 +306,7 @@ paths:
       x-codegen-request-body-name: documentIds
       responses:
         default:
-          $ref: "#/components/responseBodies/documentListResponse"
+          $ref: "#/components/responses/jsonResponse"
     post:
       operationId: indexDocuments
       summary: Create or update documents.
@@ -795,11 +315,11 @@ paths:
       tags:
       - Documents API
       requestBody:
-        $ref: "#/components/requestBodies/documentListRequest"
+        $ref: "#/components/requestBodies/documentsIndexingRequest"
       x-codegen-request-body-name: documents
       responses:
         default:
-          $ref: "#/components/responseBodies/documentsIndexingResponse"
+          $ref: "#/components/responses/jsonResponse"
     patch:
       operationId: updateDocuments
       summary: Partial update of documents.
@@ -808,11 +328,11 @@ paths:
       tags:
       - Documents API
       requestBody:
-        $ref: "#/components/requestBodies/documentListRequest"
+        $ref: "#/components/requestBodies/documentsPartialUpdateRequest"
       x-codegen-request-body-name: documents
       responses:
         default:
-          $ref: "#/components/responseBodies/documentsIndexingResponse"
+          $ref: "#/components/responses/jsonResponse"
     delete:
       operationId: deleteDocuments
       summary: Delete documents by id.
@@ -825,7 +345,7 @@ paths:
       x-codegen-request-body-name: documentIds
       responses:
         default:
-          $ref: "#/components/responseBodies/documentsDeleteResponse"
+          $ref: "#/components/responses/jsonResponse"
 
   /engines/{engine_name}/documents/list:
     parameters:
@@ -837,45 +357,12 @@ paths:
         url: https://swiftype.com/documentation/app-search/api/documents#list
       tags:
       - Documents API
-      requestBody:
-        $ref: "#/components/requestBodies/listParamsRequest"
-      x-codegen-request-body-name: listParams
+      parameters:
+      - $ref: "#/components/parameters/currentPage"
+      - $ref: "#/components/parameters/pageSize"
       responses:
         default:
-          $ref: "#/components/responseBodies/documentListResponse"
-
-  /engines/{engine_name}/search:
-    parameters:
-    - $ref: "#/components/parameters/engineNameParam"
-    post:
-      operationId: search
-      summary: Allows you to search over, facet and filter your data.
-      externalDocs:
-        url: https://swiftype.com/documentation/app-search/api/search
-      tags:
-      - Schema API
-      requestBody:
-        $ref: "#/components/requestBodies/searchRequest"
-      responses:
-        default:
-          $ref: "#/components/responseBodies/searchResponse"
-
-  /engines/{engine_name}/multi_search:
-    parameters:
-    - $ref: "#/components/parameters/engineNameParam"
-    post:
-      operationId: multiSearch
-      summary: Run several search in the same request.
-      externalDocs:
-        url: https://swiftype.com/documentation/app-search/api/search#multi
-      tags:
-      - Schema API
-      requestBody:
-        $ref: "#/components/requestBodies/multiSearchRequest"
-      x-codegen-request-body-name: queries
-      responses:
-        default:
-          $ref: "#/components/responseBodies/multiSearchResponse"
+          $ref: "#/components/responses/jsonResponse"
 
   /engines/{engine_name}/schema:
     parameters:
@@ -889,7 +376,7 @@ paths:
       - Schema API
       responses:
         default:
-          $ref: "#/components/responseBodies/schemaResponse"
+          $ref: "#/components/responses/jsonResponse"
     post:
       operationId: updateSchema
       summary: Update schema for the current engine.
@@ -898,11 +385,51 @@ paths:
       tags:
       - Schema API
       requestBody:
-        $ref: "#/components/requestBodies/schemaRequest"
+        $ref: "#/components/requestBodies/schemaUpdateRequest"
       x-codegen-request-body-name: schema
       responses:
         default:
-          $ref: "#/components/responseBodies/schemaResponse"
+          $ref: "#/components/responses/jsonResponse"
+
+  /engines/{engine_name}/search:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    post:
+      operationId: search
+      summary: Allows you to search over, facet and filter your data.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/search
+      tags:
+      - Schema API
+      parameters:
+      - $ref: "#/components/parameters/searchQueryText"
+      requestBody:
+        $ref: "#/components/requestBodies/searchRequestParams"
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
+
+  /engines/{engine_name}/multi_search:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    post:
+      operationId: multiSearch
+      summary: Run several search in the same request.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/search#multi
+      tags:
+      - Schema API
+      parameters:
+      - name: queries
+        in: query
+        required: true
+        description: Search queries.
+        schema:
+          $ref: "#/components/schema/searchRequestList"
+      x-codegen-request-body-name: queries
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
 
   /engines/{engine_name}/search_settings:
     parameters:
@@ -916,7 +443,7 @@ paths:
       - Search settings API
       responses:
         default:
-          $ref: "#/components/responseBodies/searchSettingsResponse"
+          $ref: "#/components/responses/jsonResponse"
     put:
       operationId: updateSearchSettings
       summary: Update search settings for the engine.
@@ -928,7 +455,7 @@ paths:
         $ref: "#/components/requestBodies/searchSettingsRequest"
       responses:
         default:
-          $ref: "#/components/responseBodies/searchSettingsResponse"
+          $ref: "#/components/responses/jsonResponse"
 
   /engines/{engine_name}/search_settings/reset:
     parameters:
@@ -942,7 +469,7 @@ paths:
       - Search settings API
       responses:
         default:
-          $ref: "#/components/responseBodies/searchSettingsResponse"
+          $ref: "#/components/responses/jsonResponse"
 
   /engines/{engine_name}/synonyms:
     parameters:
@@ -954,12 +481,12 @@ paths:
         url: https://swiftype.com/documentation/app-search/api/synonyms#get
       tags:
       - Synonyms API
-      requestBody:
-        $ref: "#/components/requestBodies/listParamsRequest"
-      x-codegen-request-body-name: listParams
+      parameters:
+      - $ref: "#/components/parameters/currentPage"
+      - $ref: "#/components/parameters/pageSize"
       responses:
         default:
-          $ref: "#/components/responseBodies/synonymSetListResponse"
+          $ref: "#/components/responses/jsonResponse"
     post:
       operationId: createSynonymSet
       summary: Create a new synonym set.
@@ -967,11 +494,16 @@ paths:
         url: https://swiftype.com/documentation/app-search/api/synonyms#create
       tags:
       - Synonyms API
-      requestBody:
-        $ref: "#/components/requestBodies/synonymSetRequest"
+      parameters:
+      - name: synonyms
+        in: query
+        required: true
+        description: List of synonyms words.
+        schema:
+          $ref: "#/components/schemas/synonymList"
       responses:
         default:
-          $ref: "#/components/responseBodies/synonymSetResponse"
+          $ref: "#/components/responses/jsonResponse"
 
   /engines/{engine_name}/synonyms/{synonym_set_id}:
     parameters:
@@ -986,7 +518,7 @@ paths:
       - Synonyms API
       responses:
         default:
-          $ref: "#/components/responseBodies/synonymSetResponse"
+          $ref: "#/components/responses/jsonResponse"
     delete:
       operationId: deleteSynonymSet
       summary: Delete a synonym set by id.
@@ -996,7 +528,7 @@ paths:
       - Synonyms API
       responses:
         default:
-          $ref: "#/components/responseBodies/jsonResponse"
+          $ref: "#/components/responses/jsonResponse"
 
   /engines/{engine_name}/curations:
     parameters:
@@ -1008,12 +540,12 @@ paths:
         url: https://swiftype.com/documentation/app-search/api/curations#read
       tags:
       - Curations API
-      requestBody:
-        $ref: "#/components/requestBodies/listParamsRequest"
-      x-codegen-request-body-name: listParams
+      parameters:
+      - $ref: "#/components/parameters/currentPage"
+      - $ref: "#/components/parameters/pageSize"
       responses:
         default:
-          $ref: "#/components/requestBodies/curationListResponse"
+          $ref: "#/components/responses/jsonResponse"
     post:
       operationId: createCuration
       summary: Create a new curation.
@@ -1021,11 +553,30 @@ paths:
         url: https://swiftype.com/documentation/app-search/api/curations#create
       tags:
       - Curations API
-      requestBody:
-        $ref: "#/components/requestBodies/curationRequest"
+      parameters:
+      - name: queries
+        in: query
+        required: true
+        description: List of affected search queries.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: promoted
+        in: query
+        description: List of promoted document ids.
+        x-codegen-param-name: promotedDocIds
+        schema:
+          $ref: "#/components/schemas/documentIds"
+      - name: hidden
+        in: query
+        description: List of hidden document ids.
+        x-codegen-param-name: hiddenDocIds
+        schema:
+          $ref: "#/components/schemas/documentIds"
       responses:
         default:
-          $ref: "#/components/requestBodies/curationResponse"
+          $ref: "#/components/responses/jsonResponse"
 
   /engines/{engine_name}/curations/{curation_id}:
     parameters:
@@ -1040,7 +591,7 @@ paths:
       - Curations API
       responses:
         default:
-          $ref: "#/components/requestBodies/curationResponse"
+          $ref: "#/components/responses/jsonResponse"
     put:
       operationId: updateCuration
       summary: Update an existing curation.
@@ -1048,9 +599,27 @@ paths:
         url: https://swiftype.com/documentation/app-search/api/curations#update
       tags:
       - Curations API
-      requestBody:
+      parameters:
+      - name: queries
+        in: query
         required: true
-        $ref: "#/components/requestBodies/curationRequest"
+        description: List of affected search queries.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: promoted
+        in: query
+        description: List of promoted document ids.
+        x-codegen-param-name: promotedDocIds
+        schema:
+          $ref: "#/components/schemas/documentIds"
+      - name: hidden
+        in: query
+        description: List of hidden document ids.
+        x-codegen-param-name: hiddenDocIds
+        schema:
+          $ref: "#/components/schemas/documentIds"
       responses:
         default:
           $ref: "#/components/requestBodies/curationResponse"
@@ -1063,20 +632,43 @@ paths:
       - Curations API
       responses:
         default:
-          $ref: "#/components/responseBodies/jsonResponse"
+          $ref: "#/components/responses/jsonResponse"
 
   /engines/{engine_name}/click:
     parameters:
     - $ref: "#/components/parameters/engineNameParam"
     post:
-      operationId: sendClick
+      operationId: logClickthrough
       summary: Send data about clicked results.
       externalDocs:
         url: https://swiftype.com/documentation/app-search/api/clickthrough
       tags:
       - Click API
-      requestBody:
-        $ref: "#/components/requestBodies/clickRequest"
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: The query that the user searched with.
+        schema:
+          type: string
+      - name: document_id
+        in: query
+        required: true
+        description: The id of the document that was clicked on.
+        schema:
+          $ref: "#/components/schemas/documentId"
+      - name: request_id
+        in: query
+        description: The request id returned in the meta tag of a search API response.
+        schema:
+          type: string
+      - name: tags
+        in: query
+        description: Array of strings representing additional information you wish to track with the clickthrough.
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         default:
-          $ref: "#/components/responseBodies/jsonResponse"
+          $ref: "#/components/responses/jsonResponse"

@@ -29,5 +29,7 @@ class MultiSearch extends \Swiftype\Endpoint\AbstractEndpoint
     protected $uri = '/engines/{engine_name}/multi_search';
 
     protected $routeParams = ['engine_name'];
+
+    protected $paramWhitelist = ['queries'];
     // phpcs:enable
 }

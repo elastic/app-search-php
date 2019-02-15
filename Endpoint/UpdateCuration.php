@@ -29,5 +29,7 @@ class UpdateCuration extends \Swiftype\Endpoint\AbstractEndpoint
     protected $uri = '/engines/{engine_name}/curations/{curation_id}';
 
     protected $routeParams = ['engine_name', 'curation_id'];
+
+    protected $paramWhitelist = ['queries', 'promoted', 'hidden'];
     // phpcs:enable
 }

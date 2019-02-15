@@ -27,24 +27,24 @@ class SearchApiTest extends AbstractEngineTestCase
      *
      * @param array $searchRequest The search request.
      *
-     * @testWith [{"query" : "cat", "page": {"current": 1, "size": 10}}]
-     *           [{"query" : "cat", "page": {"current": 1, "size": 1}}]
-     *           [{"query" : "", "page": {"current": 1, "size": 10}}]
-     *           [{"query" : "original", "page": {"current": 1, "size": 10}}]
-     *           [{"query" : "notfoundable", "page": {"current": 1, "size": 10}}]
+     * @testWith ["cat", {"page": {"current": 1, "size": 10}}]
+     *           ["cat", {"page": {"current": 1, "size": 1}}]
+     *           ["", {"page": {"current": 1, "size": 10}}]
+     *           ["original", {"page": {"current": 1, "size": 10}}]
+     *           ["notfoundable", {"page": {"current": 1, "size": 10}}]
      */
-    public function testSimpleSearch($searchRequest)
+    public function testSimpleSearch($queryText, $searchParams)
     {
-        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), $searchRequest);
+        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), $queryText, $searchParams);
 
         $this->assertArrayHasKey('meta', $searchResponse);
         $this->assertArrayHasKey('results', $searchResponse);
         $this->assertArrayHasKey('page', $searchResponse['meta']);
         $this->assertNotEmpty($searchResponse['meta']['request_id']);
 
-        if (isset($searchRequest['page']['size'])) {
-            $this->assertEquals($searchRequest['page']['size'], $searchResponse['meta']['page']['size']);
-            $this->assertEquals($searchRequest['page']['current'], $searchResponse['meta']['page']['current']);
+        if (isset($searchParams['page']['size'])) {
+            $this->assertEquals($searchParams['page']['size'], $searchResponse['meta']['page']['size']);
+            $this->assertEquals($searchParams['page']['current'], $searchResponse['meta']['page']['current']);
         }
 
         $expectedResultCount = min(
@@ -76,8 +76,8 @@ class SearchApiTest extends AbstractEngineTestCase
      */
     public function testFilteredSearch($filters, $expectedResultsCount)
     {
-        $searchRequest = ['query' => '', 'filters' => $filters];
-        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), $searchRequest);
+        $searchParams = ['filters' => $filters];
+        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), '', $searchParams);
         $this->assertCount($expectedResultsCount, $searchResponse['results']);
     }
 
@@ -92,8 +92,8 @@ class SearchApiTest extends AbstractEngineTestCase
      */
     public function testFacetedSearch($facets, $expectedValueCount)
     {
-        $searchRequest = ['query' => '', 'facets' => $facets];
-        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), $searchRequest);
+        $searchParams = ['facets' => $facets];
+        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), '', $searchParams);
         $this->assertArrayHasKey('facets', $searchResponse);
 
         foreach ($facets as $facetName => $facetDefinition) {
@@ -118,13 +118,12 @@ class SearchApiTest extends AbstractEngineTestCase
      *           [{"title": "desc"}, "INscMGmhmX4"]
      *           [[{"title": "asc"}], "JNDFojsd02"]
      *           [[{"title": "desc"}], "INscMGmhmX4"]
-     *           [[{"_score": "desc"}], "INscMGmhmX4"]
      *           [[{"title": "asc"}, {"_score": "desc"}], "JNDFojsd02"]
      */
     public function testSortedSearch($sortOrder, $expectedFirstDocId)
     {
-        $searchRequest = ['query' => '', 'sort' => $sortOrder];
-        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), $searchRequest);
+        $searchParams = ['sort' => $sortOrder];
+        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), '', $searchParams);
         $this->assertEquals($expectedFirstDocId, $searchResponse['results'][0]['id']['raw']);
     }
 
@@ -142,8 +141,25 @@ class SearchApiTest extends AbstractEngineTestCase
      */
     public function testSearchFields($queryText, $searchFields, $expectedResultsCount)
     {
-        $searchRequest = ['query' => $queryText, 'search_fields' => $searchFields];
-        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), $searchRequest);
+        $searchParams = ['search_fields' => $searchFields];
+        $searchResponse = $this->getDefaultClient()->search($this->getDefaultEngineName(), $queryText, $searchParams);
         $this->assertCount($expectedResultsCount, $searchResponse['results']);
+    }
+
+    /**
+     * Run a multisearch and check the content of the response.
+     */
+    public function testMultiSearch()
+    {
+        $queries = [['query' => ''], ['query' => 'cat']];
+
+        $searchResponses = $this->getDefaultClient()->multiSearch($this->getDefaultEngineName(), $queries);
+
+        $this->assertCount(count($queries), $searchResponses);
+
+        foreach ($searchResponses as $searchResponse) {
+            $this->assertArrayHasKey('meta', $searchResponse);
+            $this->assertArrayHasKey('results', $searchResponse);
+        }
     }
 }

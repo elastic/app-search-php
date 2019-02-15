@@ -27,5 +27,7 @@ class ListEngines extends \Swiftype\Endpoint\AbstractEndpoint
      * @var string
      */
     protected $uri = '/engines';
+
+    protected $paramWhitelist = ['page.current', 'page.size'];
     // phpcs:enable
 }

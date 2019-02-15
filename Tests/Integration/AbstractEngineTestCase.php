@@ -39,7 +39,7 @@ class AbstractEngineTestCase extends AbstractClientTestCase
     public static function setupBeforeClass()
     {
         parent::setUpBeforeClass();
-        self::getDefaultClient()->createEngine(['name' => self::getDefaultEngineName()]);
+        self::getDefaultClient()->createEngine(self::getDefaultEngineName());
 
         if (static::$importSampleDocs) {
             self::importSampleDocuments();
@@ -68,7 +68,7 @@ class AbstractEngineTestCase extends AbstractClientTestCase
         if ($waitForSearchableDocs) {
             do {
                 // We wait for the doc to be searchable before launching the test.
-                $searchResponse = $client->search($engineName, ['query' => '']);
+                $searchResponse = $client->search($engineName, '');
                 $areDocsSynced = $searchResponse['meta']['page']['total_results'] == count($documents);
 
                 // We also wait for the schema to be synced.

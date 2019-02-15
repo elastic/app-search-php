@@ -30,6 +30,6 @@ class ClickApiTest extends AbstractEngineTestCase
         $client = $this->getDefaultClient();
         $engineName = $this->getDefaultEngineName();
 
-        $this->assertEmpty($client->sendClick($engineName, ['query' => 'cat', 'document_id' => '5678']));
+        $this->assertEmpty($client->logClickthrough($engineName, 'cat', '5678'));
     }
 }

@@ -15,7 +15,7 @@ namespace Swiftype\AppSearch\Endpoint;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class SendClick extends \Swiftype\Endpoint\AbstractEndpoint
+class LogClickthrough extends \Swiftype\Endpoint\AbstractEndpoint
 {
     // phpcs:disable
     /**
@@ -29,5 +29,7 @@ class SendClick extends \Swiftype\Endpoint\AbstractEndpoint
     protected $uri = '/engines/{engine_name}/click';
 
     protected $routeParams = ['engine_name'];
+
+    protected $paramWhitelist = ['query', 'document_id', 'request_id', 'tags'];
     // phpcs:enable
 }

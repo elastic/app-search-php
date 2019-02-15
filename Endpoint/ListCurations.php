@@ -29,5 +29,7 @@ class ListCurations extends \Swiftype\Endpoint\AbstractEndpoint
     protected $uri = '/engines/{engine_name}/curations';
 
     protected $routeParams = ['engine_name'];
+
+    protected $paramWhitelist = ['page.current', 'page.size'];
     // phpcs:enable
 }

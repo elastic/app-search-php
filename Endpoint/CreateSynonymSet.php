@@ -29,5 +29,7 @@ class CreateSynonymSet extends \Swiftype\Endpoint\AbstractEndpoint
     protected $uri = '/engines/{engine_name}/synonyms';
 
     protected $routeParams = ['engine_name'];
+
+    protected $paramWhitelist = ['synonyms'];
     // phpcs:enable
 }

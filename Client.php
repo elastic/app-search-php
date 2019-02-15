@@ -24,20 +24,24 @@ class Client extends \Swiftype\AbstractClient
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/curations#create
      *
-     * @param string $engineName   Name of the engine.
-     * @param array  $curationData Curation data.
+     * @param string $engineName     Name of the engine.
+     * @param array  $queries        List of affected search queries.
+     * @param array  $promotedDocIds List of promoted document ids.
+     * @param array  $hiddenDocIds   List of hidden document ids.
      *
      * @return array
      */
-    public function createCuration($engineName, $curationData)
+    public function createCuration($engineName, $queries, $promotedDocIds = null, $hiddenDocIds = null)
     {
         $params = [
             'engine_name' => $engineName,
+            'queries' => $queries,
+            'promoted' => $promotedDocIds,
+            'hidden' => $hiddenDocIds,
         ];
 
         $endpoint = $this->getEndpoint('CreateCuration');
         $endpoint->setParams($params);
-        $endpoint->setBody($curationData);
 
         return $this->performRequest($endpoint);
     }
@@ -47,18 +51,20 @@ class Client extends \Swiftype\AbstractClient
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/engines#create
      *
-     * @param array $engine Engine data.
+     * @param string $name     Engine name.
+     * @param string $language Engine language (null for universal).
      *
      * @return array
      */
-    public function createEngine($engine)
+    public function createEngine($name, $language = null)
     {
         $params = [
+            'name' => $name,
+            'language' => $language,
         ];
 
         $endpoint = $this->getEndpoint('CreateEngine');
         $endpoint->setParams($params);
-        $endpoint->setBody($engine);
 
         return $this->performRequest($endpoint);
     }
@@ -68,20 +74,20 @@ class Client extends \Swiftype\AbstractClient
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/synonyms#create
      *
-     * @param string $engineName     Name of the engine.
-     * @param array  $synonymSetData Synonym set data.
+     * @param string $engineName Name of the engine.
+     * @param array  $synonyms   List of synonyms words.
      *
      * @return array
      */
-    public function createSynonymSet($engineName, $synonymSetData)
+    public function createSynonymSet($engineName, $synonyms)
     {
         $params = [
             'engine_name' => $engineName,
+            'synonyms' => $synonyms,
         ];
 
         $endpoint = $this->getEndpoint('CreateSynonymSet');
         $endpoint->setParams($params);
-        $endpoint->setBody($synonymSetData);
 
         return $this->performRequest($endpoint);
     }
@@ -314,7 +320,7 @@ class Client extends \Swiftype\AbstractClient
      * Documentation: https://swiftype.com/documentation/app-search/api/documents#create
      *
      * @param string $engineName Name of the engine.
-     * @param array  $documents  List of documents.
+     * @param array  $documents  List of document to index.
      *
      * @return array
      */
@@ -336,20 +342,22 @@ class Client extends \Swiftype\AbstractClient
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/curations#read
      *
-     * @param string $engineName Name of the engine.
-     * @param array  $listParams Listing params (include page[current] and page[size]).
+     * @param string $engineName  Name of the engine.
+     * @param string $currentPage The page to fetch. Defaults to 1.
+     * @param string $pageSize    The number of results per page.
      *
      * @return array
      */
-    public function listCurations($engineName, $listParams = null)
+    public function listCurations($engineName, $currentPage = null, $pageSize = null)
     {
         $params = [
             'engine_name' => $engineName,
+            'page.current' => $currentPage,
+            'page.size' => $pageSize,
         ];
 
         $endpoint = $this->getEndpoint('ListCurations');
         $endpoint->setParams($params);
-        $endpoint->setBody($listParams);
 
         return $this->performRequest($endpoint);
     }
@@ -359,20 +367,22 @@ class Client extends \Swiftype\AbstractClient
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/documents#list
      *
-     * @param string $engineName Name of the engine.
-     * @param array  $listParams Listing params (include page[current] and page[size]).
+     * @param string $engineName  Name of the engine.
+     * @param string $currentPage The page to fetch. Defaults to 1.
+     * @param string $pageSize    The number of results per page.
      *
      * @return array
      */
-    public function listDocuments($engineName, $listParams = null)
+    public function listDocuments($engineName, $currentPage = null, $pageSize = null)
     {
         $params = [
             'engine_name' => $engineName,
+            'page.current' => $currentPage,
+            'page.size' => $pageSize,
         ];
 
         $endpoint = $this->getEndpoint('ListDocuments');
         $endpoint->setParams($params);
-        $endpoint->setBody($listParams);
 
         return $this->performRequest($endpoint);
     }
@@ -382,18 +392,20 @@ class Client extends \Swiftype\AbstractClient
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/engines#list
      *
-     * @param array $listParams Listing params (include page[current] and page[size]).
+     * @param string $currentPage The page to fetch. Defaults to 1.
+     * @param string $pageSize    The number of results per page.
      *
      * @return array
      */
-    public function listEngines($listParams = null)
+    public function listEngines($currentPage = null, $pageSize = null)
     {
         $params = [
+            'page.current' => $currentPage,
+            'page.size' => $pageSize,
         ];
 
         $endpoint = $this->getEndpoint('ListEngines');
         $endpoint->setParams($params);
-        $endpoint->setBody($listParams);
 
         return $this->performRequest($endpoint);
     }
@@ -403,20 +415,51 @@ class Client extends \Swiftype\AbstractClient
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/synonyms#get
      *
-     * @param string $engineName Name of the engine.
-     * @param array  $listParams Listing params (include page[current] and page[size]).
+     * @param string $engineName  Name of the engine.
+     * @param string $currentPage The page to fetch. Defaults to 1.
+     * @param string $pageSize    The number of results per page.
      *
      * @return array
      */
-    public function listSynonymSets($engineName, $listParams = null)
+    public function listSynonymSets($engineName, $currentPage = null, $pageSize = null)
     {
         $params = [
             'engine_name' => $engineName,
+            'page.current' => $currentPage,
+            'page.size' => $pageSize,
         ];
 
         $endpoint = $this->getEndpoint('ListSynonymSets');
         $endpoint->setParams($params);
-        $endpoint->setBody($listParams);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Send data about clicked results.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/clickthrough
+     *
+     * @param string $engineName Name of the engine.
+     * @param string $query      The query that the user searched with.
+     * @param string $documentId The id of the document that was clicked on.
+     * @param string $requestId  The request id returned in the meta tag of a search API response.
+     * @param array  $tags       Array of strings representing additional information you wish to track with the clickthrough.
+     *
+     * @return array
+     */
+    public function logClickthrough($engineName, $query, $documentId, $requestId = null, $tags = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'query' => $query,
+            'document_id' => $documentId,
+            'request_id' => $requestId,
+            'tags' => $tags,
+        ];
+
+        $endpoint = $this->getEndpoint('LogClickthrough');
+        $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
     }
@@ -427,7 +470,7 @@ class Client extends \Swiftype\AbstractClient
      * Documentation: https://swiftype.com/documentation/app-search/api/search#multi
      *
      * @param string $engineName Name of the engine.
-     * @param array  $queries    Array of search requests.
+     * @param array  $queries    Search queries.
      *
      * @return array
      */
@@ -435,11 +478,11 @@ class Client extends \Swiftype\AbstractClient
     {
         $params = [
             'engine_name' => $engineName,
+            'queries' => $queries,
         ];
 
         $endpoint = $this->getEndpoint('MultiSearch');
         $endpoint->setParams($params);
-        $endpoint->setBody($queries);
 
         return $this->performRequest($endpoint);
     }
@@ -470,43 +513,22 @@ class Client extends \Swiftype\AbstractClient
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/search
      *
-     * @param string $engineName    Name of the engine.
-     * @param array  $searchRequest Search request.
+     * @param string $engineName          Name of the engine.
+     * @param string $queryText           Search query text.
+     * @param array  $searchRequestParams Search request parameters.
      *
      * @return array
      */
-    public function search($engineName, $searchRequest)
+    public function search($engineName, $queryText, $searchRequestParams = null)
     {
         $params = [
             'engine_name' => $engineName,
+            'query' => $queryText,
         ];
 
         $endpoint = $this->getEndpoint('Search');
         $endpoint->setParams($params);
-        $endpoint->setBody($searchRequest);
-
-        return $this->performRequest($endpoint);
-    }
-
-    /**
-     * Send data about clicked results.
-     *
-     * Documentation: https://swiftype.com/documentation/app-search/api/clickthrough
-     *
-     * @param string $engineName Name of the engine.
-     * @param array  $clickData  Click data (include query text and document id).
-     *
-     * @return array
-     */
-    public function sendClick($engineName, $clickData)
-    {
-        $params = [
-            'engine_name' => $engineName,
-        ];
-
-        $endpoint = $this->getEndpoint('SendClick');
-        $endpoint->setParams($params);
-        $endpoint->setBody($clickData);
+        $endpoint->setBody($searchRequestParams);
 
         return $this->performRequest($endpoint);
     }
@@ -516,22 +538,26 @@ class Client extends \Swiftype\AbstractClient
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/curations#update
      *
-     * @param string $engineName   Name of the engine.
-     * @param string $curationId   Curation id.
-     * @param array  $curationData Curation data.
+     * @param string $engineName     Name of the engine.
+     * @param string $curationId     Curation id.
+     * @param array  $queries        List of affected search queries.
+     * @param array  $promotedDocIds List of promoted document ids.
+     * @param array  $hiddenDocIds   List of hidden document ids.
      *
      * @return array
      */
-    public function updateCuration($engineName, $curationId, $curationData)
+    public function updateCuration($engineName, $curationId, $queries, $promotedDocIds = null, $hiddenDocIds = null)
     {
         $params = [
             'engine_name' => $engineName,
             'curation_id' => $curationId,
+            'queries' => $queries,
+            'promoted' => $promotedDocIds,
+            'hidden' => $hiddenDocIds,
         ];
 
         $endpoint = $this->getEndpoint('UpdateCuration');
         $endpoint->setParams($params);
-        $endpoint->setBody($curationData);
 
         return $this->performRequest($endpoint);
     }
@@ -542,7 +568,7 @@ class Client extends \Swiftype\AbstractClient
      * Documentation: https://swiftype.com/documentation/app-search/api/documents#partial
      *
      * @param string $engineName Name of the engine.
-     * @param array  $documents  List of documents.
+     * @param array  $documents  List of document to update.
      *
      * @return array
      */
