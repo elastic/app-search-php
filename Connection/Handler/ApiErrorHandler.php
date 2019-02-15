@@ -82,7 +82,7 @@ class ApiErrorHandler
      */
     private function getErrorMessage($response)
     {
-        $message = $response['reason'] ?? 'Unexpected error.';
+        $message = isset($response['reason']) ? $response['reason'] : 'Unexpected error.';
 
         if (!empty($response['body']['errors'])) {
             $message = $response['body']['errors'];
