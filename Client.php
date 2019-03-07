@@ -486,6 +486,33 @@ class Client extends \Swiftype\AbstractClient
     }
 
     /**
+     * Provide relevant query suggestions for incomplete queries.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/query-suggestion
+     *
+     * @param string $engineName Name of the engine.
+     * @param string $query      A partial query for which to receive suggestions.
+     * @param array  $fields     List of fields to use to generate suggestions. Defaults to all text fields.
+     * @param int    $size       Number of query suggestions to return. Must be between 1 and 20. Defaults to 5.
+     *
+     * @return array
+     */
+    public function querySuggestion($engineName, $query, $fields = null, $size = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'query' => $query,
+            'types.documents.fields' => $fields,
+            'size' => $size,
+        ];
+
+        $endpoint = $this->getEndpoint('QuerySuggestion');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Reset search settings for the engine.
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/search-settings#reset
