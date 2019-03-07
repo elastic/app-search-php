@@ -84,16 +84,23 @@ class AbstractEngineTestCase extends AbstractClientTestCase
         $indexingResponse = $client->indexDocuments($engineName, $documents);
 
         if ($waitForSearchableDocs) {
-            do {
-                // We wait for the doc to be searchable before launching the test.
-                $searchResponse = $client->search($engineName, '');
-                $areDocsSynced = $searchResponse['meta']['page']['total_results'] == count($documents);
+            $isReady = false;
+
+            while (false === $isReady) {
+                usleep(self::SYNC_RETRY_INTERVAL);
 
                 // We also wait for the schema to be synced.
                 $schema = $client->getSchema($engineName);
                 $isSchemaSynced = !empty($schema);
-                usleep(self::SYNC_RETRY_INTERVAL);
-            } while (!($areDocsSynced && $isSchemaSynced));
+
+                if ($isSchemaSynced) {
+                    // We wait for the docs to be searchable before launching the test.
+                    $searchResponse = $client->search($engineName, '');
+                    $areDocsSynced = $searchResponse['meta']['page']['total_results'] == count($documents);
+
+                    $isReady = $isSchemaSynced && $areDocsSynced;
+                }
+            }
         }
 
         return $indexingResponse;
