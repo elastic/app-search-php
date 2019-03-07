@@ -108,6 +108,7 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
     protected function getHandler()
     {
         $handler = parent::getHandler();
+        $handler = new Connection\Handler\RequestClientHeaderHandler($handler);
         $handler = new Connection\Handler\RequestAuthenticationHandler($handler, $this->apiKey);
         $handler = new \Swiftype\Connection\Handler\RequestUrlPrefixHandler($handler, self::URI_PREFIX);
         $handler = new Connection\Handler\ApiErrorHandler($handler);
