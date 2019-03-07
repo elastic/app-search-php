@@ -34,7 +34,10 @@ class QuerySuggestionApiTest extends AbstractEngineTestCase
      */
     public function testQuerySuggestion($queryText, $fields, $size)
     {
-        $suggestions = $this->getDefaultClient()->querySuggestion($this->getDefaultEngineName(), $queryText, $fields, $size);
+        $client = $this->getDefaultClient();
+        $engine = $this->getDefaultEngineName();
+
+        $suggestions = $client->querySuggestion($engine, $queryText, $fields, $size);
 
         $this->assertNotEmpty($suggestions['meta']['request_id']);
         $this->assertNotEmpty($suggestions['results']['documents']);
