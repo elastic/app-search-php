@@ -171,7 +171,7 @@ Method      | Description | Documentation
 
 ## Development
 
-Code for the endpoints are generated automatically using a custom version of [OpenAPI Generator](https://github.com/openapitools/openapi-generator).
+Code for the endpoints is generated automatically using a custom version of [OpenAPI Generator](https://github.com/openapitools/openapi-generator).
 
 The easier way to regenerate endpoints is to use the docker laucher packaged in `vendor/bin`:
 
@@ -179,11 +179,11 @@ The easier way to regenerate endpoints is to use the docker laucher packaged in 
 ./vendor/bin/swiftype-codegen.sh
 ```
 
-The custom generator will be build and launched using the following Open API spec file : `resources/api/api-spec.yml`.
+The custom generator will be built and launched using the following Open API spec file : `resources/api/api-spec.yml`.
 
-You can then commit and PR your endpoint code and modified api-spec files.
+You can then commit and PR your endpoint code and modified the api-spec files.
 
-The client class may be changed in some case. Do not forget to include it in your commit.
+The client class may be changed in some case. Do not forget to include it in your commit!
 
 ## FAQ 🔮
 

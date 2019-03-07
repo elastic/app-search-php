@@ -11,9 +11,7 @@ namespace Swiftype\AppSearch;
 /**
  * Client implementation.
  *
- * @package Swiftype
- *
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
+ * @package Swiftype\AppSearch
  */
 class Client extends \Swiftype\AbstractClient
 {

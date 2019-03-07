@@ -12,8 +12,6 @@ namespace Swiftype\AppSearch\Endpoint;
  * Implementation of the  endpoint.
  *
  * @package Swiftype\AppSearch\Endpoint
- *
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ListSynonymSets extends \Swiftype\Endpoint\AbstractEndpoint
 {
