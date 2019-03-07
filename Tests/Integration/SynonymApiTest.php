@@ -18,11 +18,6 @@ namespace Swiftype\AppSearch\Tests\Integration;
 class SynonymApiTest extends AbstractEngineTestCase
 {
     /**
-     * @var bool
-     */
-    protected static $importSampleDocs = false;
-
-    /**
      * Test Synonym API endpoints (create, get, list, delete).
      *
      * @param array $synonymSetData

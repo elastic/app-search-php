@@ -8,6 +8,8 @@
 
 namespace Swiftype\AppSearch\Tests\Integration;
 
+use Swiftype\Exception\NotFoundException;
+
 /**
  * A base class for running client tests with a default engine and some sample optional docs.
  *
@@ -39,6 +41,22 @@ class AbstractEngineTestCase extends AbstractClientTestCase
     public static function setupBeforeClass()
     {
         parent::setUpBeforeClass();
+        $tryDelete = true;
+        $hasEngine = false;
+
+        do {
+            try {
+                self::getDefaultClient()->getEngine(self::getDefaultEngineName());
+                $hasEngine = true;
+            } catch (NotFoundException $e) {
+                $hasEngine = false;
+            }
+            if ($hasEngine && $tryDelete) {
+                self::tearDownAfterClass();
+                $tryDelete = false;
+            }
+        } while ($hasEngine);
+
         self::getDefaultClient()->createEngine(self::getDefaultEngineName());
 
         if (static::$importSampleDocs) {

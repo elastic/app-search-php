@@ -18,11 +18,6 @@ namespace Swiftype\AppSearch\Tests\Integration;
 class ClickApiTest extends AbstractEngineTestCase
 {
     /**
-     * @var bool
-     */
-    protected static $importSampleDocs = true;
-
-    /**
      * Test sending a click trough the API.
      */
     public function testSendClick()
