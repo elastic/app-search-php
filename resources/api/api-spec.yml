@@ -400,7 +400,7 @@ paths:
       externalDocs:
         url: https://swiftype.com/documentation/app-search/api/search
       tags:
-      - Schema API
+      - Search API
       parameters:
       - $ref: "#/components/parameters/searchQueryText"
       requestBody:
@@ -418,7 +418,7 @@ paths:
       externalDocs:
         url: https://swiftype.com/documentation/app-search/api/search#multi
       tags:
-      - Schema API
+      - Search API
       parameters:
       - name: queries
         in: query
@@ -426,7 +426,40 @@ paths:
         description: Search queries.
         schema:
           $ref: "#/components/schema/searchRequestList"
-      x-codegen-request-body-name: queries
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
+
+  /engines/{engine_name}/query_suggestion:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    post:
+      operationId: querySuggestion
+      summary: Provide relevant query suggestions for incomplete queries.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/query-suggestion
+      tags:
+      - Query suggestion API
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: A partial query for which to receive suggestions.
+        schema:
+          type: string
+      - name: types.documents.fields
+        in: query
+        description: List of fields to use to generate suggestions. Defaults to all text fields.
+        x-codegen-param-name: fields
+        schema:
+          type: array
+          items:
+            type: string
+      - name: size
+        in: query
+        description: Number of query suggestions to return. Must be between 1 and 20. Defaults to 5.
+        schema:
+          type: integer
       responses:
         default:
           $ref: "#/components/responses/jsonResponse"
