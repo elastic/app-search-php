@@ -27,29 +27,28 @@ class CurationApiTest extends AbstractEngineTestCase
      *
      * @param array $curationData
      *
-     * @testWith [{"queries": [""], "promoted": ["INscMGmhmX4"], "hidden": ["JNDFojsd02"]}]
+     * @testWith [[""], ["INscMGmhmX4"], ["JNDFojsd02"]]
+     *           [["cat", "grumpy"], ["INscMGmhmX4"], null]
+     *           [["lol"], null, ["INscMGmhmX4"]]
      */
-    public function testCurationApi($curationData)
+    public function testCurationApi($queries, $promotedIds, $hiddenIds)
     {
         $client = $this->getDefaultClient();
         $engineName = $this->getDefaultEngineName();
 
-        $curation = $client->createCuration($engineName, $curationData);
+        $curation = $client->createCuration($engineName, $queries, $promotedIds, $hiddenIds);
         $this->assertArrayHasKey('id', $curation);
 
         $curation = $client->getCuration($engineName, $curation['id']);
-        $this->assertEquals($curationData['promoted'], $curation['promoted']);
-        $this->assertEquals($curationData['hidden'], $curation['hidden']);
-        $this->assertEquals($curationData['queries'], $curation['queries']);
+        $this->assertEquals($queries, $curation['queries']);
 
         $curationListResponse = $client->listCurations($engineName);
         $this->assertEquals(1, $curationListResponse['meta']['page']['total_results']);
         $this->assertCount(1, $curationListResponse['results']);
 
-        unset($curationData['hidden']);
-        $updateCurationResponse = $client->updateCuration($engineName, $curation['id'], $curationData);
-        $this->assertArrayHasKey('id', $updateCurationResponse);
-        $this->assertEquals($curation['id'], $updateCurationResponse['id']);
+        $updateResponse = $client->updateCuration($engineName, $curation['id'], $queries, $promotedIds, $hiddenIds);
+        $this->assertArrayHasKey('id', $updateResponse);
+        $this->assertEquals($curation['id'], $updateResponse['id']);
 
         $deleteOperationResponse = $client->deleteCuration($engineName, $curation['id']);
         $this->assertEquals(['deleted' => true], $deleteOperationResponse);

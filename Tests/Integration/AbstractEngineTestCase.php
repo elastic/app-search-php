@@ -8,6 +8,8 @@
 
 namespace Swiftype\AppSearch\Tests\Integration;
 
+use Swiftype\Exception\NotFoundException;
+
 /**
  * A base class for running client tests with a default engine and some sample optional docs.
  *
@@ -39,7 +41,23 @@ class AbstractEngineTestCase extends AbstractClientTestCase
     public static function setupBeforeClass()
     {
         parent::setUpBeforeClass();
-        self::getDefaultClient()->createEngine(['name' => self::getDefaultEngineName()]);
+        $tryDelete = true;
+        $hasEngine = false;
+
+        do {
+            try {
+                self::getDefaultClient()->getEngine(self::getDefaultEngineName());
+                $hasEngine = true;
+            } catch (NotFoundException $e) {
+                $hasEngine = false;
+            }
+            if ($hasEngine && $tryDelete) {
+                self::tearDownAfterClass();
+                $tryDelete = false;
+            }
+        } while ($hasEngine);
+
+        self::getDefaultClient()->createEngine(self::getDefaultEngineName());
 
         if (static::$importSampleDocs) {
             self::importSampleDocuments();
@@ -68,7 +86,7 @@ class AbstractEngineTestCase extends AbstractClientTestCase
         if ($waitForSearchableDocs) {
             do {
                 // We wait for the doc to be searchable before launching the test.
-                $searchResponse = $client->search($engineName, ['query' => '']);
+                $searchResponse = $client->search($engineName, '');
                 $areDocsSynced = $searchResponse['meta']['page']['total_results'] == count($documents);
 
                 // We also wait for the schema to be synced.

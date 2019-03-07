@@ -12,8 +12,6 @@ namespace Swiftype\AppSearch\Endpoint;
  * Implementation of the  endpoint.
  *
  * @package Swiftype\AppSearch\Endpoint
- *
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class UpdateCuration extends \Swiftype\Endpoint\AbstractEndpoint
 {
@@ -29,5 +27,7 @@ class UpdateCuration extends \Swiftype\Endpoint\AbstractEndpoint
     protected $uri = '/engines/{engine_name}/curations/{curation_id}';
 
     protected $routeParams = ['engine_name', 'curation_id'];
+
+    protected $paramWhitelist = ['queries', 'promoted', 'hidden'];
     // phpcs:enable
 }

@@ -12,8 +12,6 @@ namespace Swiftype\AppSearch\Endpoint;
  * Implementation of the  endpoint.
  *
  * @package Swiftype\AppSearch\Endpoint
- *
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class CreateSynonymSet extends \Swiftype\Endpoint\AbstractEndpoint
 {
@@ -29,5 +27,7 @@ class CreateSynonymSet extends \Swiftype\Endpoint\AbstractEndpoint
     protected $uri = '/engines/{engine_name}/synonyms';
 
     protected $routeParams = ['engine_name'];
+
+    protected $paramWhitelist = ['synonyms'];
     // phpcs:enable
 }

@@ -18,11 +18,6 @@ namespace Swiftype\AppSearch\Tests\Integration;
 class ClickApiTest extends AbstractEngineTestCase
 {
     /**
-     * @var bool
-     */
-    protected static $importSampleDocs = true;
-
-    /**
      * Test sending a click trough the API.
      */
     public function testSendClick()
@@ -30,6 +25,6 @@ class ClickApiTest extends AbstractEngineTestCase
         $client = $this->getDefaultClient();
         $engineName = $this->getDefaultEngineName();
 
-        $this->assertEmpty($client->sendClick($engineName, ['query' => 'cat', 'document_id' => '5678']));
+        $this->assertEmpty($client->logClickthrough($engineName, 'cat', '5678'));
     }
 }

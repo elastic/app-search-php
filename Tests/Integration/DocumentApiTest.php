@@ -58,10 +58,9 @@ class DocumentApiTest extends AbstractEngineTestCase
         $client = $this->getDefaultClient();
         $client->indexDocuments($engineName, $documents);
 
-        $listParams = ['page' => ['current' => 1, 'size' => 25]];
-        $documentListResponse = $client->listDocuments($engineName, $listParams);
-        $this->assertEquals($listParams['page']['current'], $documentListResponse['meta']['page']['current']);
-        $this->assertEquals($listParams['page']['size'], $documentListResponse['meta']['page']['size']);
+        $documentListResponse = $client->listDocuments($engineName, 1, 25);
+        $this->assertEquals(1, $documentListResponse['meta']['page']['current']);
+        $this->assertEquals(25, $documentListResponse['meta']['page']['size']);
         $this->assertCount(count($documents), $documentListResponse['results']);
     }
 

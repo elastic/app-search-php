@@ -12,8 +12,6 @@ namespace Swiftype\AppSearch\Endpoint;
  * Implementation of the  endpoint.
  *
  * @package Swiftype\AppSearch\Endpoint
- *
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class MultiSearch extends \Swiftype\Endpoint\AbstractEndpoint
 {
@@ -29,5 +27,7 @@ class MultiSearch extends \Swiftype\Endpoint\AbstractEndpoint
     protected $uri = '/engines/{engine_name}/multi_search';
 
     protected $routeParams = ['engine_name'];
+
+    protected $paramWhitelist = ['queries'];
     // phpcs:enable
 }

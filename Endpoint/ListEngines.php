@@ -12,8 +12,6 @@ namespace Swiftype\AppSearch\Endpoint;
  * Implementation of the  endpoint.
  *
  * @package Swiftype\AppSearch\Endpoint
- *
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ListEngines extends \Swiftype\Endpoint\AbstractEndpoint
 {
@@ -27,5 +25,7 @@ class ListEngines extends \Swiftype\Endpoint\AbstractEndpoint
      * @var string
      */
     protected $uri = '/engines';
+
+    protected $paramWhitelist = ['page.current', 'page.size'];
     // phpcs:enable
 }

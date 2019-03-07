@@ -57,15 +57,14 @@ class EngineApiTest extends AbstractClientTestCase
         $client = $this->getDefaultClient();
         $engineName = $this->getEngineName(__METHOD__, func_get_args());
 
-        $engineData = ['name' => $engineName, 'language' => $language];
-        $this->assertEquals($engineName, $client->createEngine($engineData)['name']);
+        $this->assertEquals($engineName, $client->createEngine($engineName, $language)['name']);
         $this->engines[] = $engineName;
 
         $engine = $client->getEngine($engineName);
         $this->assertEquals($engineName, $engine['name']);
         $this->assertEquals($language, $engine['language']);
 
-        $engineList = $client->listEngines(['page' => ['current' => 1, 'size' => 20]]);
+        $engineList = $client->listEngines(1, 20);
         $this->assertContains($engine, $engineList['results']);
 
         $this->assertTrue($client->deleteEngine($engineName)['deleted']);
@@ -101,8 +100,8 @@ class EngineApiTest extends AbstractClientTestCase
         $engineName = $this->getEngineName(__METHOD__);
         $this->engines[] = $engineName;
 
-        $this->getDefaultClient()->createEngine(['name' => $engineName]);
-        $this->getDefaultClient()->createEngine(['name' => $engineName]);
+        $this->getDefaultClient()->createEngine($engineName);
+        $this->getDefaultClient()->createEngine($engineName);
     }
 
     private function getEngineName($method, $params = [])
