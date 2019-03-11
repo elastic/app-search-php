@@ -36,12 +36,12 @@ class RateLimitLoggingHandlerTest extends TestCase
         $this->logArray = [];
 
         $logger = $this->createMock(LoggerInterface::class);
-        $logger->method('warning')->willReturnCallback(function($message) {
+        $logger->method('warning')->willReturnCallback(function ($message) {
             $this->logArray[] = $message;
         });
 
         $handler = new RateLimitLoggingHandler(
-            function ($request) use ($limit, $remaining){
+            function ($request) use ($limit, $remaining) {
                 $headers = [
                     RateLimitLoggingHandler::RATE_LIMIT_LIMIT_HEADER_NAME => $limit,
                     RateLimitLoggingHandler::RATE_LIMIT_REMAINING_HEADER_NAME => $remaining,
@@ -53,7 +53,7 @@ class RateLimitLoggingHandlerTest extends TestCase
 
         $handler([])->wait();
 
-        if ($remaining && $limit && ($remaining / $limit) < RateLimitLoggingHandler::RATE_LIMIT_PERCENT_WARNING_TRESHOLD) {
+        if ($limit && ($remaining / $limit) < RateLimitLoggingHandler::RATE_LIMIT_PERCENT_WARNING_TRESHOLD) {
             $this->assertNotEmpty($this->logArray);
         } else {
             $this->assertEmpty($this->logArray);
