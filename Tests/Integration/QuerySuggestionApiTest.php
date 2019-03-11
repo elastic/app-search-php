@@ -42,7 +42,7 @@ class QuerySuggestionApiTest extends AbstractEngineTestCase
         $this->assertNotEmpty($suggestions['meta']['request_id']);
         $this->assertNotEmpty($suggestions['results']['documents']);
 
-        if ($size !== null) {
+        if (null !== $size) {
             $this->assertLessThanOrEqual($size, count($suggestions['results']['documents']));
         }
 

@@ -678,12 +678,7 @@ paths:
       tags:
       - Click API
       parameters:
-      - name: query
-        in: query
-        required: true
-        description: The query that the user searched with.
-        schema:
-          type: string
+      - $ref: "#/components/parameters/searchQueryText"
       - name: document_id
         in: query
         required: true
@@ -702,6 +697,84 @@ paths:
           type: array
           items:
             type: string
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
+
+  /engines/{engine_name}/analytics/clicks:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    get:
+      operationId: getTopClicksAnalytics
+      summary: Returns the number of clicks received by a document in descending order.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/analytics/clicks
+      tags:
+      - Analytics API
+      parameters:
+      - name: query
+        in: query
+        description: Filter clicks over a search query.
+        schema:
+          type: string
+      - $ref: "#/components/parameters/pageSize"
+      - name: filters
+        in: query
+        description: Analytics filters
+        schema:
+          type: array
+          items:
+            type: object
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
+
+  /engines/{engine_name}/analytics/queries:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    get:
+      operationId: getTopQueriesAnalytics
+      summary: Returns queries anlaytics by usage count.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/analytics/queries
+      tags:
+      - Analytics API
+      parameters:
+      - $ref: "#/components/parameters/pageSize"
+      - name: filters
+        in: query
+        description: Analytics filters
+        schema:
+          type: array
+          items:
+            type: object
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
+
+  /engines/{engine_name}/analytics/counts:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    get:
+      operationId: getCountAnalytics
+      summary: Returns the number of clicks and total number of queries over a period.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/analytics/counts
+      tags:
+      - Analytics API
+      parameters:
+      - name: filters
+        in: query
+        description: Analytics filters
+        schema:
+          type: array
+          items:
+            type: object
+      - name: interval
+        in: query
+        description: You can define an interval along with your date range. Can be either hour or day.
+        schema:
+          type: string
       responses:
         default:
           $ref: "#/components/responses/jsonResponse"

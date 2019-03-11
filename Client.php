@@ -181,6 +181,31 @@ class Client extends \Swiftype\AbstractClient
     }
 
     /**
+     * Returns the number of clicks and total number of queries over a period.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/analytics/counts
+     *
+     * @param string $engineName Name of the engine.
+     * @param array  $filters    Analytics filters
+     * @param string $interval   You can define an interval along with your date range. Can be either hour or day.
+     *
+     * @return array
+     */
+    public function getCountAnalytics($engineName, $filters = null, $interval = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'filters' => $filters,
+            'interval' => $interval,
+        ];
+
+        $endpoint = $this->getEndpoint('GetCountAnalytics');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Retrieve a curation by id.
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/curations#single
@@ -313,6 +338,58 @@ class Client extends \Swiftype\AbstractClient
     }
 
     /**
+     * Returns the number of clicks received by a document in descending order.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/analytics/clicks
+     *
+     * @param string $engineName Name of the engine.
+     * @param string $query      Filter clicks over a search query.
+     * @param string $pageSize   The number of results per page.
+     * @param array  $filters    Analytics filters
+     *
+     * @return array
+     */
+    public function getTopClicksAnalytics($engineName, $query = null, $pageSize = null, $filters = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'query' => $query,
+            'page.size' => $pageSize,
+            'filters' => $filters,
+        ];
+
+        $endpoint = $this->getEndpoint('GetTopClicksAnalytics');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Returns queries anlaytics by usage count.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/analytics/queries
+     *
+     * @param string $engineName Name of the engine.
+     * @param string $pageSize   The number of results per page.
+     * @param array  $filters    Analytics filters
+     *
+     * @return array
+     */
+    public function getTopQueriesAnalytics($engineName, $pageSize = null, $filters = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'page.size' => $pageSize,
+            'filters' => $filters,
+        ];
+
+        $endpoint = $this->getEndpoint('GetTopQueriesAnalytics');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Create or update documents.
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/documents#create
@@ -439,18 +516,18 @@ class Client extends \Swiftype\AbstractClient
      * Documentation: https://swiftype.com/documentation/app-search/api/clickthrough
      *
      * @param string $engineName Name of the engine.
-     * @param string $query      The query that the user searched with.
+     * @param string $queryText  Search query text.
      * @param string $documentId The id of the document that was clicked on.
      * @param string $requestId  The request id returned in the meta tag of a search API response.
      * @param array  $tags       Array of strings representing additional information you wish to track with the clickthrough.
      *
      * @return array
      */
-    public function logClickthrough($engineName, $query, $documentId, $requestId = null, $tags = null)
+    public function logClickthrough($engineName, $queryText, $documentId, $requestId = null, $tags = null)
     {
         $params = [
             'engine_name' => $engineName,
-            'query' => $query,
+            'query' => $queryText,
             'document_id' => $documentId,
             'request_id' => $requestId,
             'tags' => $tags,
