@@ -32,7 +32,6 @@ class EngineApiTest extends AbstractClientTestCase
         foreach ($this->engines as $engineName) {
             try {
                 $this->getDefaultClient()->deleteEngine($engineName);
-                var_dump($engineName);
             } catch (NotFoundException $e) {
                 // The engine have already been deleted. Nothing to do.
             }
