@@ -112,6 +112,7 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
         $handler = new Connection\Handler\RequestAuthenticationHandler($handler, $this->apiKey);
         $handler = new \Swiftype\Connection\Handler\RequestUrlPrefixHandler($handler, self::URI_PREFIX);
         $handler = new Connection\Handler\ApiErrorHandler($handler);
+        $handler = new Connection\Handler\RateLimitLoggingHandler($handler, $this->getLogger());
 
         return $handler;
     }
