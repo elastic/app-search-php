@@ -187,14 +187,16 @@ class Client extends \Swiftype\AbstractClient
      *
      * @param string $engineName Name of the engine.
      * @param array  $filters    Analytics filters
+     * @param string $interval   You can define an interval along with your date range. Can be either hour or day.
      *
      * @return array
      */
-    public function getCountAnalytics($engineName, $filters = null)
+    public function getCountAnalytics($engineName, $filters = null, $interval = null)
     {
         $params = [
             'engine_name' => $engineName,
             'filters' => $filters,
+            'interval' => $interval,
         ];
 
         $endpoint = $this->getEndpoint('GetCountAnalytics');
@@ -340,20 +342,18 @@ class Client extends \Swiftype\AbstractClient
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/analytics/clicks
      *
-     * @param string $engineName  Name of the engine.
-     * @param string $query       Filter clicks over a search query.
-     * @param string $currentPage The page to fetch. Defaults to 1.
-     * @param string $pageSize    The number of results per page.
-     * @param array  $filters     Analytics filters
+     * @param string $engineName Name of the engine.
+     * @param string $query      Filter clicks over a search query.
+     * @param string $pageSize   The number of results per page.
+     * @param array  $filters    Analytics filters
      *
      * @return array
      */
-    public function getTopClicksAnalytics($engineName, $query = null, $currentPage = null, $pageSize = null, $filters = null)
+    public function getTopClicksAnalytics($engineName, $query = null, $pageSize = null, $filters = null)
     {
         $params = [
             'engine_name' => $engineName,
             'query' => $query,
-            'page.current' => $currentPage,
             'page.size' => $pageSize,
             'filters' => $filters,
         ];
@@ -369,18 +369,16 @@ class Client extends \Swiftype\AbstractClient
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/analytics/queries
      *
-     * @param string $engineName  Name of the engine.
-     * @param string $currentPage The page to fetch. Defaults to 1.
-     * @param string $pageSize    The number of results per page.
-     * @param array  $filters     Analytics filters
+     * @param string $engineName Name of the engine.
+     * @param string $pageSize   The number of results per page.
+     * @param array  $filters    Analytics filters
      *
      * @return array
      */
-    public function getTopQueriesAnalytics($engineName, $currentPage = null, $pageSize = null, $filters = null)
+    public function getTopQueriesAnalytics($engineName, $pageSize = null, $filters = null)
     {
         $params = [
             'engine_name' => $engineName,
-            'page.current' => $currentPage,
             'page.size' => $pageSize,
             'filters' => $filters,
         ];

@@ -28,6 +28,6 @@ class GetCountAnalytics extends \Swiftype\Endpoint\AbstractEndpoint
 
     protected $routeParams = ['engine_name'];
 
-    protected $paramWhitelist = ['filters'];
+    protected $paramWhitelist = ['filters', 'interval'];
     // phpcs:enable
 }

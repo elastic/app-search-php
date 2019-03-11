@@ -28,6 +28,6 @@ class GetTopClicksAnalytics extends \Swiftype\Endpoint\AbstractEndpoint
 
     protected $routeParams = ['engine_name'];
 
-    protected $paramWhitelist = ['query', 'page.current', 'page.size', 'filters'];
+    protected $paramWhitelist = ['query', 'page.size', 'filters'];
     // phpcs:enable
 }

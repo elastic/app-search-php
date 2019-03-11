@@ -717,7 +717,6 @@ paths:
         description: Filter clicks over a search query.
         schema:
           type: string
-      - $ref: "#/components/parameters/currentPage"
       - $ref: "#/components/parameters/pageSize"
       - name: filters
         in: query
@@ -741,7 +740,6 @@ paths:
       tags:
       - Analytics API
       parameters:
-      - $ref: "#/components/parameters/currentPage"
       - $ref: "#/components/parameters/pageSize"
       - name: filters
         in: query
@@ -772,6 +770,11 @@ paths:
           type: array
           items:
             type: object
+      - name: interval
+        in: query
+        description: You can define an interval along with your date range. Can be either hour or day.
+        schema:
+          type: string
       responses:
         default:
           $ref: "#/components/responses/jsonResponse"
