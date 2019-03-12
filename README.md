@@ -67,12 +67,13 @@ If the Engine does not exists yet, you can create it by using the `Client::creat
   $engine = $client->createEngine('my-engine', 'en');
 ```
 
-The second parameter (`$language`) is optional or can be set to null. Then the Engine will be created using the `universal` language.
-The list of supported language is available here : https://swiftype.com/documentation/app-search/api/engines#multi-language
+The second parameter (`$language`) is optional. Set it to `null` to apply the `universal` language.
+
+[Read more](https://swiftype.com/documentation/app-search/api/engines#multi-language) about language support.
 
 #### Index some documents
 
-In order to index some documents in the Engine you can use the `Client::indexDocuments` method :
+You can use the `Client::indexDocuments` method to index some documents into the Engine:
 
 ```php
     $documents = [
@@ -83,13 +84,13 @@ In order to index some documents in the Engine you can use the `Client::indexDoc
     $indexingResults = $client->indexDocuments('my-engine', $documents);
 ```
 
-The `$indexingResults` array will contains the result of the indexation of each documents. You should always check the content of the result.
+The `$indexingResults` array will contain the result of the indexation of each documents. You should always check the content of the result.
 
-Full documentation is available here : https://swiftype.com/documentation/app-search/api/documents#create.
+[Read more](https://swiftype.com/documentation/app-search/api/documents#create) about document indexing.
 
 #### Search
 
-In order to search in your Engine you can use the `Client::search` method :
+You can use the `Client::search` method to search in your Engine:
 
 ```php
     $searchParams = [
@@ -113,7 +114,7 @@ Param name      | Documentation URL
 `result_fields` | https://swiftype.com/documentation/app-search/api/search/result-fields
 `group`         | https://swiftype.com/documentation/app-search/api/search/grouping
 
-The search response will contains at least a meta field and a results field as shown in this example:
+The search response will contains at least a meta field and a result field as shown in this example:
 
 ```php
 [
@@ -178,7 +179,7 @@ Method      | Description | Documentation
 
 Code for the endpoints is generated automatically using a custom version of [OpenAPI Generator](https://github.com/openapitools/openapi-generator).
 
-The easier way to regenerate endpoints is to use the docker laucher packaged in `vendor/bin`:
+To regenerate endpoints, use the docker laucher packaged in `vendor/bin`:
 
 ```bash
 ./vendor/bin/swiftype-codegen.sh
@@ -186,9 +187,9 @@ The easier way to regenerate endpoints is to use the docker laucher packaged in 
 
 The custom generator will be built and launched using the following Open API spec file : `resources/api/api-spec.yml`.
 
-You can then commit and PR your endpoint code and modified the api-spec files.
+You can then commit and PR your endpoint code, and modify the api-spec files.
 
-The client class may be changed in some case. Do not forget to include it in your commit!
+The client class may be changed in some cases. Do not forget to include it in your commit!
 
 ## FAQ 🔮
 
