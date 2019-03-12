@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
 class RateLimitLoggingHandler
 {
     /**
-     * @var integer
+     * @var int
      */
     const RATE_LIMIT_PERCENT_WARNING_TRESHOLD = 0.1;
 
@@ -34,6 +34,11 @@ class RateLimitLoggingHandler
      * @var string
      */
     const RATE_LIMIT_REMAINING_HEADER_NAME = 'X-RateLimit-Remaining';
+
+    /**
+     * @var string
+     */
+    const RETRY_AFTER_HEADER_NAME = 'Retry-After';
 
     /**
      * @var callable
@@ -53,7 +58,7 @@ class RateLimitLoggingHandler
     public function __construct(callable $handler, LoggerInterface $logger)
     {
         $this->handler = $handler;
-        $this->logger  = $logger;
+        $this->logger = $logger;
     }
 
     /**
@@ -69,12 +74,13 @@ class RateLimitLoggingHandler
         $response = Core::proxy($handler($request), function ($response) {
             if ($this->isRateLimitWarning($response)) {
                 $message = sprintf(
-                    "AppSearch Rate Limit: %s remaining of %s allowed",
+                    'AppSearch Rate Limit: %s remaining of %s allowed',
                     $this->getRemainingRateLimit($response),
                     $this->getAllowedRateLimit($response)
                 );
                 $this->logger->warning($message);
             }
+
             return $response;
         });
 
@@ -86,14 +92,14 @@ class RateLimitLoggingHandler
      *
      * @param array $response
      *
-     * @return boolean
+     * @return bool
      */
     private function isRateLimitWarning($response)
     {
         $allowedRateLimit = $this->getAllowedRateLimit($response);
         $remainingRateLimit = $this->getRemainingRateLimit($response);
 
-        if ($allowedRateLimit === null || $remainingRateLimit === null) {
+        if (null === $allowedRateLimit || null === $remainingRateLimit) {
             return false;
         }
 
@@ -105,7 +111,7 @@ class RateLimitLoggingHandler
      *
      * @param array $response
      *
-     * @return NULL|integer
+     * @return null|int
      */
     private function getAllowedRateLimit($response)
     {
@@ -117,7 +123,7 @@ class RateLimitLoggingHandler
      *
      * @param array $response
      *
-     * @return NULL|integer
+     * @return null|int
      */
     private function getRemainingRateLimit($response)
     {
@@ -129,16 +135,10 @@ class RateLimitLoggingHandler
      *
      * @param array $response
      *
-     * @return NULL|integer
+     * @return null|int
      */
     private function getHeaderValue($response, $headerName)
     {
-        $headerValue = !empty($response['headers'][$headerName]) ? $response['headers'][$headerName] : null;
-
-        if (is_array($headerValue)) {
-            $headerValue = current($headerValue);
-        }
-
-        return $headerValue;
+        return Core::firstHeader($response, $headerName);
     }
 }

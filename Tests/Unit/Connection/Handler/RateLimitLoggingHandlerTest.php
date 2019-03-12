@@ -34,7 +34,7 @@ class RateLimitLoggingHandlerTest extends TestCase
     public function testExceptionTypes($limit, $remaining)
     {
         $response = ['headers' => array_filter($this->getResponseHeaders($limit, $remaining))];
-        $handler  = $this->getHandler($response);
+        $handler = $this->getHandler($response);
 
         $handler([])->wait();
 
@@ -65,10 +65,10 @@ class RateLimitLoggingHandlerTest extends TestCase
     /**
      * Indicate if a warning should be logged or not.
      *
-     * @param integer|NULL $limit
-     * @param integer|NULL $remaining
+     * @param int|null $limit
+     * @param int|null $remaining
      *
-     * @return boolean
+     * @return bool
      */
     private function shouldLogWarning($limit, $remaining)
     {
@@ -78,16 +78,16 @@ class RateLimitLoggingHandlerTest extends TestCase
     /**
      * Return response headers.
      *
-     * @param integer|NULL $limit
-     * @param integer|NULL $remaining
+     * @param int|null $limit
+     * @param int|null $remaining
      *
      * @return array[]
      */
     private function getResponseHeaders($limit, $remaining)
     {
         return [
-            RateLimitLoggingHandler::RATE_LIMIT_LIMIT_HEADER_NAME => $limit,
-            RateLimitLoggingHandler::RATE_LIMIT_REMAINING_HEADER_NAME => $remaining,
+            RateLimitLoggingHandler::RATE_LIMIT_LIMIT_HEADER_NAME => [$limit],
+            RateLimitLoggingHandler::RATE_LIMIT_REMAINING_HEADER_NAME => [$remaining],
         ];
     }
 

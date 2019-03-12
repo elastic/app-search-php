@@ -77,6 +77,13 @@
   - Error msg.
 
 -
+  - status: 429
+    body:
+      error: Error msg.
+  - \Swiftype\AppSearch\Exception\ApiRateExceededException
+  - Error msg.
+
+-
   - status: 500
     body:
       error: Error msg.

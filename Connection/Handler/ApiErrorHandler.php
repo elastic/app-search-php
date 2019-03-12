@@ -13,6 +13,7 @@ use Swiftype\Exception\ApiException;
 use Swiftype\Exception\AuthenticationException;
 use Swiftype\Exception\BadRequestException;
 use Swiftype\Exception\NotFoundException;
+use Swiftype\AppSearch\Exception\ApiRateExceededException;
 
 /**
  * This handler manage server side errors and throw comprehensive exceptions to the user.
@@ -59,6 +60,9 @@ class ApiErrorHandler
                     case 404:
                         $exception = new NotFoundException($exception->getMessage());
                         break;
+                    case 429:
+                        $exception = $this->getApiRateExceededException($exception->getMessage(), $response);
+                        break;
                     case 400:
                         $exception = new BadRequestException($exception->getMessage());
                         break;
@@ -91,5 +95,29 @@ class ApiErrorHandler
         }
 
         return is_array($message) ? implode(' ', $message) : $message;
+    }
+
+    /**
+     * Build an ApiRateExceededException from the response.
+     *
+     * @param string $message
+     * @param array  $response
+     *
+     * @return \Swiftype\AppSearch\Exception\ApiRateExceededException
+     */
+    private function getApiRateExceededException($message, $response)
+    {
+        $limit = null;
+        $retryAfter = null;
+
+        if (Core::hasHeader($response, RateLimitLoggingHandler::RATE_LIMIT_LIMIT_HEADER_NAME)) {
+            $limit = Core::firstHeader($response, RateLimitLoggingHandler::RATE_LIMIT_LIMIT_HEADER_NAME);
+        }
+
+        if (Core::hasHeader($response, RateLimitLoggingHandler::RETRY_AFTER_HEADER_NAME)) {
+            $retryAfter = Core::firstHeader($response, RateLimitLoggingHandler::RETRY_AFTER_HEADER_NAME);
+        }
+
+        return new ApiRateExceededException($message, $limit, $retryAfter);
     }
 }
