@@ -181,6 +181,43 @@ class Client extends \Swiftype\AbstractClient
     }
 
     /**
+     * The API Log displays API request and response data at the Engine level.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/logs
+     *
+     * @param string $engineName       Name of the engine.
+     * @param string $fromDate         Filter date from.
+     * @param string $toDate           Filter date to.
+     * @param string $currentPage      The page to fetch. Defaults to 1.
+     * @param string $pageSize         The number of results per page.
+     * @param string $query            Use this to specify a particular endpoint, like analytics, search, curations and so on.
+     * @param string $httpStatusFilter Filter based on a particular status code: 400, 401, 403, 429, 200.
+     * @param string $httpMethodFilter Filter based on a particular HTTP method: GET, POST, PUT, PATCH, DELETE.
+     * @param string $sortDirection    Would you like to have your results ascending, oldest to newest, or descending, newest to oldest?
+     *
+     * @return array
+     */
+    public function getApiLogs($engineName, $fromDate, $toDate, $currentPage = null, $pageSize = null, $query = null, $httpStatusFilter = null, $httpMethodFilter = null, $sortDirection = null)
+    {
+        $params = [
+            'engine_name' => $engineName,
+            'filters.date.from' => $fromDate,
+            'filters.date.to' => $toDate,
+            'page.current' => $currentPage,
+            'page.size' => $pageSize,
+            'query' => $query,
+            'filters.status' => $httpStatusFilter,
+            'filters.method' => $httpMethodFilter,
+            'sort_direction' => $sortDirection,
+        ];
+
+        $endpoint = $this->getEndpoint('GetApiLogs');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Returns the number of clicks and total number of queries over a period.
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/analytics/counts
