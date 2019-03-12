@@ -778,3 +778,56 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/jsonResponse"
+
+  /engines/{engine_name}/logs/api:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    get:
+      operationId: getApiLogs
+      summary: The API Log displays API request and response data at the Engine level.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/logs
+      tags:
+      - Logs API
+      parameters:
+      - name: filters.date.from
+        in: query
+        description: Filter date from.
+        required: true
+        schema:
+          type: string
+        x-codegen-param-name: fromDate
+      - name: filters.date.to
+        in: query
+        description: Filter date to.
+        required: true
+        schema:
+          type: string
+        x-codegen-param-name: toDate
+      - $ref: "#/components/parameters/currentPage"
+      - $ref: "#/components/parameters/pageSize"
+      - name: query
+        in: query
+        description: Use this to specify a particular endpoint, like analytics, search, curations and so on.
+        schema:
+          type: string
+      - name: filters.status
+        in: query
+        description: "Filter based on a particular status code: 400, 401, 403, 429, 200."
+        schema:
+          type: string
+        x-codegen-param-name: httpStatusFilter
+      - name: filters.method
+        in: query
+        description: "Filter based on a particular HTTP method: GET, POST, PUT, PATCH, DELETE."
+        schema:
+          type: string
+        x-codegen-param-name: httpMethodFilter
+      - name: sort_direction
+        in: query
+        description: "Would you like to have your results ascending, oldest to newest, or descending, newest to oldest?"
+        schema:
+          type: string
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
