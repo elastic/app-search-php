@@ -54,12 +54,11 @@ class AnalyticsApiTest extends AbstractEngineTestCase
 
         $filters = [];
 
-
-        if ($withResults != null) {
+        if (null != $withResults) {
             $filters['all'][] = ['results' => $withResults];
         }
 
-        if ($clicked != null) {
+        if (null != $clicked) {
             $filters['all'][] = ['clicks' => $clicked];
         }
 
