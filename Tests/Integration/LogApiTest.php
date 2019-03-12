@@ -40,7 +40,17 @@ class LogApiTest extends AbstractEngineTestCase
         $fromDate = date('c', strtotime('yesterday'));
         $toDate = date('c');
 
-        $logs = $client->getApiLogs($engine, $fromDate, $toDate, $currentPage, $pageSize, $query, $status, $method, $sortDir);
+        $logs = $client->getApiLogs(
+            $engine,
+            $fromDate,
+            $toDate,
+            $currentPage,
+            $pageSize,
+            $query,
+            $status,
+            $method,
+            $sortDir
+        );
 
         $this->assertNotEmpty($logs['results']);
 
