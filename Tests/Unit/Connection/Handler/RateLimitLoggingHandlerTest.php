@@ -33,30 +33,78 @@ class RateLimitLoggingHandlerTest extends TestCase
      */
     public function testExceptionTypes($limit, $remaining)
     {
+        $response = ['headers' => array_filter($this->getResponseHeaders($limit, $remaining))];
+        $handler  = $this->getHandler($response);
+
+        $handler([])->wait();
+
+        if ($this->shouldLogWarning($limit, $remaining)) {
+            $this->assertNotEmpty($this->logArray);
+            $this->assertArrayHasKey('warning', $this->logArray);
+        } else {
+            $this->assertEmpty($this->logArray);
+        }
+    }
+
+    /**
+     * Return a the response handler used in test.
+     *
+     * @param array $response
+     *
+     * @return \Swiftype\AppSearch\Connection\Handler\RateLimitLoggingHandler
+     */
+    private function getHandler($response)
+    {
+        $responseCallback = function ($request) use ($response) {
+            return new CompletedFutureArray($response);
+        };
+
+        return new RateLimitLoggingHandler($responseCallback, $this->getLoggerMock());
+    }
+
+    /**
+     * Indicate if a warning should be logged or not.
+     *
+     * @param integer|NULL $limit
+     * @param integer|NULL $remaining
+     *
+     * @return boolean
+     */
+    private function shouldLogWarning($limit, $remaining)
+    {
+        return $limit && ($remaining / $limit) < RateLimitLoggingHandler::RATE_LIMIT_PERCENT_WARNING_TRESHOLD;
+    }
+
+    /**
+     * Return response headers.
+     *
+     * @param integer|NULL $limit
+     * @param integer|NULL $remaining
+     *
+     * @return array[]
+     */
+    private function getResponseHeaders($limit, $remaining)
+    {
+        return [
+            RateLimitLoggingHandler::RATE_LIMIT_LIMIT_HEADER_NAME => $limit,
+            RateLimitLoggingHandler::RATE_LIMIT_REMAINING_HEADER_NAME => $remaining,
+        ];
+    }
+
+    /**
+     * Create a mock for the logger interface.
+     *
+     * @return \Psr\Log\LoggerInterface
+     */
+    private function getLoggerMock()
+    {
         $this->logArray = [];
 
         $logger = $this->createMock(LoggerInterface::class);
         $logger->method('warning')->willReturnCallback(function ($message) {
-            $this->logArray[] = $message;
+            $this->logArray['warning'][] = $message;
         });
 
-        $handler = new RateLimitLoggingHandler(
-            function ($request) use ($limit, $remaining) {
-                $headers = [
-                    RateLimitLoggingHandler::RATE_LIMIT_LIMIT_HEADER_NAME => $limit,
-                    RateLimitLoggingHandler::RATE_LIMIT_REMAINING_HEADER_NAME => $remaining,
-                ];
-                return new CompletedFutureArray(['headers' => array_filter($headers)]);
-            },
-            $logger
-        );
-
-        $handler([])->wait();
-
-        if ($limit && ($remaining / $limit) < RateLimitLoggingHandler::RATE_LIMIT_PERCENT_WARNING_TRESHOLD) {
-            $this->assertNotEmpty($this->logArray);
-        } else {
-            $this->assertEmpty($this->logArray);
-        }
+        return $logger;
     }
 }
