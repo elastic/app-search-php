@@ -40,12 +40,13 @@ If the Engine does not exists yet, you can create it by using the `Client::creat
   $engine = $client->createEngine('my-engine', 'en');
 ```
 
-The second parameter (`$language`) is optional or can be set to null. Then the Engine will be created using the `universal` language.
-The list of supported language is available here : https://swiftype.com/documentation/app-search/api/engines#multi-language
+The second parameter (`$language`) is optional. Set it to `null` to apply the `universal` language.
+
+[Read more](https://swiftype.com/documentation/app-search/api/engines#multi-language) about language support.
 
 #### Index some documents
 
-In order to index some documents in the Engine you can use the `Client::indexDocuments` method :
+You can use the `Client::indexDocuments` method to index some documents into the Engine:
 
 ```php
     $documents = [
@@ -56,13 +57,13 @@ In order to index some documents in the Engine you can use the `Client::indexDoc
     $indexingResults = $client->indexDocuments('my-engine', $documents);
 ```
 
-The `$indexingResults` array will contains the result of the indexation of each documents. You should always check the content of the result.
+The `$indexingResults` array will contain the result of the indexation of each documents. You should always check the content of the result.
 
-Full documentation is available here : https://swiftype.com/documentation/app-search/api/documents#create.
+[Read more](https://swiftype.com/documentation/app-search/api/documents#create) about document indexing.
 
 #### Search
 
-In order to search in your Engine you can use the `Client::search` method :
+You can use the `Client::search` method to search in your Engine:
 
 ```php
     $searchParams = [

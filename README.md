@@ -114,7 +114,7 @@ Param name      | Documentation URL
 `result_fields` | https://swiftype.com/documentation/app-search/api/search/result-fields
 `group`         | https://swiftype.com/documentation/app-search/api/search/grouping
 
-The search response will contains at least a meta field and a result field as shown in this example:
+The search response will contains at least a meta field and a results field as shown in this example:
 
 ```php
 [
@@ -187,9 +187,9 @@ To regenerate endpoints, use the docker laucher packaged in `vendor/bin`:
 
 The custom generator will be built and launched using the following Open API spec file : `resources/api/api-spec.yml`.
 
-You can then commit and PR your endpoint code, and modify the api-spec files.
+You can then commit and PR the modified api-spec file and your endpoints code files.
 
-The client class may be changed in some cases. Do not forget to include it in your commit!
+The client class and readme may be changed in some cases. Do not forget to include them in your commit!
 
 ## FAQ 🔮
 
