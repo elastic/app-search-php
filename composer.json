@@ -1,5 +1,5 @@
 {
-  "name" : "elasticsearch/swiftype-app-search-php",
+  "name" : "swiftype/swiftype-app-search-php",
   "description" : "Swiftype App Search Official PHP Client",
   "homepage": "https://github.com/swiftype/swiftype-app-search-php",
   "keywords" : [
