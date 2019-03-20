@@ -52,7 +52,7 @@ class LogApiTest extends AbstractEngineTestCase
             $sortDir
         );
 
-        $this->assertNotEmpty($logs['results']);
+        $this->assertArrayHasKey('results', $logs);
 
         if ($pageSize) {
             $this->assertEquals($logs['meta']['page']['current'], $currentPage ? $currentPage : 1);
