@@ -30,12 +30,8 @@ class AnalyticsApiTest extends AbstractEngineTestCase
 
         $topClicks = $client->getTopClicksAnalytics($engine, $searchTerm, $size);
 
-        $this->assertNotEmpty($topClicks['meta']['page']['size']);
         $this->assertLessThanOrEqual($size, $topClicks['meta']['page']['size']);
-
-        $this->assertNotEmpty($topClicks['results']);
-        $this->assertArrayHasKey('document_id', current($topClicks['results']));
-        $this->assertArrayHasKey('clicks', current($topClicks['results']));
+        $this->assertArrayHasKey('results', $topClicks);
     }
 
     /**
@@ -64,12 +60,7 @@ class AnalyticsApiTest extends AbstractEngineTestCase
 
         $queries = $client->getTopQueriesAnalytics($engine, $size, !empty($filters) ? $filters : null);
 
-        $this->assertNotEmpty($queries['meta']['page']['size']);
         $this->assertLessThanOrEqual($size, $queries['meta']['page']['size']);
-
-        $this->assertNotEmpty($queries['results']);
-        $this->assertArrayHasKey('term', current($queries['results']));
-        $this->assertArrayHasKey('queries', current($queries['results']));
-        $this->assertArrayHasKey('clicks', current($queries['results']));
+        $this->assertArrayHasKey('results', $queries);
     }
 }
