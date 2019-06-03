@@ -33,6 +33,11 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
     private $apiKey;
 
     /**
+     * @var string
+     */
+    private $integration;
+
+    /**
      * Instantiate a new client builder.
      *
      * @param string $hostIdentifier
@@ -55,6 +60,20 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
     public function setApiKey($apiKey)
     {
         $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Set integration name & version for the client.
+     *
+     * @param string $integration
+     *
+     * @return ClientBuilder
+     */
+    public function setIntegration($integration)
+    {
+        $this->integration = $integration;
 
         return $this;
     }
@@ -108,7 +127,8 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
     protected function getHandler()
     {
         $handler = parent::getHandler();
-        $handler = new Connection\Handler\RequestClientHeaderHandler($handler);
+
+        $handler = new Connection\Handler\RequestClientHeaderHandler($handler, $this->integration);
         $handler = new Connection\Handler\RequestAuthenticationHandler($handler, $this->apiKey);
         $handler = new \Swiftype\Connection\Handler\RequestUrlPrefixHandler($handler, self::URI_PREFIX);
         $handler = new Connection\Handler\ApiErrorHandler($handler);

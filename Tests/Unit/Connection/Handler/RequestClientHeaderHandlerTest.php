@@ -23,7 +23,7 @@ class RequestClientHeaderHandlerTest extends TestCase
     /**
      * Check the reporting headers is present and contains the right value.
      */
-    public function testAddAuthHeader()
+    public function testAddAuthHeaderWithoutIntegrationName()
     {
         $handler = function ($request) {
             return $request['headers'];
@@ -34,5 +34,25 @@ class RequestClientHeaderHandlerTest extends TestCase
 
         $this->assertArrayHasKey('X-Swiftype-Client', $response);
         $this->assertArrayHasKey('X-Swiftype-Client-Version', $response);
+    }
+
+    /**
+     * Check the reporting headers is present and contains the right value.
+     */
+    public function testAddAuthHeaderWithIntegrationName()
+    {
+        $handler = function ($request) {
+            return $request['headers'];
+        };
+
+        $requestHandler = new RequestClientHeaderHandler($handler, 'integration:2.1.1');
+        $response = $requestHandler([]);
+
+        $this->assertArrayHasKey('X-Swiftype-Client', $response);
+        $this->assertArrayHasKey('X-Swiftype-Client-Version', $response);
+        $this->assertArrayHasKey('X-Swiftype-Integration', $response);
+        $this->assertArrayHasKey('X-Swiftype-Integration-Version', $response);
+        $this->assertEquals(['integration'], $response['X-Swiftype-Integration']);
+        $this->assertEquals(['2.1.1'], $response['X-Swiftype-Integration-Version']);
     }
 }
