@@ -86,7 +86,7 @@ class RequestClientHeaderHandler
         $request = Core::setHeader($request, self::CLIENT_VERSION_HEADER, [self::CLIENT_VERSION_VALUE]);
 
         if ($this->integration !== null) {
-            list($integrationName, $integrationVersion) = explode(":", $this->integration)
+            list($integrationName, $integrationVersion) = explode(":", $this->integration);
             if ($integrationName) {
                 $request = Core::setHeader($request, self::CLIENT_INTEGRATION_NAME_HEADER, [$integrationName]);
             }
