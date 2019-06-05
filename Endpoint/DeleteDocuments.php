@@ -6,12 +6,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch\Endpoint;
+namespace Elastic\AppSearch\Client\Endpoint;
 
 /**
  * Implementation of the  endpoint.
  *
- * @package Swiftype\AppSearch\Endpoint
+ * @package Elastic\AppSearch\Client\Endpoint
  */
 class DeleteDocuments extends \Elastic\OpenApi\Codegen\Endpoint\AbstractEndpoint
 {

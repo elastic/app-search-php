@@ -1,24 +1,24 @@
 <?php
 /**
- * This file is part of the Swiftype App Search PHP Client package.
+ * This file is part of the Elastic App Search PHP Client package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch\Connection\Handler;
+namespace Elastic\AppSearch\Client\Connection\Handler;
 
 use GuzzleHttp\Ring\Core;
 use Elastic\OpenApi\Codegen\Exception\ApiException;
 use Elastic\OpenApi\Codegen\Exception\AuthenticationException;
 use Elastic\OpenApi\Codegen\Exception\BadRequestException;
 use Elastic\OpenApi\Codegen\Exception\NotFoundException;
-use Swiftype\AppSearch\Exception\ApiRateExceededException;
+use Elastic\AppSearch\Client\Exception\ApiRateExceededException;
 
 /**
  * This handler manage server side errors and throw comprehensive exceptions to the user.
  *
- * @package Swiftype\AppSearch\Connection\Handler
+ * @package Elastic\AppSearch\Client\Connection\Handler
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
@@ -103,7 +103,7 @@ class ApiErrorHandler
      * @param string $message
      * @param array  $response
      *
-     * @return \Swiftype\AppSearch\Exception\ApiRateExceededException
+     * @return \Elastic\AppSearch\Client\Exception\ApiRateExceededException
      */
     private function getApiRateExceededException($message, $response)
     {

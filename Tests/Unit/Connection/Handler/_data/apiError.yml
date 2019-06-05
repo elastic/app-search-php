@@ -80,7 +80,7 @@
   - status: 429
     body:
       error: Error msg.
-  - \Swiftype\AppSearch\Exception\ApiRateExceededException
+  - \Elastic\AppSearch\Client\Exception\ApiRateExceededException
   - Error msg.
 
 -

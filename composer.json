@@ -33,7 +33,7 @@
   },
   "autoload" : {
     "psr-4" : {
-      "Swiftype\\AppSearch\\" : ""
+      "Elastic\\AppSearch\\Client\\" : ""
     },
     "exclude-from-classmap" : [
       "/Tests/"

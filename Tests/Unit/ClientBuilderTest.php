@@ -1,21 +1,21 @@
 <?php
 /**
- * This file is part of the Swiftype App Search PHP Client package.
+ * This file is part of the Elastic App Search PHP Client package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch\Tests\Unit\Connection\Handler;
+namespace Elastic\AppSearch\Client\Tests\Unit\Connection\Handler;
 
 use PHPUnit\Framework\TestCase;
-use Swiftype\AppSearch\Client;
-use Swiftype\AppSearch\ClientBuilder;
+use Elastic\AppSearch\Client\Client;
+use Elastic\AppSearch\Client\ClientBuilder;
 
 /**
  * Check the client builder is able to instantiate new clients.
  *
- * @package Swiftype\AppSearch\Test\Unit\Connection\Handler
+ * @package Elastic\AppSearch\Client\Test\Unit\Connection\Handler
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */

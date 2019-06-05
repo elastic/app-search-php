@@ -1,20 +1,20 @@
 <?php
 /**
- * This file is part of the Swiftype App Search PHP Client package.
+ * This file is part of the Elastic App Search PHP Client package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch\Tests\Unit\Connection\Handler;
+namespace Elastic\AppSearch\Client\Tests\Unit\Connection\Handler;
 
 use PHPUnit\Framework\TestCase;
-use Swiftype\AppSearch\Connection\Handler\RequestAuthenticationHandler;
+use Elastic\AppSearch\Client\Connection\Handler\RequestAuthenticationHandler;
 
 /**
  * Unit tests for the authentication handler.
  *
- * @package Swiftype\AppSearch\Test\Unit\Connection\Handler
+ * @package Elastic\AppSearch\Client\Test\Unit\Connection\Handler
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */

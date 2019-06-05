@@ -6,12 +6,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch;
+namespace Elastic\AppSearch\Client;
 
 /**
  * Client implementation.
  *
- * @package Swiftype\AppSearch
+ * @package Elastic\AppSearch\Client
  */
 class Client extends \Elastic\OpenApi\Codegen\AbstractClient
 {

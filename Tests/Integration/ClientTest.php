@@ -1,20 +1,20 @@
 <?php
 /**
- * This file is part of the Swiftype App Search PHP Client package.
+ * This file is part of the Elastic App Search PHP Client package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch\Tests\Integration;
+namespace Elastic\AppSearch\Client\Tests\Integration;
 
-use Swiftype\AppSearch\ClientBuilder;
-use Swiftype\AppSearch\Client;
+use Elastic\AppSearch\Client\ClientBuilder;
+use Elastic\AppSearch\Client\Client;
 
 /**
  * Testing client instantiaton and error handling.
  *
- * @package Swiftype\AppSearch\Test\Integration
+ * @package Elastic\AppSearch\Client\Test\Integration
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */

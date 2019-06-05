@@ -33,19 +33,19 @@ composer require swiftype/swiftype-app-search-php
 
 #### Basic client instantiation
 
-To instantiate a new client you can use `\Swiftype\AppSearch\ClientBuilder`:
+To instantiate a new client you can use `\Elastic\AppSearch\Client\ClientBuilder`:
 
 ```php
   $apiEndpoint   = 'http://localhost:3002/';
   $apiKey        = 'private-XXXXXXXXXXXX';
-  $clientBuilder = \Swiftype\AppSearch\ClientBuilder::create($apiEndpoint, $apiKey);
+  $clientBuilder = \Elastic\AppSearch\Client\ClientBuilder::create($apiEndpoint, $apiKey);
 
   $client = $clientBuilder->build();
 ```
 
 **Notes:**
 
-- The resulting client will be of type `\Swiftype\AppSearch\Client`
+- The resulting client will be of type `\Elastic\AppSearch\Client\Client`
 
 - You can find the API endpoint and your API key URL in your App Search account: https://app.swiftype.com/as/credentials.
 
@@ -197,7 +197,7 @@ The client class and readme may be changed in some cases. Do not forget to inclu
 
 ### Where do I report issues with the client?
 
-If something is not working as expected, please open an [issue](https://github.com/swiftype/swiftype-app-search-php/issues/new).
+If something is not working as expected, please open an [issue](https://github.com/elastic/app-search-php/issues/new).
 
 ### Where can I find the full API documentation ?
 
@@ -211,12 +211,12 @@ You can checkout the [Elastic community discuss forums](https://discuss.elastic.
 
 We welcome contributors to the project. Before you begin, a couple notes...
 
-+ Before opening a pull request, please create an issue to [discuss the scope of your proposal](https://github.com/swiftype/swiftype-app-search-php/issues).
++ Before opening a pull request, please create an issue to [discuss the scope of your proposal](https://github.com/elastic/app-search-php/issues).
 + Please write simple code and concise documentation, when appropriate.
 
 ## License 📗
 
-[Apache 2.0](https://github.com/swiftype/swiftype-app-search-php/blob/master/LICENSE) © [Elastic](https://github.com/elastic)
+[Apache 2.0](https://github.com/elastic/app-search-php/blob/master/LICENSE) © [Elastic](https://github.com/elastic)
 
-Thank you to all the [contributors](https://github.com/swiftype/swiftype-app-search-php/graphs/contributors)!
+Thank you to all the [contributors](https://github.com/elastic/app-search-php/graphs/contributors)!
 

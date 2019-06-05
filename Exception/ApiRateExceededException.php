@@ -1,12 +1,12 @@
 <?php
 /**
- * This file is part of the Swiftype App Search PHP Client package.
+ * This file is part of the Elastic App Search PHP Client package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch\Exception;
+namespace Elastic\AppSearch\Client\Exception;
 
 use Elastic\OpenApi\Codegen\Exception\ApiException;
 use Elastic\OpenApi\Codegen\Exception\ClientException;
