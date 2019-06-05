@@ -1,11 +1,11 @@
 {
-  "name" : "swiftype/swiftype-app-search-php",
-  "description" : "Swiftype App Search Official PHP Client",
-  "homepage": "https://github.com/swiftype/swiftype-app-search-php",
+  "name" : "elastic/app-search-php",
+  "description" : "Elastic App Search Official PHP Client",
+  "homepage": "https://github.com/elastic/app-search-php",
   "keywords" : [
     "search",
     "client",
-    "swiftype",
+    "elastic",
     "php"
   ],
   "repositories": [
