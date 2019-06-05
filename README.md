@@ -1,6 +1,6 @@
-<p align="center"><img src="https://github.com/swiftype/swiftype-app-search-php/blob/master/logo-app-search.png?raw=true" alt="Elastic App Search Logo"></p>
+<p align="center"><img src="https://github.com/elastic/app-search-php/blob/master/logo-app-search.png?raw=true" alt="Elastic App Search Logo"></p>
 
-<p align="center"><a href="https://circleci.com/gh/swiftype/swiftype-app-search-php"><img src="https://circleci.com/gh/swiftype/swiftype-app-search-php.svg?style=svg&circle-token=c5aa66b0ee683b0f485c414eb6554837c29cc150" alt="CircleCI buidl"></a></p>
+<p align="center"><a href="https://circleci.com/gh/elastic/app-search-php"><img src="https://circleci.com/gh/swiftype/swiftype-app-search-php.svg?style=svg&circle-token=c5aa66b0ee683b0f485c414eb6554837c29cc150" alt="CircleCI buidl"></a></p>
 
 > A first-party PHP client for building excellent, relevant search experiences with [Elastic App Search](https://www.elastic.co/cloud/app-search-service).
 >
@@ -24,7 +24,7 @@ Using this client assumes that you have already created an App Search account on
 You can install the client in your project by using composer:
 
 ```bash
-composer require swiftype/swiftype-app-search-php
+composer require elastic/app-search-php
 ```
 
 ## Usage
