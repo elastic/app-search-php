@@ -67,7 +67,7 @@ class SearchSettingsApiTest extends AbstractEngineTestCase
      *
      * @param array $searchFields
      *
-     * @expectedException \Swiftype\Exception\BadRequestException
+     * @expectedException \Elastic\OpenApi\Codegen\Exception\BadRequestException
      *
      * @testWith [{"not_a_valid_field": {"weight": 2}}]
      *           [{"title": {"weight": "not-a-number"}}]

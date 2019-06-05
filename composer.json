@@ -8,6 +8,12 @@
     "swiftype",
     "php"
   ],
+  "repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/elastic/openapi-codegen-php"
+    }
+  ],
   "license" : "Apache-2.0",
   "type" : "library",
   "authors" : [
@@ -15,7 +21,7 @@
   ],
   "require" : {
     "php" : "^5.6|^7.0",
-    "swiftype/swiftype-common-php" : "^1.1.2",
+    "elastic/openapi-codegen" : "dev-master@dev",
     "psr/log" : "^1.0."
   },
   "require-dev" : {

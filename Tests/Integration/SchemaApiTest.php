@@ -62,7 +62,7 @@ class SchemaApiTest extends AbstractEngineTestCase
      * @param string $fieldName
      * @param string $fieldType
      *
-     * @expectedException \Swiftype\Exception\BadRequestException
+     * @expectedException \Elastic\OpenApi\Codegen\Exception\BadRequestException
      *
      * @testWith ["string_field", "not-a-valid-type"]
      *           ["id", "number"]

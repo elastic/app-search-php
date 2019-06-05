@@ -18,7 +18,7 @@ use Swiftype\AppSearch\Client;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class ClientApiTest extends \PHPUnit\Framework\TestCase
+class ClientTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test instantiation of a client through the client builder.
@@ -35,9 +35,9 @@ class ClientApiTest extends \PHPUnit\Framework\TestCase
      * @param string API Endpoint.
      * @param string Class of the exception that should be raised.
      *
-     * @testWith ["http://localhost:5000", "\\Swiftype\\Exception\\CouldNotConnectToHostException"]
-     *           ["http://foo.bar:5000", "\\Swiftype\\Exception\\CouldNotResolveHostException"]
-     *           ["_foo_", "\\Swiftype\\Exception\\UnexpectedValueException"]
+     * @testWith ["http://localhost:5000", "\\Elastic\\OpenApi\\Codegen\\Exception\\CouldNotConnectToHostException"]
+     *           ["http://foo.bar:5000", "\\Elastic\\OpenApi\\Codegen\\Exception\\CouldNotResolveHostException"]
+     *           ["_foo_", "\\Elastic\\OpenApi\\Codegen\\Exception\\UnexpectedValueException"]
      */
     public function testConnectionErrors($apiEndpoint, $exceptionClass)
     {
@@ -49,7 +49,7 @@ class ClientApiTest extends \PHPUnit\Framework\TestCase
     /**
      * Test an Authentication exception is thrown when providing an in valid API Key.
      *
-     * @expectedException \Swiftype\Exception\AuthenticationException
+     * @expectedException \Elastic\OpenApi\Codegen\Exception\AuthenticationException
      */
     public function testAuthenticationError()
     {

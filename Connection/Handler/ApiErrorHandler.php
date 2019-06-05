@@ -9,10 +9,10 @@
 namespace Swiftype\AppSearch\Connection\Handler;
 
 use GuzzleHttp\Ring\Core;
-use Swiftype\Exception\ApiException;
-use Swiftype\Exception\AuthenticationException;
-use Swiftype\Exception\BadRequestException;
-use Swiftype\Exception\NotFoundException;
+use Elastic\OpenApi\Codegen\Exception\ApiException;
+use Elastic\OpenApi\Codegen\Exception\AuthenticationException;
+use Elastic\OpenApi\Codegen\Exception\BadRequestException;
+use Elastic\OpenApi\Codegen\Exception\NotFoundException;
 use Swiftype\AppSearch\Exception\ApiRateExceededException;
 
 /**

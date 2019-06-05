@@ -108,7 +108,7 @@ class DocumentApiTest extends AbstractEngineTestCase
     /**
      * Test index in an engine that does not exists.
      *
-     * @expectedException \Swiftype\Exception\NotFoundException
+     * @expectedException \Elastic\OpenApi\Codegen\Exception\NotFoundException
      */
     public function testIndexingInInvalidEngine()
     {

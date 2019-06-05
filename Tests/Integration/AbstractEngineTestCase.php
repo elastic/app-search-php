@@ -8,7 +8,7 @@
 
 namespace Swiftype\AppSearch\Tests\Integration;
 
-use Swiftype\Exception\NotFoundException;
+use Elastic\OpenApi\Codegen\Exception\NotFoundException;
 
 /**
  * A base class for running client tests with a default engine and some sample optional docs.

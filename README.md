@@ -3,6 +3,8 @@
 <p align="center"><a href="https://circleci.com/gh/swiftype/swiftype-app-search-php"><img src="https://circleci.com/gh/swiftype/swiftype-app-search-php.svg?style=svg&circle-token=c5aa66b0ee683b0f485c414eb6554837c29cc150" alt="CircleCI buidl"></a></p>
 
 > A first-party PHP client for building excellent, relevant search experiences with [Elastic App Search](https://www.elastic.co/cloud/app-search-service).
+>
+> **:warning: This is a beta version of the client. Stable version will be released soon.**
 
 ## Contents
 
@@ -182,7 +184,7 @@ Code for the endpoints is generated automatically using a custom version of [Ope
 To regenerate endpoints, use the docker laucher packaged in `vendor/bin`:
 
 ```bash
-./vendor/bin/swiftype-codegen.sh
+./vendor/bin/elastic-openapi-codegen.sh
 ```
 
 The custom generator will be built and launched using the following Open API spec file : `resources/api/api-spec.yml`.
@@ -217,3 +219,4 @@ We welcome contributors to the project. Before you begin, a couple notes...
 [Apache 2.0](https://github.com/swiftype/swiftype-app-search-php/blob/master/LICENSE) © [Elastic](https://github.com/elastic)
 
 Thank you to all the [contributors](https://github.com/swiftype/swiftype-app-search-php/graphs/contributors)!
+

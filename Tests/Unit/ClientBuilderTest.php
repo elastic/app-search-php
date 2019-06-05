@@ -39,7 +39,7 @@ class ClientBuilderTest extends TestCase
      *
      * @dataProvider invalidApiEndpoints
      *
-     * @expectedException \Swiftype\Exception\UnexpectedValueException
+     * @expectedException \Elastic\OpenApi\Codegen\Exception\UnexpectedValueException
      *
      * @param string $apiEndpoint
      */

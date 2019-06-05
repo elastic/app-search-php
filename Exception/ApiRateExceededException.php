@@ -8,17 +8,17 @@
 
 namespace Swiftype\AppSearch\Exception;
 
-use Swiftype\Exception\ApiException;
-use Swiftype\Exception\SwiftypeException;
+use Elastic\OpenApi\Codegen\Exception\ApiException;
+use Elastic\OpenApi\Codegen\Exception\ClientException;
 
 /**
  * Exception thrown when the API Rate limit have been exceded.
  *
- * @package Swiftype\Exception
+ * @package Elastic\OpenApi\Codegen
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class ApiRateExceededException extends ApiException implements SwiftypeException
+class ApiRateExceededException extends ApiException implements ClientException
 {
     /**
      * @var int

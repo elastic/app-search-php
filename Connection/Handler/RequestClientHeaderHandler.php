@@ -67,7 +67,7 @@ class RequestClientHeaderHandler
      */
     public function __construct(callable $handler, $integration = null)
     {
-        $this->handler     = $handler;
+        $this->handler = $handler;
         $this->integration = $integration;
     }
 
@@ -85,8 +85,8 @@ class RequestClientHeaderHandler
         $request = Core::setHeader($request, self::CLIENT_NAME_HEADER, [self::CLIENT_NAME_VALUE]);
         $request = Core::setHeader($request, self::CLIENT_VERSION_HEADER, [self::CLIENT_VERSION_VALUE]);
 
-        if ($this->integration !== null) {
-            list($integrationName, $integrationVersion) = explode(":", $this->integration);
+        if (null !== $this->integration) {
+            list($integrationName, $integrationVersion) = explode(':', $this->integration);
             if ($integrationName) {
                 $request = Core::setHeader($request, self::CLIENT_INTEGRATION_NAME_HEADER, [$integrationName]);
             }

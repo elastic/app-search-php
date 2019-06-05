@@ -15,7 +15,7 @@ namespace Swiftype\AppSearch;
  *
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class ClientBuilder extends \Swiftype\AbstractClientBuilder
+class ClientBuilder extends \Elastic\OpenApi\Codegen\AbstractClientBuilder
 {
     /**
      * @var string
@@ -105,7 +105,7 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
         }
 
         if (!$isValidEndpoint) {
-            throw new \Swiftype\Exception\UnexpectedValueException("Invalid API endpoint : $host");
+            throw new \Elastic\OpenApi\Codegen\Exception\UnexpectedValueException("Invalid API endpoint : $host");
         }
 
         return parent::setHost($testedEndpoint);
@@ -130,7 +130,7 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
 
         $handler = new Connection\Handler\RequestClientHeaderHandler($handler, $this->integration);
         $handler = new Connection\Handler\RequestAuthenticationHandler($handler, $this->apiKey);
-        $handler = new \Swiftype\Connection\Handler\RequestUrlPrefixHandler($handler, self::URI_PREFIX);
+        $handler = new \Elastic\OpenApi\Codegen\Connection\Handler\RequestUrlPrefixHandler($handler, self::URI_PREFIX);
         $handler = new Connection\Handler\ApiErrorHandler($handler);
         $handler = new Connection\Handler\RateLimitLoggingHandler($handler, $this->getLogger());
 
@@ -142,6 +142,6 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
      */
     protected function getEndpointBuilder()
     {
-        return new \Swiftype\Endpoint\Builder(__NAMESPACE__ . "\Endpoint");
+        return new \Elastic\OpenApi\Codegen\Endpoint\Builder(__NAMESPACE__ . "\Endpoint");
     }
 }

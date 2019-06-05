@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Swiftype PHP Client package.
+ * This file is part of the Elastic OpenAPI PHP code generator.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,7 +13,7 @@ namespace Swiftype\AppSearch\Endpoint;
  *
  * @package Swiftype\AppSearch\Endpoint
  */
-class QuerySuggestion extends \Swiftype\Endpoint\AbstractEndpoint
+class QuerySuggestion extends \Elastic\OpenApi\Codegen\Endpoint\AbstractEndpoint
 {
     // phpcs:disable
     /**
