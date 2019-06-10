@@ -15,7 +15,7 @@ use Elastic\AppSearch\Client\Client;
  * Testing client instantiaton and error handling.
  *
  * @package Elastic\AppSearch\Client\Test\Integration
- *
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ClientTest extends \PHPUnit\Framework\TestCase

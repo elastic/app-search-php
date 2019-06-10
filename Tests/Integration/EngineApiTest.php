@@ -14,7 +14,7 @@ use Elastic\OpenApi\Codegen\Exception\NotFoundException;
  * Integrations test for the Engine API.
  *
  * @package Elastic\AppSearch\Client\Test\Integration
- *
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class EngineApiTest extends AbstractClientTestCase

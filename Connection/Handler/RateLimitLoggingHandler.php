@@ -15,7 +15,7 @@ use Psr\Log\LoggerInterface;
  * Log a warning if more than 90 percent of the allowed rate limit is consumed.
  *
  * @package Elastic\AppSearch\Client\Connection\Handler
- *
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RateLimitLoggingHandler

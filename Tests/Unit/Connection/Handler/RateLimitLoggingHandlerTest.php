@@ -17,7 +17,7 @@ use Psr\Log\LoggerInterface;
  * Rate limit logger tests.
  *
  * @package Elastic\AppSearch\Client\Test\Unit\Connection\Handler
- *
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RateLimitLoggingHandlerTest extends TestCase

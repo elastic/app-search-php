@@ -15,7 +15,7 @@ use Elastic\AppSearch\Client\Connection\Handler\RequestAuthenticationHandler;
  * Unit tests for the authentication handler.
  *
  * @package Elastic\AppSearch\Client\Test\Unit\Connection\Handler
- *
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RequestAuthenticationHandlerTest extends TestCase

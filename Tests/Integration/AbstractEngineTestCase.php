@@ -14,7 +14,7 @@ use Elastic\OpenApi\Codegen\Exception\NotFoundException;
  * A base class for running client tests with a default engine and some sample optional docs.
  *
  * @package Elastic\AppSearch\Client\Test\Integration
- *
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class AbstractEngineTestCase extends AbstractClientTestCase

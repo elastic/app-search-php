@@ -15,7 +15,7 @@ use Elastic\OpenApi\Codegen\Exception\ClientException;
  * Exception thrown when the API Rate limit have been exceded.
  *
  * @package Elastic\OpenApi\Codegen
- *
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ApiRateExceededException extends ApiException implements ClientException

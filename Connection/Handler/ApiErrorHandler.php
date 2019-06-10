@@ -19,7 +19,7 @@ use Elastic\AppSearch\Client\Exception\ApiRateExceededException;
  * This handler manage server side errors and throw comprehensive exceptions to the user.
  *
  * @package Elastic\AppSearch\Client\Connection\Handler
- *
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ApiErrorHandler
