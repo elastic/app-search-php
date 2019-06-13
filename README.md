@@ -1,8 +1,10 @@
-<p align="center"><img src="https://github.com/swiftype/swiftype-app-search-php/blob/master/logo-app-search.png?raw=true" alt="Elastic App Search Logo"></p>
+<p align="center"><img src="https://github.com/elastic/app-search-php/blob/master/logo-app-search.png?raw=true" alt="Elastic App Search Logo"></p>
 
-<p align="center"><a href="https://circleci.com/gh/swiftype/swiftype-app-search-php"><img src="https://circleci.com/gh/swiftype/swiftype-app-search-php.svg?style=svg&circle-token=c5aa66b0ee683b0f485c414eb6554837c29cc150" alt="CircleCI buidl"></a></p>
+<p align="center"><a href="https://circleci.com/gh/elastic/app-search-php"><img src="https://circleci.com/gh/swiftype/swiftype-app-search-php.svg?style=svg&circle-token=c5aa66b0ee683b0f485c414eb6554837c29cc150" alt="CircleCI buidl"></a></p>
 
 > A first-party PHP client for building excellent, relevant search experiences with [Elastic App Search](https://www.elastic.co/cloud/app-search-service).
+>
+> **:warning: This is a beta version of the client. Stable version will be released soon.**
 
 ## Contents
 
@@ -22,7 +24,7 @@ Using this client assumes that you have already created an App Search account on
 You can install the client in your project by using composer:
 
 ```bash
-composer require swiftype/swiftype-app-search-php
+composer require elastic/app-search-php
 ```
 
 ## Usage
@@ -31,19 +33,19 @@ composer require swiftype/swiftype-app-search-php
 
 #### Basic client instantiation
 
-To instantiate a new client you can use `\Swiftype\AppSearch\ClientBuilder`:
+To instantiate a new client you can use `\Elastic\AppSearch\Client\ClientBuilder`:
 
 ```php
   $apiEndpoint   = 'http://localhost:3002/';
   $apiKey        = 'private-XXXXXXXXXXXX';
-  $clientBuilder = \Swiftype\AppSearch\ClientBuilder::create($apiEndpoint, $apiKey);
+  $clientBuilder = \Elastic\AppSearch\Client\ClientBuilder::create($apiEndpoint, $apiKey);
 
   $client = $clientBuilder->build();
 ```
 
 **Notes:**
 
-- The resulting client will be of type `\Swiftype\AppSearch\Client`
+- The resulting client will be of type `\Elastic\AppSearch\Client\Client`
 
 - You can find the API endpoint and your API key URL in your App Search account: https://app.swiftype.com/as/credentials.
 
@@ -182,7 +184,7 @@ Code for the endpoints is generated automatically using a custom version of [Ope
 To regenerate endpoints, use the docker laucher packaged in `vendor/bin`:
 
 ```bash
-./vendor/bin/swiftype-codegen.sh
+./vendor/bin/elastic-openapi-codegen.sh
 ```
 
 The custom generator will be built and launched using the following Open API spec file : `resources/api/api-spec.yml`.
@@ -195,7 +197,7 @@ The client class and readme may be changed in some cases. Do not forget to inclu
 
 ### Where do I report issues with the client?
 
-If something is not working as expected, please open an [issue](https://github.com/swiftype/swiftype-app-search-php/issues/new).
+If something is not working as expected, please open an [issue](https://github.com/elastic/app-search-php/issues/new).
 
 ### Where can I find the full API documentation ?
 
@@ -209,11 +211,12 @@ You can checkout the [Elastic community discuss forums](https://discuss.elastic.
 
 We welcome contributors to the project. Before you begin, a couple notes...
 
-+ Before opening a pull request, please create an issue to [discuss the scope of your proposal](https://github.com/swiftype/swiftype-app-search-php/issues).
++ Before opening a pull request, please create an issue to [discuss the scope of your proposal](https://github.com/elastic/app-search-php/issues).
 + Please write simple code and concise documentation, when appropriate.
 
 ## License 📗
 
-[Apache 2.0](https://github.com/swiftype/swiftype-app-search-php/blob/master/LICENSE) © [Elastic](https://github.com/elastic)
+[Apache 2.0](https://github.com/elastic/app-search-php/blob/master/LICENSE) © [Elastic](https://github.com/elastic)
 
-Thank you to all the [contributors](https://github.com/swiftype/swiftype-app-search-php/graphs/contributors)!
+Thank you to all the [contributors](https://github.com/elastic/app-search-php/graphs/contributors)!
+

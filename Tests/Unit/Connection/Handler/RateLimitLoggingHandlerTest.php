@@ -1,23 +1,23 @@
 <?php
 /**
- * This file is part of the Swiftype App Search PHP Client package.
+ * This file is part of the Elastic App Search PHP Client package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch\Tests\Unit\Connection\Handler;
+namespace Elastic\AppSearch\Client\Tests\Unit\Connection\Handler;
 
 use GuzzleHttp\Ring\Future\CompletedFutureArray;
 use PHPUnit\Framework\TestCase;
-use Swiftype\AppSearch\Connection\Handler\RateLimitLoggingHandler;
+use Elastic\AppSearch\Client\Connection\Handler\RateLimitLoggingHandler;
 use Psr\Log\LoggerInterface;
 
 /**
  * Rate limit logger tests.
  *
- * @package Swiftype\AppSearch\Test\Unit\Connection\Handler
- *
+ * @package Elastic\AppSearch\Client\Test\Unit\Connection\Handler
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RateLimitLoggingHandlerTest extends TestCase
@@ -51,7 +51,7 @@ class RateLimitLoggingHandlerTest extends TestCase
      *
      * @param array $response
      *
-     * @return \Swiftype\AppSearch\Connection\Handler\RateLimitLoggingHandler
+     * @return \Elastic\AppSearch\Client\Connection\Handler\RateLimitLoggingHandler
      */
     private function getHandler($response)
     {

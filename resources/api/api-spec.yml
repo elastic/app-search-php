@@ -1,8 +1,8 @@
 openapi: 3.0.2
 
 info:
-  title: "Swiftype App Search API"
-  description: "Swiftype App Search API"
+  title: "Elastic App Search API"
+  description: "Elastic App Search API"
   version: "1.0"
 
 externalDocs:

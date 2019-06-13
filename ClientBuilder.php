@@ -1,21 +1,21 @@
 <?php
 /**
- * This file is part of the Swiftype App Search PHP Client package.
+ * This file is part of the Elastic App Search PHP Client package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch;
+namespace Elastic\AppSearch\Client;
 
 /**
  * Use this class to instantiate new client and all their dependencies.
  *
- * @package Swiftype\AppSearch
- *
+ * @package Elastic\AppSearch\Client
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class ClientBuilder extends \Swiftype\AbstractClientBuilder
+class ClientBuilder extends \Elastic\OpenApi\Codegen\AbstractClientBuilder
 {
     /**
      * @var string
@@ -43,7 +43,7 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
      * @param string $hostIdentifier
      * @param string $apiKey
      *
-     * @return \Swiftype\AppSearch\ClientBuilder
+     * @return \Elastic\AppSearch\Client\ClientBuilder
      */
     public static function create($apiEndpoint = null, $apiKey = null)
     {
@@ -105,16 +105,16 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
         }
 
         if (!$isValidEndpoint) {
-            throw new \Swiftype\Exception\UnexpectedValueException("Invalid API endpoint : $host");
+            throw new \Elastic\OpenApi\Codegen\Exception\UnexpectedValueException("Invalid API endpoint : $host");
         }
 
         return parent::setHost($testedEndpoint);
     }
 
     /**
-     * Return the configured Swiftype client.
+     * Return the configured App Search client.
      *
-     * @return \Swiftype\AppSearch\Client
+     * @return \Elastic\AppSearch\Client\Client
      */
     public function build()
     {
@@ -130,7 +130,7 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
 
         $handler = new Connection\Handler\RequestClientHeaderHandler($handler, $this->integration);
         $handler = new Connection\Handler\RequestAuthenticationHandler($handler, $this->apiKey);
-        $handler = new \Swiftype\Connection\Handler\RequestUrlPrefixHandler($handler, self::URI_PREFIX);
+        $handler = new \Elastic\OpenApi\Codegen\Connection\Handler\RequestUrlPrefixHandler($handler, self::URI_PREFIX);
         $handler = new Connection\Handler\ApiErrorHandler($handler);
         $handler = new Connection\Handler\RateLimitLoggingHandler($handler, $this->getLogger());
 
@@ -142,6 +142,6 @@ class ClientBuilder extends \Swiftype\AbstractClientBuilder
      */
     protected function getEndpointBuilder()
     {
-        return new \Swiftype\Endpoint\Builder(__NAMESPACE__ . "\Endpoint");
+        return new \Elastic\OpenApi\Codegen\Endpoint\Builder(__NAMESPACE__ . "\Endpoint");
     }
 }

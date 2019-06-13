@@ -1,11 +1,11 @@
 {
-  "name" : "swiftype/swiftype-app-search-php",
-  "description" : "Swiftype App Search Official PHP Client",
-  "homepage": "https://github.com/swiftype/swiftype-app-search-php",
+  "name" : "elastic/app-search-php",
+  "description" : "Elastic App Search Official PHP Client",
+  "homepage": "https://github.com/elastic/app-search-php",
   "keywords" : [
     "search",
     "client",
-    "swiftype",
+    "elastic",
     "php"
   ],
   "license" : "Apache-2.0",
@@ -15,7 +15,7 @@
   ],
   "require" : {
     "php" : "^5.6|^7.0",
-    "swiftype/swiftype-common-php" : "^1.1.2",
+    "elastic/openapi-codegen" : "^1.0.0",
     "psr/log" : "^1.0."
   },
   "require-dev" : {
@@ -27,7 +27,7 @@
   },
   "autoload" : {
     "psr-4" : {
-      "Swiftype\\AppSearch\\" : ""
+      "Elastic\\AppSearch\\Client\\" : ""
     },
     "exclude-from-classmap" : [
       "/Tests/"

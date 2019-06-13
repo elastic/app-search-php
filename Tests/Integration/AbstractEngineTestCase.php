@@ -1,20 +1,20 @@
 <?php
 /**
- * This file is part of the Swiftype App Search PHP Client package.
+ * This file is part of the Elastic App Search PHP Client package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch\Tests\Integration;
+namespace Elastic\AppSearch\Client\Tests\Integration;
 
-use Swiftype\Exception\NotFoundException;
+use Elastic\OpenApi\Codegen\Exception\NotFoundException;
 
 /**
  * A base class for running client tests with a default engine and some sample optional docs.
  *
- * @package Swiftype\AppSearch\Test\Integration
- *
+ * @package Elastic\AppSearch\Client\Test\Integration
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class AbstractEngineTestCase extends AbstractClientTestCase

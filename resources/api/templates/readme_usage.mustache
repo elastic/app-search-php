@@ -4,19 +4,19 @@
 
 #### Basic client instantiation
 
-To instantiate a new client you can use `\Swiftype\AppSearch\ClientBuilder`:
+To instantiate a new client you can use `\Elastic\AppSearch\Client\ClientBuilder`:
 
 ```php
   $apiEndpoint   = 'http://localhost:3002/';
   $apiKey        = 'private-XXXXXXXXXXXX';
-  $clientBuilder = \Swiftype\AppSearch\ClientBuilder::create($apiEndpoint, $apiKey);
+  $clientBuilder = \Elastic\AppSearch\Client\ClientBuilder::create($apiEndpoint, $apiKey);
 
   $client = $clientBuilder->build();
 ```
 
 **Notes:**
 
-- The resulting client will be of type `\Swiftype\AppSearch\Client`
+- The resulting client will be of type `\Elastic\AppSearch\Client\Client`
 
 - You can find the API endpoint and your API key URL in your App Search account: https://app.swiftype.com/as/credentials.
 

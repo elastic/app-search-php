@@ -1,19 +1,19 @@
 <?php
 /**
- * This file is part of the Swiftype PHP Client package.
+ * This file is part of the Elastic OpenAPI PHP code generator.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch;
+namespace Elastic\AppSearch\Client;
 
 /**
  * Client implementation.
  *
- * @package Swiftype\AppSearch
+ * @package Elastic\AppSearch\Client
  */
-class Client extends \Swiftype\AbstractClient
+class Client extends \Elastic\OpenApi\Codegen\AbstractClient
 {
     // phpcs:disable
 

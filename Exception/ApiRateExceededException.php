@@ -1,24 +1,24 @@
 <?php
 /**
- * This file is part of the Swiftype App Search PHP Client package.
+ * This file is part of the Elastic App Search PHP Client package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch\Exception;
+namespace Elastic\AppSearch\Client\Exception;
 
-use Swiftype\Exception\ApiException;
-use Swiftype\Exception\SwiftypeException;
+use Elastic\OpenApi\Codegen\Exception\ApiException;
+use Elastic\OpenApi\Codegen\Exception\ClientException;
 
 /**
  * Exception thrown when the API Rate limit have been exceded.
  *
- * @package Swiftype\Exception
- *
+ * @package Elastic\OpenApi\Codegen
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
-class ApiRateExceededException extends ApiException implements SwiftypeException
+class ApiRateExceededException extends ApiException implements ClientException
 {
     /**
      * @var int

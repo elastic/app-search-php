@@ -1,20 +1,20 @@
 <?php
 /**
- * This file is part of the Swiftype App Search PHP Client package.
+ * This file is part of the Elastic App Search PHP Client package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Swiftype\AppSearch\Connection\Handler;
+namespace Elastic\AppSearch\Client\Connection\Handler;
 
 use GuzzleHttp\Ring\Core;
 
 /**
  * This handler add automatically the API Key to the request.
  *
- * @package Swiftype\AppSearch\Connection\Handler
- *
+ * @package Elastic\AppSearch\Client\Connection\Handler
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RequestAuthenticationHandler
