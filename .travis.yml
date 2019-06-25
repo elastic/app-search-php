@@ -20,9 +20,11 @@ cache:
   - /home/travis/.composer/
 
 before_script: composer install -n --prefer-dist
-script: env
+script: ST_ENGINE_NAME="php-test-$TRAVIS_JOB_NUMBER" vendor/bin/phpunit -c phpunit.xml.dist --testsuite $TEST_SUITE
 
 jobs:
   include:
-  - script: ls
-    stage: qa
+  - stage: qa
+    script: vendor/bin/phplint . --exclude=vendor
+  - stage: qa
+    script: vendor/bin/phpcs --ignore=vendor,resources --standard=PSR12 .
