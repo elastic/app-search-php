@@ -46,10 +46,10 @@ class AbstractClientTestCase extends TestCase
      */
     protected static function getDefaultEngineName()
     {
-        $enginePrefix = str_replace('.', '-', getenv('ST_ENGINE_NAME') ?: 'php-integration-test');
+        $enginePrefix = getenv('ST_ENGINE_NAME') ? getenv('ST_ENGINE_NAME') : 'php-integration-test';
         $className = explode('\\', get_called_class());
         $engineSuffix = strtolower(end($className));
 
-        return  sprintf('%s-%s', $enginePrefix, $engineSuffix);
+        return str_replace('.', '-', sprintf('%s-%s', $enginePrefix, $engineSuffix));
     }
 }

@@ -17,7 +17,7 @@ stages:
 
 cache:
   directories:
-  - /home/travis/.composer/
+  - $HOME/.composer/cache
 
 install: composer install -n --prefer-dist
 script: 
