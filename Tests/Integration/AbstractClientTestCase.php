@@ -30,6 +30,7 @@ class AbstractClientTestCase extends TestCase
      */
     public static function setupBeforeClass()
     {
+        var_dump($_ENV);
         self::$defaultClient = ClientBuilder::create(getenv('ST_API_ENDPOINT'), getenv('ST_API_KEY'))->build();
     }
 
