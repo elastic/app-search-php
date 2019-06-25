@@ -30,9 +30,6 @@ class AbstractClientTestCase extends TestCase
      */
     public static function setupBeforeClass()
     {
-        var_dump(getenv('ST_API_ENDPOINT'));
-        var_dump(getenv('ST_API_KEY'));
-        var_dump(getenv('ST_ENGINE_NAME'));
         self::$defaultClient = ClientBuilder::create(getenv('ST_API_ENDPOINT'), getenv('ST_API_KEY'))->build();
     }
 
@@ -49,7 +46,7 @@ class AbstractClientTestCase extends TestCase
      */
     protected static function getDefaultEngineName()
     {
-        $enginePrefix = getenv('ST_ENGINE_NAME') ?: 'php-integration-test';
+        $enginePrefix = str_replace('.', '-', getenv('ST_ENGINE_NAME') ?: 'php-integration-test');
         $className = explode('\\', get_called_class());
         $engineSuffix = strtolower(end($className));
 
