@@ -1,10 +1,10 @@
 language: php
 
 php:
+- '7.2'
 - '5.6'
 - '7.0'
 - '7.1'
-- '7.2'
 - '7.3'
 
 env:
@@ -15,9 +15,14 @@ stages:
 - qa
 - test
 
+cache:
+  directories:
+  - /home/travis/.composer/
+
+before_script: composer install -n --prefer-dist
+script: env
+
 jobs:
   include:
-  - php: '7.2'
-    script: ls
+  - script: ls
     stage: qa
-  - script: env
