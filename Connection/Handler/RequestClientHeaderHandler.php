@@ -13,9 +13,7 @@ use GuzzleHttp\Ring\Core;
 /**
  * This handler add automatically reporting headers to the request.
  *
- * @package Elastic\AppSearch\Client\Connection\Handler 
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co> 
+ * @package Elastic\AppSearch\Client\Connection\Handler
  */
 class RequestClientHeaderHandler
 {

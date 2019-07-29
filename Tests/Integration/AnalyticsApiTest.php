@@ -12,8 +12,6 @@ namespace Elastic\AppSearch\Client\Tests\Integration;
  * Integration test for the Analytics API.
  *
  * @package Elastic\AppSearch\Client\Test\Integration
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class AnalyticsApiTest extends AbstractEngineTestCase
 {

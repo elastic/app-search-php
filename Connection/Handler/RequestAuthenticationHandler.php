@@ -14,8 +14,6 @@ use GuzzleHttp\Ring\Core;
  * This handler add automatically the API Key to the request.
  *
  * @package Elastic\AppSearch\Client\Connection\Handler
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RequestAuthenticationHandler
 {
