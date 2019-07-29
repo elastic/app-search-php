@@ -17,8 +17,6 @@ use Elastic\AppSearch\Client\Connection\Handler\RateLimitLoggingHandler;
  * Check API errors are turns into comprehensive exceptions by the handler.
  *
  * @package Elastic\AppSearch\Client\Test\Unit\Connection\Handler
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ApiErrorHandlerTest extends TestCase
 {

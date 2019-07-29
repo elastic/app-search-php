@@ -15,8 +15,6 @@ use Elastic\AppSearch\Client\ClientBuilder;
  * A base class for running client tests.
  *
  * @package Elastic\AppSearch\Client\Test\Integration
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class AbstractClientTestCase extends TestCase
 {
@@ -30,7 +28,8 @@ class AbstractClientTestCase extends TestCase
      */
     public static function setupBeforeClass()
     {
-        self::$defaultClient = ClientBuilder::create(getenv('ST_API_ENDPOINT'), getenv('ST_API_KEY'))->build();
+        $clientBuilder = new ClientBuilder();
+        self::$defaultClient = $clientBuilder->create(getenv('ST_API_ENDPOINT'), getenv('ST_API_KEY'))->build();
     }
 
     /**

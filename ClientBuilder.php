@@ -12,8 +12,6 @@ namespace Elastic\AppSearch\Client;
  * Use this class to instantiate new client and all their dependencies.
  *
  * @package Elastic\AppSearch\Client
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ClientBuilder extends \Elastic\OpenApi\Codegen\AbstractClientBuilder
 {
@@ -21,11 +19,6 @@ class ClientBuilder extends \Elastic\OpenApi\Codegen\AbstractClientBuilder
      * @var string
      */
     const URI_PREFIX = '/api/as/v1/';
-
-    /**
-     * @var string
-     */
-    private $apiEndpoint;
 
     /**
      * @var string

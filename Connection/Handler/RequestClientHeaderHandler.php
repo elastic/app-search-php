@@ -14,8 +14,6 @@ use GuzzleHttp\Ring\Core;
  * This handler add automatically reporting headers to the request.
  *
  * @package Elastic\AppSearch\Client\Connection\Handler
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class RequestClientHeaderHandler
 {
@@ -27,7 +25,7 @@ class RequestClientHeaderHandler
     /**
      * @var string
      */
-    const CLIENT_NAME_VALUE = 'swiftype-app-search-php';
+    const CLIENT_NAME_VALUE = 'elastic-app-search-php';
 
     /**
      * @var string
@@ -47,7 +45,7 @@ class RequestClientHeaderHandler
     /**
      * @var string
      */
-    const CLIENT_VERSION_VALUE = '1.0.0-alpha';
+    const CLIENT_VERSION_VALUE = '1.0.0';
 
     /**
      * @var callable

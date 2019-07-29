@@ -16,8 +16,6 @@ use Elastic\AppSearch\Client\ClientBuilder;
  * Check the client builder is able to instantiate new clients.
  *
  * @package Elastic\AppSearch\Client\Test\Unit\Connection\Handler
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache2
- * @author  Aurélien FOUCRET <aurelien.foucret@elastic.co>
  */
 class ClientBuilderTest extends TestCase
 {
