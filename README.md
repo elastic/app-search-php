@@ -2,7 +2,7 @@
 
 <p align="center"><a href="https://circleci.com/gh/elastic/app-search-php"><img src="https://circleci.com/gh/swiftype/swiftype-app-search-php.svg?style=svg&circle-token=c5aa66b0ee683b0f485c414eb6554837c29cc150" alt="CircleCI buidl"></a></p>
 
-> A first-party PHP client for building excellent, relevant search experiences with [Elastic App Search](https://www.elastic.co/cloud/app-search-service).
+> A first-party PHP client for building excellent, relevant search experiences with [Elastic App Search](https://www.elastic.co/products/app-search).
 
 ## Contents
 
