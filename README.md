@@ -1,7 +1,10 @@
 <p align="center"><img src="https://github.com/elastic/app-search-php/blob/master/logo-app-search.png?raw=true" alt="Elastic App Search Logo"></p>
 
 <p align="center">
-  <a href="https://circleci.com/gh/elastic/app-search-php"><img src="https://circleci.com/gh/swiftype/swiftype-app-search-php.svg?style=svg" alt="CircleCI build"></a>
+  <img src="https://img.shields.io/packagist/l/elastic/app-search" alt="Apache 2.0 License"/>
+  <a href="https://github.com/elastic/app-search-php/releases"><img src="https://img.shields.io/github/release/elastic/app-search-php/all.svg?style=flat-square" alt="GitHub release" /></a>
+  <a href="https://circleci.com/gh/elastic/app-search-php"><img src="https://img.shields.io/circleci/build/github/elastic/app-search-php/master" alt="CircleCI build" /></a>
+  <img src="https://img.shields.io/librariesio/github/elastic/app-search-php" alt="Dependencies status"/>
 </p>
 
 > A first-party PHP client for building excellent, relevant search experiences with [Elastic App Search](https://www.elastic.co/products/app-search).
