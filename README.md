@@ -12,6 +12,7 @@
 ## Contents
 
 - [Getting started](#getting-started-)
+- [Versioning](#versioning)
 - [Usage](#usage)
 - [Development](#development)
 - [FAQ](#faq-)
@@ -29,6 +30,16 @@ You can install the client in your project by using composer:
 ```bash
 composer require elastic/app-search
 ```
+
+## Versioning
+
+ This client is versioned and released alongside App Search.
+
+ To guarantee compatibility, use the most recent version of this library within the major version of the corresponding App Search implementation.
+
+ For example, for App Search `7.3`, use `7.3` of this library or above, but not `8.0`.
+
+ If you are a [SaaS](https://app.swiftype.com/as) user, simply use the most recent version of this library.
 
 ## Usage
 
