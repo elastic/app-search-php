@@ -1,9 +1,17 @@
 version: 2.1
 
+executors:
+  php:
+    parameters:
+      php-version:
+        type: string
+        default: "7.2"
+    docker:
+    - image: circleci/php:<< parameters.php-version >>-browsers
+
+
 unit_tests: &unit_tests
-  steps:
-  - install_deps
-  - run_unit_tests
+
 
 integration_tests: &integration_tests
   environment:
@@ -11,26 +19,6 @@ integration_tests: &integration_tests
   steps:
   - install_deps
   - run_integration_tests
-
-php73: &php73
-  docker:
-  - image: circleci/php:7.3-browsers
-
-php72: &php72
-  docker:
-  - image: circleci/php:7.2-browsers
-
-php71: &php71
-  docker:
-  - image: circleci/php:7.1-browsers
-
-php70: &php70
-  docker:
-  - image: circleci/php:7.0-browsers
-
-php56: &php56
-  docker:
-  - image: circleci/php:5.6-browsers
 
 commands:
 
@@ -40,8 +28,6 @@ commands:
     - restore_cache:
         keys:
         - v1-dependencies-{{ checksum "composer.json" }}
-    - attach_workspace:
-        at: .
     - run:
         name: Install composer dependencies
         command: composer install -n --prefer-dist
@@ -49,75 +35,41 @@ commands:
         paths:
         - ~/.composer/cache/
         key: v1-dependencies-{{ checksum "composer.json" }}
-    - persist_to_workspace:
-        root: .
-        paths:
-        - .
 
-  run_unit_tests:
+jobs:
+
+  unit-tests:
+    parameters:
+      executor:
+        type: executor
+    executor: << parameters.executor >>
     steps:
+    - install_deps
     - run:
         name: Unit testing
         command: vendor/bin/phpunit -c phpunit.xml.dist --testsuite unit
 
-  run_integration_tests:
+  integration-tests:
+    parameters:
+      executor:
+        type: executor
+    executor: << parameters.executor >>
     steps:
+    - install_deps
     - run:
         name: Integration testing
         command: ST_ENGINE_NAME="php-integration-test-$CIRCLE_BUILD_NUM" vendor/bin/phpunit -c phpunit.xml.dist --testsuite integration
 
-jobs:
-
-  php-73-unit-tests:
-    <<: *unit_tests
-    <<: *php73
-
-  php-73-integration-tests:
-    <<: *integration_tests
-    <<: *php73
-
-  php-72-unit-tests:
-    <<: *unit_tests
-    <<: *php72
-
-  php-72-integration-tests:
-    <<: *integration_tests
-    <<: *php72
-
-  php-71-unit-tests:
-    <<: *unit_tests
-    <<: *php71
-
-  php-71-integration-tests:
-    <<: *integration_tests
-    <<: *php71
-
-  php-70-unit-tests:
-    <<: *unit_tests
-    <<: *php70
-
-  php-70-integration-tests:
-    <<: *integration_tests
-    <<: *php70
-
-  php-56-unit-tests:
-    <<: *unit_tests
-    <<: *php56
-
-  php-56-integration-tests:
-    <<: *integration_tests
-    <<: *php56
-
-  qa-phplint:
-    <<: *php73
+  phplint:
+    executor: php
     steps:
     - install_deps
     - run:
         name:
         command: vendor/bin/phplint . --exclude=vendor
 
-  qa-phpcs:
-    <<: *php73
+  phpcs:
+    executor: php
     steps:
     - install_deps
     - run:
@@ -128,25 +80,25 @@ workflows:
   version: 2
   qa:
     jobs:
-    - qa-phplint
-    - qa-phpcs
+    - phplint
+    - phpcs
   php-73-tests:
     jobs:
-    - php-73-unit-tests
-    - php-73-integration-tests
+    - unit-tests: { name: php-73-unit-tests, executor: { name: php, php-version: "7.3" } }
+    - integration-tests: { name: php-73-integration-tests, executor: { name: php, php-version: "7.3" } }
   php-72-tests:
     jobs:
-    - php-72-unit-tests
-    - php-72-integration-tests
+    - unit-tests: { name: php-72-unit-tests, executor: { name: php, php-version: "7.2" } }
+    - integration-tests: { name: php-72-integration-tests, executor: { name: php, php-version: "7.2" } }
   php-71-tests:
     jobs:
-    - php-71-unit-tests
-    - php-71-integration-tests
+    - unit-tests: { name: php-71-unit-tests, executor: { name: php, php-version: "7.1" } }
+    - integration-tests: { name: php-71-integration-tests, executor: { name: php, php-version: "7.1" } }
   php-70-tests:
     jobs:
-    - php-70-unit-tests
-    - php-70-integration-tests
+    - unit-tests: { name: php-70-unit-tests, executor: { name: php, php-version: "7.0" } }
+    - integration-tests: { name: php-70-integration-tests, executor: { name: php, php-version: "7.0" } }
   php-56-tests:
     jobs:
-    - php-56-unit-tests
-    - php-56-integration-tests
+    - unit-tests: { name: php-56-unit-tests, executor: { name: php, php-version: "5.6" } }
+    - integration-tests: { name: php-56-integration-tests, executor: { name: php, php-version: "5.6" } }
