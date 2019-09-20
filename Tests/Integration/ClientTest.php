@@ -23,7 +23,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
      */
     public function testClientBuilder()
     {
-        $client = ClientBuilder::create(getenv('ST_API_ENDPOINT'), getenv('ST_API_KEY'))->build();
+        $client = ClientBuilder::create(getenv('AS_URL'), getenv('AS_PRIVATE_KEY'))->build();
         $this->assertInstanceOf(Client::class, $client);
     }
 
@@ -40,7 +40,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     public function testConnectionErrors($apiEndpoint, $exceptionClass)
     {
         $this->expectException($exceptionClass);
-        $client = ClientBuilder::create($apiEndpoint, getenv('ST_API_KEY'))->build();
+        $client = ClientBuilder::create($apiEndpoint, getenv('AS_PRIVATE_KEY'))->build();
         $client->listEngines();
     }
 
@@ -51,7 +51,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
      */
     public function testAuthenticationError()
     {
-        $client = ClientBuilder::create(getenv('ST_API_ENDPOINT'), 'not-an-api-key')->build();
+        $client = ClientBuilder::create(getenv('AS_URL'), 'not-an-api-key')->build();
         $client->listEngines();
     }
 }

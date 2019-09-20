@@ -1,47 +1,43 @@
 version: 2.1
 
-unit_tests: &unit_tests
-  steps:
-  - install_deps
-  - run_unit_tests
-
-integration_tests: &integration_tests
-  environment:
-    ST_ENGINE_NAME: php-integration-test-$CIRCLE_BUILD_NUM
-  steps:
-  - install_deps
-  - run_integration_tests
-
-php73: &php73
-  docker:
-  - image: circleci/php:7.3-browsers
-
-php72: &php72
-  docker:
-  - image: circleci/php:7.2-browsers
-
-php71: &php71
-  docker:
-  - image: circleci/php:7.1-browsers
-
-php70: &php70
-  docker:
-  - image: circleci/php:7.0-browsers
-
-php56: &php56
-  docker:
-  - image: circleci/php:5.6-browsers
+executors:
+  php:
+    parameters:
+      php-version: { type: string, default: "7.2" }
+    docker:
+    - image: circleci/php:<< parameters.php-version >>-browsers
+      environment:
+        CIRCLE_EXECUTOR: php
+  stack:
+    parameters:
+      php-version: { type: string, default: "7.2" }
+    docker:
+    - image: circleci/php:<< parameters.php-version >>-browsers
+      environment:
+        CIRCLE_EXECUTOR: stack
+    - image: docker.elastic.co/elasticsearch/elasticsearch:7.3.0
+      name: elasticsearch
+      environment:
+        cluster.name: es-cluster
+        node.name: es-node
+        bootstrap.memory_lock: true
+        discovery.type: single-node
+        ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    - image: docker.elastic.co/app-search/app-search:7.3.0
+      name: appsearch
+      environment:
+        elasticsearch.host: http://elasticsearch:9200
+        allow_es_settings_modification: true
+        app_search.listen_host: 0.0.0.0
+        JAVA_OPTS: "-Xms512m -Xmx512m"
 
 commands:
-
   install_deps:
     steps:
     - checkout
     - restore_cache:
         keys:
         - v1-dependencies-{{ checksum "composer.json" }}
-    - attach_workspace:
-        at: .
     - run:
         name: Install composer dependencies
         command: composer install -n --prefer-dist
@@ -49,75 +45,48 @@ commands:
         paths:
         - ~/.composer/cache/
         key: v1-dependencies-{{ checksum "composer.json" }}
-    - persist_to_workspace:
-        root: .
-        paths:
-        - .
-
-  run_unit_tests:
-    steps:
-    - run:
-        name: Unit testing
-        command: vendor/bin/phpunit -c phpunit.xml.dist --testsuite unit
-
-  run_integration_tests:
-    steps:
-    - run:
-        name: Integration testing
-        command: ST_ENGINE_NAME="php-integration-test-$CIRCLE_BUILD_NUM" vendor/bin/phpunit -c phpunit.xml.dist --testsuite integration
 
 jobs:
-
-  php-73-unit-tests:
-    <<: *unit_tests
-    <<: *php73
-
-  php-73-integration-tests:
-    <<: *integration_tests
-    <<: *php73
-
-  php-72-unit-tests:
-    <<: *unit_tests
-    <<: *php72
-
-  php-72-integration-tests:
-    <<: *integration_tests
-    <<: *php72
-
-  php-71-unit-tests:
-    <<: *unit_tests
-    <<: *php71
-
-  php-71-integration-tests:
-    <<: *integration_tests
-    <<: *php71
-
-  php-70-unit-tests:
-    <<: *unit_tests
-    <<: *php70
-
-  php-70-integration-tests:
-    <<: *integration_tests
-    <<: *php70
-
-  php-56-unit-tests:
-    <<: *unit_tests
-    <<: *php56
-
-  php-56-integration-tests:
-    <<: *integration_tests
-    <<: *php56
-
-  qa-phplint:
-    <<: *php73
+  unit-tests:
+    parameters:
+      executor:
+        type: executor
+    executor: << parameters.executor >>
     steps:
     - install_deps
     - run:
-        name:
+        name: Unit testing
+        command: vendor/bin/phpunit -c phpunit.xml.dist --testsuite unit
+  integration-tests:
+    parameters:
+      executor:
+        type: executor
+    executor: << parameters.executor >>
+    steps:
+    - install_deps
+    - run:
+        name: Configuring App Search
+        command: |
+          if [ $CIRCLE_EXECUTOR = "stack" ]; then
+            export AS_URL="http://appsearch:3002"
+            export ES_URL="http://elasticsearch:9200"
+            source .circleci/retrieve-credentials.sh
+            echo "export AS_URL=$AS_URL" >> $BASH_ENV
+            echo "export AS_PRIVATE_KEY=$AS_PRIVATE_KEY" >> $BASH_ENV
+            echo "export AS_SEARCH_KEY=$AS_SEARCH_KEY" >> $BASH_ENV
+          fi
+    - run:
+        name: Integration testing
+        command: AS_ENGINE_NAME="php-integration-test-$CIRCLE_BUILD_NUM" vendor/bin/phpunit -c phpunit.xml.dist --testsuite integration
+  qa-phplint:
+    executor: php
+    steps:
+    - install_deps
+    - run:
+        name: PHPLint
         command: vendor/bin/phplint . --exclude=vendor
-
   qa-phpcs:
-    <<: *php73
+    executor: php
     steps:
     - install_deps
     - run:
@@ -132,21 +101,71 @@ workflows:
     - qa-phpcs
   php-73-tests:
     jobs:
-    - php-73-unit-tests
-    - php-73-integration-tests
+    - unit-tests:
+        name: php-73-unit-tests
+        executor: { name: php, php-version: "7.3" }
+    - integration-tests:
+        name: php-73-integration-tests
+        executor: { name: stack, php-version: "7.3" }
+    - integration-tests:
+        name: php-73-integration-tests-saas
+        executor: { name: php, php-version: "7.3" }
+        filters:
+            branches:
+              ignore: /pull.*/
   php-72-tests:
     jobs:
-    - php-72-unit-tests
-    - php-72-integration-tests
+    - unit-tests:
+        name: php-72-unit-tests
+        executor: { name: php, php-version: "7.2" }
+    - integration-tests:
+        name: php-72-integration-tests
+        executor: { name: stack, php-version: "7.2" }
+    - integration-tests:
+        name: php-72-integration-tests-saas
+        executor: { name: php, php-version: "7.2" }
+        filters:
+            branches:
+              ignore: /pull.*/
   php-71-tests:
     jobs:
-    - php-71-unit-tests
-    - php-71-integration-tests
+    - unit-tests:
+        name: php-71-unit-tests
+        executor: { name: php, php-version: "7.1" }
+    - integration-tests:
+        name: php-71-integration-tests
+        executor: { name: stack, php-version: "7.1" }
+    - integration-tests:
+        name: php-71-integration-tests-saas
+        executor: { name: php, php-version: "7.1" }
+        filters:
+            branches:
+              ignore: /pull.*/
   php-70-tests:
     jobs:
-    - php-70-unit-tests
-    - php-70-integration-tests
+    - unit-tests:
+        name: php-70-unit-tests
+        executor: { name: php, php-version: "7.0" }
+    - integration-tests:
+        name: php-70-integration-tests
+        executor: { name: stack, php-version: "7.0" }
+    - integration-tests:
+        name: php-70-integration-tests-saas
+        executor: { name: php, php-version: "7.0" }
+        filters:
+            branches:
+              ignore: /pull.*/
   php-56-tests:
     jobs:
-    - php-56-unit-tests
-    - php-56-integration-tests
+    - unit-tests:
+        name: php-56-unit-tests
+        executor: { name: php, php-version: "5.6" }
+    - integration-tests:
+        name: php-56-integration-tests
+        executor: { name: stack, php-version: "5.6" }
+    - integration-tests:
+        name: php-56-integration-tests-saas
+        executor: { name: php, php-version: "5.6" }
+        filters:
+            branches:
+              ignore: /pull.*/
