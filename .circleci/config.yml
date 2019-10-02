@@ -91,7 +91,7 @@ jobs:
     - install_deps
     - run:
         name: PHPCS
-        command: vendor/bin/phpcs --ignore=vendor,resources --standard=PSR12 .
+        command: vendor/bin/phpcs --ignore=vendor,resources .
 
 workflows:
   version: 2
