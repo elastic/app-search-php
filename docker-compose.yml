@@ -1,0 +1,24 @@
+version: '3'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+#    name: elasticsearch
+    environment:
+      cluster.name: es-cluster
+      node.name: es-node
+      bootstrap.memory_lock: 'true'
+      discovery.type: single-node
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+
+  appsearch:
+    image: docker.elastic.co/app-search/app-search:7.4.0
+#    name: appsearch
+    environment:
+      elasticsearch.host: http://elasticsearch:9200
+      allow_es_settings_modification: 'true'
+      app_search.listen_host: 0.0.0.0
+      JAVA_OPTS: "-Xms512m -Xmx512m"
+    ports:
+      - "3002:3002"
