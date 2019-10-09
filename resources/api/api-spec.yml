@@ -552,6 +552,23 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/jsonResponse"
+    put:
+      operationId: updateSynonymSet
+      summary: Update an existing synonym set by id.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/synonyms#update
+      tags:
+      - Synonyms API
+      parameters:
+      - name: synonyms
+        in: query
+        required: true
+        description: List of synonyms words.
+        schema:
+          $ref: "#/components/schemas/synonymList"
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
     delete:
       operationId: deleteSynonymSet
       summary: Delete a synonym set by id.
