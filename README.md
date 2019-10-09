@@ -211,6 +211,12 @@ vendor/bin/phpunit -c phpunit.xml.dist --testsuite unit
 In order to run integration tests locally a [docker-compose](https://docs.docker.com/compose/install) configuration is included:
 ```bash
 docker-compose up --detach
+```
+It takes a while for the containers to start. Once initialized run the integration tests:  
+```bash 
+export ES_URL="http://localhost:9200"
+export AS_URL="http://localhost:3002"
+source .circleci/retrieve-credentials.sh
 vendor/bin/phpunit -c phpunit.xml.dist --testsuite integration
 ```
 
