@@ -121,6 +121,11 @@ components:
       items:
         type: string
 
+    keyName:
+      type: string
+      maxLength: 64
+      pattern: '^[a-zA-Z0-9\-]$'
+
   # Reusable request bodies ----------------------------------------------------
   requestBodies:
     documentIdsRequest:
@@ -219,6 +224,15 @@ components:
       required: true
       schema:
         type: string
+
+    keyNameParam:
+      name: key_name
+      in: path
+      description: API key name.
+      required: true
+      schema:
+        $ref: '#/components/schemas/keyName'
+
 
   # Reusable responses definitions ---------------------------------------------
   responses:
@@ -828,6 +842,128 @@ paths:
         description: "Would you like to have your results ascending, oldest to newest, or descending, newest to oldest?"
         schema:
           type: string
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
+
+  /credentials:
+    get:
+      operationId: listKeys
+      summary: Generate details for all keys.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/credentials#all
+      tags:
+        - Credentials API
+      parameters:
+        - $ref: "#/components/parameters/currentPage"
+        - $ref: "#/components/parameters/pageSize"
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
+    post:
+      operationId: createKey
+      summary: Create a new API key.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/credentials#create
+      tags:
+        - Credentials API
+      parameters:
+        - name: name
+          in: query
+          required: true
+          description: API key name.
+          schema:
+            $ref: "#/components/schemas/keyName"
+        - name: type
+          in: query
+          required: true
+          description: Type of API key.
+          schema:
+            type: string
+            enum: [private,search,admin]
+        - name: read
+          in: query
+          schema:
+            type: boolean
+        - name: write
+          in: query
+          schema:
+            type: boolean
+        - name: access_all_engines
+          in: query
+          schema:
+            type: boolean
+        - name: engines
+          in: query
+          schema:
+            type: array
+            items:
+              $ref: "#/components/parameters/engineNameParam"
+
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
+
+  /credentials/{key_name}:
+    parameters:
+    - $ref: "#/components/parameters/keyNameParam"
+    get:
+      operationId: listKey
+      summary: Generate details for one key.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/credentials#single
+      tags:
+      - Credentials API
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
+    put:
+      operationId: updateKey
+      summary: Update an existing key.
+      description: You are unable to change the type of a key!
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/credentials#update
+      tags:
+        - Credentials API
+      parameters:
+        - name: name
+          in: query
+          required: true
+          description: API key name.
+          schema:
+            $ref: "#/components/schemas/keyName"
+        - name: read
+          in: query
+          description: Only accepted if the key is a Private API Key.
+          schema:
+            type: boolean
+        - name: write
+          in: query
+          description: Only accepted if the key is a Private API Key.
+          schema:
+            type: boolean
+        - name: access_all_engines
+          in: query
+          description: Considers all present and future engines. If true, do not include engines. If false, you must include engines.
+          schema:
+            type: boolean
+        - name: engines
+          in: query
+          description: If access_all_engines is set to false, provide the engines that the new key can access.
+          schema:
+            type: array
+            items:
+              $ref: "#/components/parameters/engineNameParam"
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
+    delete:
+      operationId: deleteKey
+      summary: Delete an API key.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/credentials#delete
+      tags:
+        - Credentials API
       responses:
         default:
           $ref: "#/components/responses/jsonResponse"

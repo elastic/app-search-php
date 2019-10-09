@@ -68,6 +68,37 @@ class Client extends \Elastic\OpenApi\Codegen\AbstractClient
     }
 
     /**
+     * Create a new API key.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/credentials#create
+     *
+     * @param string $name             API key name.
+     * @param string $type             Type of API key.
+     * @param bool   $read
+     * @param bool   $write
+     * @param bool   $accessAllEngines
+     * @param array  $engines
+     *
+     * @return array
+     */
+    public function createKey($name, $type, $read = null, $write = null, $accessAllEngines = null, $engines = null)
+    {
+        $params = [
+            'name' => $name,
+            'type' => $type,
+            'read' => $read,
+            'write' => $write,
+            'access_all_engines' => $accessAllEngines,
+            'engines' => $engines,
+        ];
+
+        $endpoint = $this->getEndpoint('CreateKey');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Create a new synonym set.
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/synonyms#create
@@ -152,6 +183,27 @@ class Client extends \Elastic\OpenApi\Codegen\AbstractClient
         ];
 
         $endpoint = $this->getEndpoint('DeleteEngine');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Delete an API key.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/credentials#delete
+     *
+     * @param string $keyName API key name.
+     *
+     * @return array
+     */
+    public function deleteKey($keyName)
+    {
+        $params = [
+            'key_name' => $keyName,
+        ];
+
+        $endpoint = $this->getEndpoint('DeleteKey');
         $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
@@ -523,6 +575,50 @@ class Client extends \Elastic\OpenApi\Codegen\AbstractClient
     }
 
     /**
+     * Generate details for one key.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/credentials#single
+     *
+     * @param string $keyName API key name.
+     *
+     * @return array
+     */
+    public function listKey($keyName)
+    {
+        $params = [
+            'key_name' => $keyName,
+        ];
+
+        $endpoint = $this->getEndpoint('ListKey');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Generate details for all keys.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/credentials#all
+     *
+     * @param string $currentPage The page to fetch. Defaults to 1.
+     * @param string $pageSize    The number of results per page.
+     *
+     * @return array
+     */
+    public function listKeys($currentPage = null, $pageSize = null)
+    {
+        $params = [
+            'page.current' => $currentPage,
+            'page.size' => $pageSize,
+        ];
+
+        $endpoint = $this->getEndpoint('ListKeys');
+        $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Retrieve available synonym sets for the engine.
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/synonyms#get
@@ -720,6 +816,39 @@ class Client extends \Elastic\OpenApi\Codegen\AbstractClient
         $endpoint = $this->getEndpoint('UpdateDocuments');
         $endpoint->setParams($params);
         $endpoint->setBody($documents);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Update an existing key.
+     *
+     * You are unable to change the type of a key!
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/credentials#update
+     *
+     * @param string $keyName          API key name.
+     * @param string $name             API key name.
+     * @param bool   $read             Only accepted if the key is a Private API Key.
+     * @param bool   $write            Only accepted if the key is a Private API Key.
+     * @param bool   $accessAllEngines Considers all present and future engines. If true, do not include engines. If false, you must include engines.
+     * @param array  $engines          If access_all_engines is set to false, provide the engines that the new key can access.
+     *
+     * @return array
+     */
+    public function updateKey($keyName, $name, $read = null, $write = null, $accessAllEngines = null, $engines = null)
+    {
+        $params = [
+            'key_name' => $keyName,
+            'name' => $name,
+            'read' => $read,
+            'write' => $write,
+            'access_all_engines' => $accessAllEngines,
+            'engines' => $engines,
+        ];
+
+        $endpoint = $this->getEndpoint('UpdateKey');
+        $endpoint->setParams($params);
 
         return $this->performRequest($endpoint);
     }
