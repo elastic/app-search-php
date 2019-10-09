@@ -29,7 +29,7 @@ executors:
         elasticsearch.host: http://elasticsearch:9200
         allow_es_settings_modification: true
         app_search.listen_host: 0.0.0.0
-        JAVA_OPTS: "-Xms512m -Xmx512m"
+        JAVA_OPTS: "-Xms1024m -Xmx1024m"
 
 commands:
   install_deps:
