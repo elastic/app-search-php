@@ -201,6 +201,19 @@ You can then commit and PR the modified api-spec file and your endpoints code fi
 
 The client class and readme may be changed in some cases. Do not forget to include them in your commit!
 
+### Running CI tests locally
+
+Run phpunit tests with: 
+```bash
+vendor/bin/phpunit -c phpunit.xml.dist --testsuite unit
+```
+
+In order to run integration tests locally a [docker-compose](https://docs.docker.com/compose/install) configuration is included:
+```bash
+docker-compose up --detach
+vendor/bin/phpunit -c phpunit.xml.dist --testsuite integration
+```
+
 ## FAQ 🔮
 
 ### Where do I report issues with the client?
