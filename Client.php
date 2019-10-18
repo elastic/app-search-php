@@ -24,14 +24,14 @@ class Client extends \Elastic\OpenApi\Codegen\AbstractClient
      *
      * @param string $name             API key name.
      * @param string $type             Type of API key.
-     * @param bool   $read             Sets whether the key can read from the engine(s).
-     * @param bool   $write            Sets whether the key can write to the engine(s).
+     * @param bool   $read             Sets whether the key can read from the engine(s). Only used with &#39;private&#39; API keys
+     * @param bool   $write            Sets whether the key can write to the engine(s). Only used with &#39;private&#39; API keys
      * @param bool   $accessAllEngines Applies to all present and future engines. If true, do not include the engines parameter, otherwise the engines parameter is required.
      * @param array  $engines          If access_all_engines is set to false, provide the engines that the key is permitted to access.
      *
      * @return array
      */
-    public function createCredential($name, $type, $read, $write, $accessAllEngines = false, $engines = null)
+    public function createCredential($name, $type, $read = null, $write = null, $accessAllEngines = false, $engines = null)
     {
         $params = [
             'name' => $name,
@@ -777,6 +777,7 @@ class Client extends \Elastic\OpenApi\Codegen\AbstractClient
      *
      * @param string $keyName          API key name.
      * @param string $name             API key name.
+     * @param string $type             Type of API key.
      * @param bool   $read             Should this key have read access? Only accepted if &#39;type&#39; is &#39;private&#39;.
      * @param bool   $write            Should this key have write access? Only accepted if &#39;type&#39; is &#39;private&#39;.
      * @param bool   $accessAllEngines Should this key have access to all present and future engines? If true, include an &#39;engines&#39; param.
@@ -784,11 +785,12 @@ class Client extends \Elastic\OpenApi\Codegen\AbstractClient
      *
      * @return array
      */
-    public function updateCredential($keyName, $name, $read, $write, $accessAllEngines = false, $engines = null)
+    public function updateCredential($keyName, $name, $type, $read, $write, $accessAllEngines = false, $engines = null)
     {
         $params = [
             'key_name' => $keyName,
             'name' => $name,
+            'type' => $type,
             'read' => $read,
             'write' => $write,
             'access_all_engines' => $accessAllEngines,

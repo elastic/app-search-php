@@ -28,6 +28,6 @@ class UpdateCredential extends \Elastic\OpenApi\Codegen\Endpoint\AbstractEndpoin
 
     protected $routeParams = ['key_name'];
 
-    protected $paramWhitelist = ['name', 'read', 'write', 'access_all_engines', 'engines'];
+    protected $paramWhitelist = ['name', 'type', 'read', 'write', 'access_all_engines', 'engines'];
     // phpcs:enable
 }

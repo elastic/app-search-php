@@ -878,14 +878,14 @@ paths:
           enum: [private,search,admin]
       - name: read
         in: query
-        required: true
-        description: Sets whether the key can read from the engine(s).
+#        required: true
+        description: Sets whether the key can read from the engine(s). Only used with 'private' API keys
         schema:
           type: boolean
       - name: write
         in: query
-        required: true
-        description: Sets whether the key can write to the engine(s).
+#        required: true
+        description: Sets whether the key can write to the engine(s). Only used with 'private' API keys
         schema:
           type: boolean
       - name: access_all_engines
@@ -933,6 +933,13 @@ paths:
         description: API key name.
         schema:
           type: string
+      - name: type
+        in: query
+        required: true
+        description: Type of API key.
+        schema:
+          type: string
+          enum: [private,search,admin]
       - name: read
         in: query
         required: true

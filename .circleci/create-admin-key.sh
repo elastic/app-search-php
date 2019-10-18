@@ -7,11 +7,12 @@ function wait_for_as {
 
 function create_admin_key {
   local ES_URL=${ES_URL:-"http://localhost:9200"}
+  local INDEX=".app-search-actastic-loco_moco_api_tokens"
   # retrieve an existing private key
-  local JSON=$(curl -s "${ES_URL}/.app-search-actastic-loco_moco_api_tokens/_search?q=authentication_token:private-*")
+  local JSON=$(curl -s "${ES_URL}/${INDEX}/_search?q=authentication_token:private-*")
   # rewrite to an admin key
   local ADMIN_JSON=$(echo "$JSON"|jq -c '.hits.hits[0]._source'|sed s/private/admin/g)
-  curl -X PUT -H "Content-Type: application/json" "${ES_URL}/.app-search-actastic-loco_moco_api_tokens/_doc/phpintegrationtesting?pretty&refresh=true" \
+  curl -s -X PUT -H "Content-Type: application/json" "${ES_URL}/${INDEX}/_doc/phpintegrationtesting?pretty&refresh=true" \
     -d "$ADMIN_JSON"
 }
 
