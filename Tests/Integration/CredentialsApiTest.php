@@ -14,7 +14,6 @@ use Elastic\AppSearch\Client\ClientBuilder;
  * Integration test for the Credentials API.
  *
  * @package Elastic\AppSearch\Client\Test\Integration
- *
  */
 class CredentialsApiTest extends AbstractClientTestCase
 {
@@ -47,6 +46,7 @@ class CredentialsApiTest extends AbstractClientTestCase
 
     /**
      * Test Credentials API list keys endpoint.
+     *
      * @covers \Elastic\AppSearch\Client\Client::listCredentials
      */
     public function testListCredentials()

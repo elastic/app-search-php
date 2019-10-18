@@ -878,13 +878,11 @@ paths:
           enum: [private,search,admin]
       - name: read
         in: query
-#        required: true
         description: Sets whether the key can read from the engine(s). Only used with 'private' API keys
         schema:
           type: boolean
       - name: write
         in: query
-#        required: true
         description: Sets whether the key can write to the engine(s). Only used with 'private' API keys
         schema:
           type: boolean
@@ -942,13 +940,11 @@ paths:
           enum: [private,search,admin]
       - name: read
         in: query
-        required: true
         description: Should this key have read access? Only accepted if 'type' is 'private'.
         schema:
           type: boolean
       - name: write
         in: query
-        required: true
         description: Should this key have write access? Only accepted if 'type' is 'private'.
         schema:
           type: boolean

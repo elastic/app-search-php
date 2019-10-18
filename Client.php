@@ -785,7 +785,7 @@ class Client extends \Elastic\OpenApi\Codegen\AbstractClient
      *
      * @return array
      */
-    public function updateCredential($keyName, $name, $type, $read, $write, $accessAllEngines = false, $engines = null)
+    public function updateCredential($keyName, $name, $type, $read = null, $write = null, $accessAllEngines = false, $engines = null)
     {
         $params = [
             'key_name' => $keyName,
