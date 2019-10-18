@@ -70,10 +70,12 @@ jobs:
           if [ $CIRCLE_EXECUTOR = "stack" ]; then
             export AS_URL="http://appsearch:3002"
             export ES_URL="http://elasticsearch:9200"
+            source .circleci/create-admin-key.sh
             source .circleci/retrieve-credentials.sh
             echo "export AS_URL=$AS_URL" >> $BASH_ENV
             echo "export AS_PRIVATE_KEY=$AS_PRIVATE_KEY" >> $BASH_ENV
             echo "export AS_SEARCH_KEY=$AS_SEARCH_KEY" >> $BASH_ENV
+            echo "export AS_ADMIN_KEY=$AS_ADMIN_KEY" >> $BASH_ENV
           fi
     - run:
         name: Integration testing
