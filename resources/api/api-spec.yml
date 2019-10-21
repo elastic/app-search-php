@@ -425,7 +425,7 @@ paths:
         required: true
         description: Search queries.
         schema:
-          $ref: "#/components/schema/searchRequestList"
+          $ref: "#/components/schemas/searchRequestList"
       responses:
         default:
           $ref: "#/components/responses/jsonResponse"
