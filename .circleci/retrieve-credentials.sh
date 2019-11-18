@@ -12,6 +12,6 @@ function load_api_keys {
 }
 
 wait_for_as
-AS_PRIVATE_KEY=`load_api_keys private`
-AS_SEARCH_KEY=`load_api_keys search`
+export AS_PRIVATE_KEY=`load_api_keys private`
+export AS_SEARCH_KEY=`load_api_keys search`
 unset -f load_api_keys
