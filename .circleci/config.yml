@@ -15,7 +15,7 @@ executors:
     - image: circleci/php:<< parameters.php-version >>-browsers
       environment:
         CIRCLE_EXECUTOR: stack
-    - image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    - image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
       name: elasticsearch
       environment:
         cluster.name: es-cluster
@@ -23,7 +23,7 @@ executors:
         bootstrap.memory_lock: true
         discovery.type: single-node
         ES_JAVA_OPTS: "-Xms512m -Xmx512m"
-    - image: docker.elastic.co/app-search/app-search:7.4.0
+    - image: docker.elastic.co/app-search/app-search:7.5.0
       name: appsearch
       environment:
         elasticsearch.host: http://elasticsearch:9200
