@@ -104,7 +104,7 @@ You can use the `Client::search` method to search in your Engine:
 
 ```php
     $searchParams = [
-      'page'  => ['current' => 1, 'size' => 10];
+      'page'  => ['current' => 1, 'size' => 10]
     ];
 
     $searchResponse = $client->search('my-engine', 'search text', $searchParams);
