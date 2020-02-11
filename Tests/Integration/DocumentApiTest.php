@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the Elastic App Search PHP Client package.
  *
@@ -25,6 +26,7 @@ class DocumentApiTest extends AbstractEngineTestCase
         $client = $this->getDefaultClient();
 
         $indexingResponse = $client->indexDocuments($engineName, $documents);
+        $this->waitForIndexing();
 
         $this->assertCount(count($documents), $indexingResponse);
         foreach ($indexingResponse as $documentIndexingResponse) {
@@ -43,6 +45,8 @@ class DocumentApiTest extends AbstractEngineTestCase
         $documentIds = array_column($documents, 'id');
 
         $client->indexDocuments($engineName, $documents);
+        $this->waitForIndexing();
+
         $this->assertEquals($documents, $client->getDocuments($engineName, $documentIds));
     }
 
@@ -55,8 +59,10 @@ class DocumentApiTest extends AbstractEngineTestCase
         $engineName = $this->getDefaultEngineName();
         $client = $this->getDefaultClient();
         $client->indexDocuments($engineName, $documents);
+        $this->waitForIndexing();
 
         $documentListResponse = $client->listDocuments($engineName, 1, 25);
+
         $this->assertEquals(1, $documentListResponse['meta']['page']['current']);
         $this->assertEquals(25, $documentListResponse['meta']['page']['size']);
         $this->assertCount(count($documents), $documentListResponse['results']);
@@ -74,8 +80,10 @@ class DocumentApiTest extends AbstractEngineTestCase
         $client->indexDocuments($engineName, $documents);
 
         $client->deleteDocuments($engineName, [current($documentIds)]);
+        $this->waitForIndexing();
 
         $documentListResponse = $client->listDocuments($engineName);
+
         $this->assertCount(count($documents) - 1, $documentListResponse['results']);
     }
 
@@ -92,6 +100,7 @@ class DocumentApiTest extends AbstractEngineTestCase
 
         $documentsUpdates = [['id' => $documents[0]['id'], 'title' => 'foo']];
         $updateResponse = $client->updateDocuments($engineName, $documentsUpdates);
+
         $this->assertEmpty(current($updateResponse)['errors']);
     }
 
@@ -111,5 +120,10 @@ class DocumentApiTest extends AbstractEngineTestCase
     public function testIndexingInInvalidEngine()
     {
         $this->getDefaultClient()->getDocuments('not-an-engine', $this->getSampleDocuments());
+    }
+
+    private function waitForIndexing()
+    {
+        sleep(1);
     }
 }

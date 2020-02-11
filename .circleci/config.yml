@@ -107,12 +107,6 @@ workflows:
     - integration-tests:
         name: php-73-integration-tests
         executor: { name: stack, php-version: "7.3" }
-    - integration-tests:
-        name: php-73-integration-tests-saas
-        executor: { name: php, php-version: "7.3" }
-        filters:
-            branches:
-              ignore: /pull.*/
   php-72-tests:
     jobs:
     - unit-tests:
@@ -121,12 +115,6 @@ workflows:
     - integration-tests:
         name: php-72-integration-tests
         executor: { name: stack, php-version: "7.2" }
-    - integration-tests:
-        name: php-72-integration-tests-saas
-        executor: { name: php, php-version: "7.2" }
-        filters:
-            branches:
-              ignore: /pull.*/
   php-71-tests:
     jobs:
     - unit-tests:
@@ -135,12 +123,6 @@ workflows:
     - integration-tests:
         name: php-71-integration-tests
         executor: { name: stack, php-version: "7.1" }
-    - integration-tests:
-        name: php-71-integration-tests-saas
-        executor: { name: php, php-version: "7.1" }
-        filters:
-            branches:
-              ignore: /pull.*/
   php-70-tests:
     jobs:
     - unit-tests:
@@ -149,12 +131,6 @@ workflows:
     - integration-tests:
         name: php-70-integration-tests
         executor: { name: stack, php-version: "7.0" }
-    - integration-tests:
-        name: php-70-integration-tests-saas
-        executor: { name: php, php-version: "7.0" }
-        filters:
-            branches:
-              ignore: /pull.*/
   php-56-tests:
     jobs:
     - unit-tests:
@@ -163,9 +139,3 @@ workflows:
     - integration-tests:
         name: php-56-integration-tests
         executor: { name: stack, php-version: "5.6" }
-    - integration-tests:
-        name: php-56-integration-tests-saas
-        executor: { name: php, php-version: "5.6" }
-        filters:
-            branches:
-              ignore: /pull.*/
