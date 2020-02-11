@@ -245,7 +245,8 @@ paths:
         default:
           $ref: "#/components/responses/jsonResponse"
     post:
-      operationId: createEngine
+      operationId: doCreateEngine
+      x-operation-scope: protected
       summary: Creates a new engine.
       externalDocs:
         url: https://swiftype.com/documentation/app-search/api/engines#create
@@ -263,6 +264,19 @@ paths:
         description: Engine language (null for universal).
         schema:
           type: string
+      - name: type
+        in: query
+        description: Engine type.
+        schema:
+          type: string
+          default: 'default'
+      - name: source_engines
+        in: query
+        description: Sources engines list.
+        schema:
+          type: array
+          items:
+              type: string
       responses:
         default:
           $ref: "#/components/responses/jsonResponse"

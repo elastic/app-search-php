@@ -9,11 +9,11 @@
 namespace Elastic\AppSearch\Client\Endpoint;
 
 /**
- * Implementation of the CreateEngine endpoint.
+ * Implementation of the DoCreateEngine endpoint.
  *
  * @package Elastic\AppSearch\Client\Endpoint
  */
-class CreateEngine extends \Elastic\OpenApi\Codegen\Endpoint\AbstractEndpoint
+class DoCreateEngine extends \Elastic\OpenApi\Codegen\Endpoint\AbstractEndpoint
 {
     // phpcs:disable
     /**
@@ -26,6 +26,6 @@ class CreateEngine extends \Elastic\OpenApi\Codegen\Endpoint\AbstractEndpoint
      */
     protected $uri = '/engines';
 
-    protected $paramWhitelist = ['name', 'language'];
+    protected $paramWhitelist = ['name', 'language', 'type', 'source_engines'];
     // phpcs:enable
 }

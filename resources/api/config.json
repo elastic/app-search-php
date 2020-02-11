@@ -1,4 +1,5 @@
 {
+  "clientClass": "AbstractClient",
   "gitUserId": "elastic",
   "gitRepoId": "app-search-php",
   "artifactVersion": "1.0.0",

@@ -153,8 +153,9 @@ The search response will contains at least a meta field and a results field as s
 
 Method      | Description | Documentation
 ------------|-------------|--------------
-**`createCuration`**| Create a new curation.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$queries` (required) <br />   - `$promotedDocIds`<br />   - `$hiddenDocIds`<br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#create)
 **`createEngine`**| Creates a new engine.<br/> <br/> **Parameters :** <br />  - `$name` (required) <br />   - `$language`<br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/engines#create)
+**`createMetaEngine`**| Creates a new meta engine.<br/> <br/> **Parameters :** <br />  - `$name` (required) <br />   - `$sourceEngines` (required)<br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/engines#create)
+**`createCuration`**| Create a new curation.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$queries` (required) <br />   - `$promotedDocIds`<br />   - `$hiddenDocIds`<br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#create)
 **`createSynonymSet`**| Create a new synonym set.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$synonyms` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/synonyms#create)
 **`deleteCuration`**| Delete a curation by id.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$curationId` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/curations#destroy)
 **`deleteDocuments`**| Delete documents by id.<br/> <br/> **Parameters :** <br />  - `$engineName` (required) <br />   - `$documentIds` (required) <br/>|[Endpoint Documentation](https://swiftype.com/documentation/app-search/api/documents#partial)
