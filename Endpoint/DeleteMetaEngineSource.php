@@ -9,23 +9,23 @@
 namespace Elastic\AppSearch\Client\Endpoint;
 
 /**
- * Implementation of the CreateEngine endpoint.
+ * Implementation of the DeleteMetaEngineSource endpoint.
  *
  * @package Elastic\AppSearch\Client\Endpoint
  */
-class CreateEngine extends \Elastic\OpenApi\Codegen\Endpoint\AbstractEndpoint
+class DeleteMetaEngineSource extends \Elastic\OpenApi\Codegen\Endpoint\AbstractEndpoint
 {
     // phpcs:disable
     /**
      * @var string
      */
-    protected $method = 'POST';
+    protected $method = 'DELETE';
 
     /**
      * @var string
      */
-    protected $uri = '/engines';
+    protected $uri = '/engines/{engine_name}/source_engines';
 
-    protected $paramWhitelist = ['name', 'language'];
+    protected $routeParams = ['engine_name'];
     // phpcs:enable
 }
