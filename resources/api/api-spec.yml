@@ -131,6 +131,14 @@ components:
           schema:
             $ref: "#/components/schemas/documentIds"
 
+    engineIdsRequest:
+      required: true
+      description: List of engine ids.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/documentIds"
+
     documentsIndexingRequest:
       required: true
       description: List of document to index.
@@ -301,6 +309,36 @@ paths:
         url: https://swiftype.com/documentation/app-search/api/engines#delete
       tags:
       - Engine API
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
+
+  /engines/{engine_name}/source_engines:
+    parameters:
+    - $ref: "#/components/parameters/engineNameParam"
+    post:
+      operationId: addMetaEngineSource
+      summary: Add a source engine to an existing meta engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/meta-engines#add-source-engines
+      tags:
+      - Engine API
+      requestBody:
+        $ref: "#/components/requestBodies/engineIdsRequest"
+      x-codegen-request-body-name: sourceEngines
+      responses:
+        default:
+          $ref: "#/components/responses/jsonResponse"
+    delete:
+      operationId: deleteMetaEngineSource
+      summary: Delete a source engine from a meta engine.
+      externalDocs:
+        url: https://swiftype.com/documentation/app-search/api/meta-engines#remove-source-engines
+      tags:
+      - Engine API
+      requestBody:
+        $ref: "#/components/requestBodies/engineIdsRequest"
+      x-codegen-request-body-name: sourceEngines
       responses:
         default:
           $ref: "#/components/responses/jsonResponse"

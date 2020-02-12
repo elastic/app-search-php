@@ -18,6 +18,29 @@ abstract class AbstractClient extends \Elastic\OpenApi\Codegen\AbstractClient
     // phpcs:disable
 
     /**
+     * Add a source engine to an existing meta engine.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/meta-engines#add-source-engines
+     *
+     * @param string $engineName    Name of the engine.
+     * @param array  $sourceEngines List of engine ids.
+     *
+     * @return array
+     */
+    public function addMetaEngineSource($engineName, $sourceEngines)
+    {
+        $params = [
+            'engine_name' => $engineName,
+        ];
+
+        $endpoint = $this->getEndpoint('AddMetaEngineSource');
+        $endpoint->setParams($params);
+        $endpoint->setBody($sourceEngines);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
      * Create a new curation.
      *
      * Documentation: https://swiftype.com/documentation/app-search/api/curations#create
@@ -130,6 +153,29 @@ abstract class AbstractClient extends \Elastic\OpenApi\Codegen\AbstractClient
 
         $endpoint = $this->getEndpoint('DeleteEngine');
         $endpoint->setParams($params);
+
+        return $this->performRequest($endpoint);
+    }
+
+    /**
+     * Delete a source engine from a meta engine.
+     *
+     * Documentation: https://swiftype.com/documentation/app-search/api/meta-engines#remove-source-engines
+     *
+     * @param string $engineName    Name of the engine.
+     * @param array  $sourceEngines List of engine ids.
+     *
+     * @return array
+     */
+    public function deleteMetaEngineSource($engineName, $sourceEngines)
+    {
+        $params = [
+            'engine_name' => $engineName,
+        ];
+
+        $endpoint = $this->getEndpoint('DeleteMetaEngineSource');
+        $endpoint->setParams($params);
+        $endpoint->setBody($sourceEngines);
 
         return $this->performRequest($endpoint);
     }
