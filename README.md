@@ -1,6 +1,6 @@
 <p align="center"><img src="https://github.com/elastic/app-search-php/blob/master/logo-app-search.png?raw=true" alt="Elastic App Search Logo"></p>
 
-<p align="center"><a href="https://circleci.com/gh/elastic/app-search-php"><img src="https://circleci.com/gh/swiftype/swiftype-app-search-php.svg?style=svg&circle-token=c5aa66b0ee683b0f485c414eb6554837c29cc150" alt="CircleCI buidl"></a></p>
+<p align="center"><a href="https://circleci.com/gh/elastic/app-search-php"><img src="https://circleci.com/gh/elastic/app-search-php.svg" alt="CircleCI buidl"></a></p>
 
 > A first-party PHP client for building excellent, relevant search experiences with [Elastic App Search](https://www.elastic.co/products/app-search).
 
@@ -17,7 +17,11 @@
 
 ## Getting started 🐣
 
-Using this client assumes that you have already created an App Search account on https://swiftype.com/ or you have a [self managed version](https://swiftype.com/documentation/app-search/self-managed/overview) of App Search available.
+Using this client assumes that you have already an instance of Elastic App Search up and running.
+
+
+
+You can find more information about Elastic App Search at : https://www.elastic.co/app-search.
 
 You can install the client in your project by using composer:
 
@@ -33,7 +37,7 @@ composer require elastic/app-search
 
  For example, for App Search `7.3`, use `7.3` of this library or above, but not `8.0`.
 
- If you are a [SaaS](https://app.swiftype.com/as) user, simply use the most recent version of this library.
+ If you are using the [SaaS version available on swiftype.com](https://app.swiftype.com/as) of App Search, you should use the version 7.5.x of the client.
 
 ## Usage
 
@@ -55,7 +59,7 @@ To instantiate a new client you can use `\Elastic\AppSearch\Client\ClientBuilder
 
 - The resulting client will be of type `\Elastic\AppSearch\Client\Client`
 
-- You can find the API endpoint and your API key URL in your App Search account: https://app.swiftype.com/as/credentials.
+- You can find the API endpoint and your API key URL in the credentials sections of the App Search dashboard.
 
 - You can use any type of API Key (private, public or admin). The client will throw an exception if you try to execute an action that is not authorized for the key used.
 
