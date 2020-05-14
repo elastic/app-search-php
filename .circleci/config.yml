@@ -15,7 +15,7 @@ executors:
     - image: circleci/php:<< parameters.php-version >>-browsers
       environment:
         CIRCLE_EXECUTOR: stack
-    - image: docker.elastic.co/elasticsearch/elasticsearch:7.6.0
+    - image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
       name: elasticsearch
       environment:
         cluster.name: es-cluster
@@ -25,12 +25,13 @@ executors:
         ES_JAVA_OPTS: "-Xms512m -Xmx512m"
         xpack.security.enabled: true
         ELASTIC_PASSWORD: password
-    - image: docker.elastic.co/app-search/app-search:7.6.0
+    - image: docker.elastic.co/enterpise-search/enterpise-search:7.7.0
       name: appsearch
       environment:
         elasticsearch.host: http://elasticsearch:9200
         elasticsearch.password: password
-        APP_SEARCH_DEFAULT_PASSWORD: password
+        ENT_SEARCH_DEFAULT_PASSWORD: password
+        secret_management.encryption_keys: [changeme]
         allow_es_settings_modification: true
         app_search.listen_host: 0.0.0.0
         JAVA_OPTS: "-Xms512m -Xmx512m"
