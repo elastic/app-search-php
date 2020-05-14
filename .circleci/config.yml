@@ -33,7 +33,6 @@ executors:
         ENT_SEARCH_DEFAULT_PASSWORD: password
         secret_management.encryption_keys: "[changeme]"
         allow_es_settings_modification: true
-        app_search.listen_host: 0.0.0.0
         JAVA_OPTS: "-Xms512m -Xmx512m"
 
 commands:
