@@ -100,8 +100,7 @@ jobs:
     - image: circleci/golang:1.13-alpine
     steps:
     - checkout
-    - setup_remote_docker:
-        docker_layer_caching: true
+    - setup_remote_docker
     - run: 
         name: Building docker test image
         command: docker build . --target test_image -t elastic/app_search_php_client_test:latest
