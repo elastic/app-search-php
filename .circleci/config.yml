@@ -113,53 +113,53 @@ jobs:
 
 workflows:
   version: 2
-  qa:
+  build-and-test:
     jobs:
     - qa-phplint
     - qa-phpcs
-  php-73-tests:
-    jobs:
     - unit-tests:
         name: php-73-unit-tests
         executor: { name: php, php-version: "7.3" }
     - integration-tests:
         name: php-73-integration-tests
         executor: { name: stack, php-version: "7.3" }
-  php-72-tests:
-    jobs:
     - unit-tests:
         name: php-72-unit-tests
         executor: { name: php, php-version: "7.2" }
     - integration-tests:
         name: php-72-integration-tests
         executor: { name: stack, php-version: "7.2" }
-  php-71-tests:
-    jobs:
     - unit-tests:
         name: php-71-unit-tests
         executor: { name: php, php-version: "7.1" }
     - integration-tests:
         name: php-71-integration-tests
         executor: { name: stack, php-version: "7.1" }
-  php-70-tests:
-    jobs:
     - unit-tests:
         name: php-70-unit-tests
         executor: { name: php, php-version: "7.0" }
     - integration-tests:
         name: php-70-integration-tests
         executor: { name: stack, php-version: "7.0" }
-  php-56-tests:
-    jobs:
     - unit-tests:
         name: php-56-unit-tests
         executor: { name: php, php-version: "5.6" }
     - integration-tests:
         name: php-56-integration-tests
         executor: { name: stack, php-version: "5.6" }
-  build-test-artifacts:
-    jobs:
     - build-test-image:
         filters:
           branches:
             only: master
+        requires:
+        - php-56-unit-tests
+        - php-56-integration-tests
+        - php-70-unit-tests
+        - php-70-integration-tests
+        - php-71-unit-tests
+        - php-71-integration-tests
+        - php-72-unit-tests
+        - php-72-integration-tests
+        - php-73-unit-tests
+        - php-73-integration-tests
+
