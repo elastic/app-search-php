@@ -159,4 +159,7 @@ workflows:
         executor: { name: stack, php-version: "5.6" }
   build-test-artifacts:
     jobs:
-    - build-test-image
+    - build-test-image:
+        filters:
+          branches:
+            only: master
