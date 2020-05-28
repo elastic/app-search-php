@@ -120,33 +120,58 @@ workflows:
     - unit-tests:
         name: php-73-unit-tests
         executor: { name: php, php-version: "7.3" }
+        requires:
+        - qa-phplint
+        - qa-phpcs
     - integration-tests:
         name: php-73-integration-tests
         executor: { name: stack, php-version: "7.3" }
+        requires:
+        - php-73-unit-tests
     - unit-tests:
         name: php-72-unit-tests
         executor: { name: php, php-version: "7.2" }
+        requires:
+          - qa-phplint
+          - qa-phpcs
     - integration-tests:
         name: php-72-integration-tests
         executor: { name: stack, php-version: "7.2" }
+        requires:
+        - php-72-unit-tests
     - unit-tests:
         name: php-71-unit-tests
         executor: { name: php, php-version: "7.1" }
+        requires:
+          - qa-phplint
+          - qa-phpcs
     - integration-tests:
         name: php-71-integration-tests
         executor: { name: stack, php-version: "7.1" }
+        requires:
+        - php-71-unit-tests
     - unit-tests:
         name: php-70-unit-tests
         executor: { name: php, php-version: "7.0" }
+        requires:
+          - qa-phplint
+          - qa-phpcs
     - integration-tests:
         name: php-70-integration-tests
         executor: { name: stack, php-version: "7.0" }
+        requires:
+        - php-70-unit-tests
     - unit-tests:
         name: php-56-unit-tests
         executor: { name: php, php-version: "5.6" }
+        requires:
+          - qa-phplint
+          - qa-phpcs
     - integration-tests:
         name: php-56-integration-tests
         executor: { name: stack, php-version: "5.6" }
+        requires:
+        - php-56-unit-tests
     - build-test-image:
         filters:
           branches:
