@@ -10,7 +10,6 @@ function wait_for_as {
       sleep 1
     fi
   done
-  set -e
 }
 
 function load_api_keys {

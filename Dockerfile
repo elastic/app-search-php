@@ -1,5 +1,5 @@
 ARG base_image=php:7.2-cli
-FROM $base_image
+FROM $base_image as builder
 
 # Installing additional tools
 RUN apt-get update \
@@ -11,3 +11,10 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php composer-setup.php \
  && php -r "unlink('composer-setup.php');" \
  && mv composer.phar /usr/local/bin/composer
+
+
+FROM builder as test_image
+
+WORKDIR /app
+COPY . /app/
+RUN composer install
