@@ -97,7 +97,7 @@ jobs:
         command: vendor/bin/phpcs --ignore=vendor,resources .
   build-test-image:
     docker:
-    - image: circleci/golang:1.13-alpine
+    - image: circleci/golang
     steps:
     - checkout
     - setup_remote_docker
@@ -157,6 +157,6 @@ workflows:
     - integration-tests:
         name: php-56-integration-tests
         executor: { name: stack, php-version: "5.6" }
-  test-artifacts:
+  build-test-artifacts:
     jobs:
     - build-test-image
