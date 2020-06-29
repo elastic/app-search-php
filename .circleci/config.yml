@@ -24,6 +24,7 @@ executors:
         discovery.type: single-node
         xpack.security.enabled: true
         xpack.license.self_generated.type: trial
+        xpack.security.authc.api_key.enabled: true
         ELASTIC_PASSWORD: password
     - image: docker.elastic.co/enterprise-search/enterprise-search:7.8.0
       name: appsearch
