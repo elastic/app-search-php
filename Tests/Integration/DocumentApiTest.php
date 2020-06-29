@@ -78,6 +78,7 @@ class DocumentApiTest extends AbstractEngineTestCase
         $client = $this->getDefaultClient();
         $documentIds = array_column($documents, 'id');
         $client->indexDocuments($engineName, $documents);
+        $this->waitForIndexing();
 
         $client->deleteDocuments($engineName, [current($documentIds)]);
         $this->waitForIndexing();
@@ -124,6 +125,6 @@ class DocumentApiTest extends AbstractEngineTestCase
 
     private function waitForIndexing()
     {
-        sleep(1);
+        sleep(10);
     }
 }
