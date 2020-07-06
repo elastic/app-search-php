@@ -4,7 +4,7 @@ function wait_for_as {
   local continue=1
   set +e
   while [ $continue -gt 0 ]; do 
-    curl --connect-timeout 5 --max-time 10 --retry 10 --retry-delay 0 --retry-max-time 120 --retry-connrefuse -s -o /dev/null ${AS_URL}/login
+    curl --connect-timeout 5 --max-time 10 --retry 10 --retry-delay 0 --retry-max-time 120 --retry-connrefused -s -o /dev/null ${AS_URL}/login
     continue=$?
     if [ $continue -gt 0 ]; then
       sleep 1
