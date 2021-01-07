@@ -188,3 +188,22 @@ workflows:
         - php-72-integration-tests
         - php-73-unit-tests
         - php-73-integration-tests
+  nightly:
+    triggers:
+    - schedule:
+        cron: "0 0 * * *"
+        filters:
+          branches:
+            only:
+            - master
+    jobs:
+    - unit-tests:
+        executor: { name: php, php-version: "7.3" }
+    - integration-tests:
+        executor: { name: stack, php-version: "7.3" }
+        requires:
+        - unit-tests
+    - build-test-image:
+        requires:
+        - unit-tests
+        - integration-tests
