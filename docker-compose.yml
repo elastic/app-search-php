@@ -1,0 +1,53 @@
+# A docker-compose to make it easier to run PHP integration tests locally with different PHP versions.
+version: "2"
+
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+    environment:
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "xpack.security.enabled=true"
+      - "xpack.security.authc.api_key.enabled=true"
+      - "ELASTIC_PASSWORD=password"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+
+  entsearch:
+    image: docker.elastic.co/enterprise-search/enterprise-search:7.12.0
+    depends_on:
+      - "elasticsearch"
+    environment:
+      - "ENT_SEARCH_DEFAULT_PASSWORD=password"
+      - "elasticsearch.username=elastic"
+      - "elasticsearch.password=password"
+      - "elasticsearch.host=http://elasticsearch:9200"
+      - "allow_es_settings_modification=true"
+      - "secret_management.encryption_keys=[4a2cd3f81d39bf28738c10db0ca782095ffac07279561809eecc722e0c20eb09]"
+      - "elasticsearch.startup_retry.interval=15"
+    ports:
+      - 3002:3002
+
+  # php_client - Helpful for running integration tests locally.
+  # docker-compose build --build-arg base_image=php:7.3-cli
+  # docker-compose run php_client bash
+  # # source .circleci/retrieve-credentials.sh
+  # # vendor/bin/phpunit -c phpunit.xml.dist --testsuite integration
+  php_client:
+    build:
+      context: .
+      args:
+        base_image: php:7.3-cli
+    image: php_client
+    depends_on:
+     - "elasticsearch"
+     - "entsearch"
+    environment:
+     - "AS_URL=http://entsearch:3002"
+     - "ES_URL=http://elasticsearch:9200"
+     - "AS_ENGINE_NAME=php-integration-test-7.3"
