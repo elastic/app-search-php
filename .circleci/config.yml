@@ -34,6 +34,7 @@ executors:
         ENT_SEARCH_DEFAULT_PASSWORD: password
         secret_management.encryption_keys: "[changeme]"
         allow_es_settings_modification: true
+        elasticsearch.startup_retry.interval: 30
 
 commands:
   install_deps:
