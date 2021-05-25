@@ -15,7 +15,7 @@ executors:
     - image: circleci/php:<< parameters.php-version >>-browsers
       environment:
         CIRCLE_EXECUTOR: stack
-    - image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+    - image: docker.elastic.co/elasticsearch/elasticsearch:7.13.0
       name: elasticsearch
       environment:
         cluster.name: es-cluster
@@ -27,7 +27,7 @@ executors:
         xpack.security.authc.api_key.enabled: true
         ELASTIC_PASSWORD: password
         ES_JAVA_OPTS: -Xms512m -Xmx512m
-    - image: docker.elastic.co/enterprise-search/enterprise-search:7.12.0
+    - image: docker.elastic.co/enterprise-search/enterprise-search:7.13.0
       name: appsearch
       environment:
         elasticsearch.host: http://elasticsearch:9200

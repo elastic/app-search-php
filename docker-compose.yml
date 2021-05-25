@@ -4,7 +4,7 @@ version: "2"
 services:
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.0
     environment:
       - "discovery.type=single-node"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -19,7 +19,7 @@ services:
       - 9200:9200
 
   entsearch:
-    image: docker.elastic.co/enterprise-search/enterprise-search:7.12.0
+    image: docker.elastic.co/enterprise-search/enterprise-search:7.13.0
     depends_on:
       - "elasticsearch"
     environment:
